@@ -61,9 +61,9 @@ class MadridInvestmentsLoader(InvestmentsLoader):
         return {
             'is_actual': is_actual,
             'gc_code': gc_code,
-            'fc_code': 'X'+investment_line,
+            'fc_code': 'X'+investment_line.zfill(2),
             'fc_area': 'X',
-            'fc_policy': 'X'+investment_line,
+            'fc_policy': 'X'+investment_line.zfill(2),
             'amount': amount,
             'project_id': project_id.strip(),
             'description': description.strip()
