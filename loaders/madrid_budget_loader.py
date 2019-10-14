@@ -178,6 +178,10 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             if int(year) < 2015:
                 fc_code = programme_mapping.get(fc_code, fc_code)
 
+            # For years before 2019 we check whether we need to amend the programme code
+            if int(year) < 2019:
+                fc_code = programme_mapping_pre_2019.get(fc_code, fc_code)
+
             # The input files are encoded in ISO-8859-1, since we want to work with the files
             # as they're published in the original open data portal. All the text fields are
             # ignored, as we use the codes instead, but the description one.
