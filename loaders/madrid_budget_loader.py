@@ -6,6 +6,7 @@ import csv
 import os
 import re
 
+
 class MadridBudgetLoader(SimpleBudgetLoader):
 
     def parse_item(self, filename, line):
@@ -37,7 +38,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             '32101': '32301',   # Centros docentes
             '32401': '32601',   # Servicios de educación
             '33201': '33210',   # Bibliotecas
-            '33404': '92402',   # Participación empresarial
+            '33404': '92402',   # Participación empresarial
             '33403': '33601',   # Patrimonio cultural
             '43110': '43301',   # Promoción económica
             '44101': '44110',   # Promoción del transporte
@@ -78,7 +79,18 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # old programme: new programme
             '15341': '15340',   # Infraestructuras urbanas
             '23104': '23200',   # Planes de barrio
-            '33404': '92402',   # Participación empresarial
+            '33404': '92402',   # Participación empresarial
+        }
+        programme_mapping_pre_2019 = {
+            # old programme: new programme
+            '49102': '4910A',  # Innovación y tecnología
+            '91210': '9121A',  # Área de gobierno de Economía, Empleo y Participación Ciudadana
+            '91211': '9121B',  # Área de gobierno de Seguridad
+            '91214': '9121C',  # Área de gobierno de Obras y Espacios Públicos
+            '91215': '9121D',  # Área delegada de licencias de actividades
+            '91217': '9121E',  # Área de Comunicación
+            '91219': '9121F',  # Área delegada de Deportes
+            '92010': '9201A',  # Oficina de la Presidencia del Pleno
         }
 
         # The institutional structure of the City of Madrid has changed quite a lot along the
@@ -96,6 +108,10 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             '0065': '0098',     # CULTURA Y DEPORTES
         }
 
+        institutional_mapping_pre_2019 = {
+            '0075': '007A',     # Área de Economía, Empleo y Participación Ciudadana
+        }
+
         # Skip first line
         if line[0] == 'Centro':
             return
@@ -103,14 +119,14 @@ class MadridBudgetLoader(SimpleBudgetLoader):
         # The format of numbers in data files have changed along the years:
         # Up to 2016 (included) we converted Excel files using in2csv: English format
         # From 2017 we use the original CSVs from the open data portal: Spanish format
-        year = re.search('municipio/(\d+)/', filename).group(1)
+        year = re.search(r'municipio/(\d+)/', filename).group(1)
         if int(year) < 2017:
             parse_amount = self._read_english_number
         else:
             parse_amount = self.parse_spanish_amount
 
-        is_expense = (filename.find('gastos.csv')!=-1)
-        is_actual = (filename.find('/ejecucion_')!=-1)
+        is_expense = (filename.find('gastos.csv') != -1)
+        is_actual = (filename.find('/ejecucion_') != -1)
         if is_expense:
             # Note: in the most recent 2016 data the leading zeros were missing,
             # so add them back using zfill.
@@ -135,7 +151,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # Note: in the most recent 2016 data the leading zeros were missing,
             # so add them back using zfill.
             institution = self.get_institution_code(line[0].zfill(3))
-            ic_code = institution + (line[2].zfill(3) if institution=='0' else '00')
+            ic_code = institution + (line[2].zfill(3) if institution == '0' else '00')
 
             # We've been asked to ignore data for a special department, not really an organism (#756)
             if ic_code == '200':
@@ -144,6 +160,9 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # Apply institutional mapping to make codes consistent across years
             if int(year) <= 2015:
                 ic_code = institutional_mapping.get(ic_code, ic_code)
+
+            if int(year) < 2019:
+                ic_code = institutional_mapping_pre_2019.get(ic_code, ic_code)
 
             # Some years require some amendments
             if year == '2011':
@@ -162,7 +181,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # The input files are encoded in ISO-8859-1, since we want to work with the files
             # as they're published in the original open data portal. All the text fields are
             # ignored, as we use the codes instead, but the description one.
-            description = self._spanish_titlecase( line[9].decode("iso-8859-1").encode("utf-8") )
+            description = self._spanish_titlecase(line[9].decode("iso-8859-1").encode("utf-8"))
 
             return {
                 'is_expense': True,
@@ -193,7 +212,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
                 amount = 0
 
             # See note above
-            description = self._spanish_titlecase( line[5].decode("iso-8859-1").encode("utf-8") )
+            description = self._spanish_titlecase(line[5].decode("iso-8859-1").encode("utf-8"))
 
             return {
                 'is_expense': False,
@@ -208,7 +227,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
     # We expect the organization code to be one digit, but Madrid has a 3-digit code.
     # We can _almost_ pick the last digit, except for one case.
     def get_institution_code(self, madrid_code):
-        institution_code = madrid_code if madrid_code!='001' else '000'
+        institution_code = madrid_code if madrid_code != '001' else '000'
         return institution_code[2]
 
     def parse_spanish_amount(self, amount):

@@ -1,32 +1,47 @@
-#Institución,Sección,Nombre
+#Institución;Sección;Nombre
 0;;;Ayuntamiento de Madrid
 0;0;0;Ayuntamiento de Madrid
+1;;;Informática del Ayuntamiento de Madrid
+1;0;0;Informática del Ayuntamiento de Madrid
+2;;;Consorcio Plan Rehabilitación y Equipamiento de Teatros de Madrid
+2;0;0;Consorcio Plan Rehabilitación y Equipamiento de Teatros de Madrid
+3;;;Agencia para el Empleo de Madrid
+3;0;0;Agencia para el Empleo de Madrid
+4;;;Patronato de Turismo de Madrid
+4;0;0;Patronato de Turismo de Madrid
+6;;;Agencia Tributaria Madrid
+6;0;0;Agencia Tributaria Madrid
+7;;;Madrid Emprende
+7;0;0;Madrid Emprende
+8;;;Madrid Salud
+8;0;0;Madrid Salud
+9;;;Agencia de Actividades
+9;0;0;Agencia de Actividades
+#
+# Secciones vigentes del Ayuntamiento de Madrid
+#
 0;0;02;Presidencia del Pleno
 0;0;03;Oficina Municipal contra el Fraude y la Corrupción
 0;0;10;Alcaldía
-0;0;11;Vicealcaldía
-0;0;12;Área de Coordinación General de la Alcaldía
-0;0;13;Área de Comunicación
-0;0;14;Área de Estudios
-0;0;16;Área de Gerencia de la Ciudad
-0;0;27;"Área de Equidad, Derechos Sociales y Empleo"
-0;0;28;Políticas de Genero y Diversidad
-0;0;37;Área de Coordinación Territorial y Asociaciones
-0;0;45;Área de Seguridad
-0;0;47;"Área de Portavoz, Coord. Junta Gobierno y Relaciones con el Pleno"
-0;0;55;Área de Obras y Espacios Públicos
-0;0;57;Área de Economía y Hacienda
-0;0;67;"Área de Salud, Seguridad y Emergencias"
-0;0;75;"Área de Economía, Empleo y Participación Ciudadana"
-0;0;77;"Área de Participación Ciudadana, Transparencia y Gobierno Abierto"
-0;0;87;Área de Desarrollo Urbano Sostenible
-0;0;97;Área de Medio Ambiente y Movilidad
-0;0;98;Área de Cultura y Deportes
-0;0;99;Área de Licencias de Actividades
+0;0;12;Coordinación General de la Alcaldía
+0;0;20;Vicealcaldía
+0;0;21;"Área delegada de Coordinación Territorial, Transparencia y Participación Ciudadana"
+0;0;23;Área delegada de Internacionalización y Cooperación
+0;0;27;"Familias, Igualdad y Bienestar Social"
+0;0;31;Área Delegada de Vivienda
+0;0;55;Obras y Equipamientos
+0;0;57;Hacienda y Personal
+0;0;60;"Economía, Innovación y Empleo"
+0;0;65;Área Delegada de Deporte
+0;0;66;Área Delegada de Turismo
+0;0;67;"Portavoz, Seguridad y Emergencias"
+0;0;75;"Área Delegada de Emprendimiento, Empleo e Innovación"
+0;0;87;Desarrollo Urbano
+0;0;97;Medio Ambiente y Movilidad
+0;0;98;"Cultura, Turismo y Deporte"
 0;1;00;Endeudamiento
-0;1;10;Créditos Globales y Fondo Contingencia
+0;1;10;Créditos Globales y Fondo de Contingencia
 0;1;20;Tribunal Económico-Administrativo
-0;1;30;Defensor del Contribuyente
 0;2;01;Distrito de Centro
 0;2;02;Distrito de Arganzuela
 0;2;03;Distrito de Retiro
@@ -48,19 +63,18 @@
 0;2;19;Distrito de Vicálvaro
 0;2;20;Distrito de San Blas-Canillejas
 0;2;21;Distrito de Barajas
-1;;;Informática del Ayuntamiento de Madrid
-1;0;0;Informática del Ayuntamiento de Madrid
-2;;;Consorcio Plan Rehabilitación y Equipamiento de Teatros de Madrid
-2;0;0;Consorcio Plan Rehabilitación y Equipamiento de Teatros de Madrid
-3;;;Agencia para el Empleo de Madrid
-3;0;0;Agencia para el Empleo de Madrid
-4;;;Patronato de Turismo de Madrid
-4;0;0;Patronato de Turismo de Madrid
-6;;;Agencia Tributaria Madrid
-6;0;0;Agencia Tributaria Madrid
-7;;;Madrid Emprende
-7;0;0;Madrid Emprende
-8;;;Madrid Salud
-8;0;0;Madrid Salud
-9;;;Agencia de Actividades
-9;0;0;Agencia de Actividades
+#
+# Secciones antiguas del Ayuntamiento de Madrid
+#
+0;0;11;Vicealcaldía
+0;0;13;Área de Comunicación
+0;0;14;Área de Estudios
+0;0;16;Área de Gerencia de la Ciudad
+0;0;28;Políticas de Genero y Diversidad
+0;0;37;Área de Coordinación Territorial y Asociaciones
+0;0;45;Área de Seguridad
+0;0;47;"Área de Portavoz, Coordinación de la Junta de Gobierno y Relaciones con el Pleno"
+0;0;7A;"Área de Economía, Empleo y Participación Ciudadana"
+0;0;77;"Área de Participación Ciudadana, Transparencia y Gobierno Abierto"
+0;0;99;Área de Licencias de Actividades
+0;1;30;Defensor del Contribuyente

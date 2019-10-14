@@ -1,7 +1,8 @@
-#Área,Política,Grupo,Programa,Descripción
+#Área;Política;Grupo;Programa;Descripción
 #
 # Áreas de gasto y Políticas, definidas en la Orden HAP/419/2014 y comunes a todas las EELL.
 # Ver http://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-2922
+#
 0;;;;Deuda pública
 0;1;;;Deuda pública
 1;;;;Servicios públicos básicos
@@ -33,191 +34,218 @@
 9;3;;;Administración financiera y tributaria
 9;4;;;Transferencias a otras administraciónes públicas
 #
-# Programas específicos de Madrid
+# Programas específicos vigentes de Madrid
+#
 0;1;1;11;Endeudamiento
-1;3;0;00;"Dir. y gest. admv. de salud, seguridad y emergencias"
-1;3;0;01;Formación seguridad y emergencias
+1;3;0;00;"Dirección y gestión administrativa de Portavoz, Seguridad y Emergencias"
+1;3;0;01;Coordinación general de seguridad y emergencias
 1;3;2;01;Seguridad
 1;3;3;01;Tráfico
 1;3;3;02;Gestión de aparcamientos
 1;3;4;02;Planificación de la movilidad
-1;3;4;03;Instalaciones de gestión de la movilidad
 1;3;4;04;Gestión de la movilidad
-1;3;5;10;SAMUR-protección civil
+1;3;5;10;SAMUR-Protección Civil
 1;3;6;10;Bomberos
-1;5;0;00;Dir. y gestión admv. de desarrollo urbano sostenible
+1;5;0;00;Dirección y gestión administrativa de Desarrollo Urbano
 1;5;1;01;Planificación urbanística
 1;5;1;02;Gestión urbanística
 1;5;1;03;Ejecución y control de la edificación
 1;5;1;04;Estrategia urbana
 1;5;1;05;Gestión del patrimonio municipal del suelo
-1;5;1;08;Revisión del Plan General Ordenación Urbana Madrid
-1;5;1;09;Gestión de licencias de actividades
-1;5;1;10;Programa refuerzo para tramitación de licencias
 1;5;2;10;Promoción y gestión de vivienda
 1;5;2;20;Conservación y rehabilitación vivienda
+1;5;3;20;Dirección y gestión administrativa de Obras y Equipamientos
 1;5;3;21;Vías públicas
 1;5;3;22;Otras actuaciones en vías públicas
+1;5;3;23;Infraestructuras Madrid Calle 30
 1;5;3;40;Infraestructuras urbanas
-1;5;5;00;Direc. y gest.admtva. de obras y espacios públicos
-1;5;5;03;Proyectos singulares
-1;5;5;05;Planificación urbana
-1;5;5;06;Evaluación urbana
-1;5;5;07;Ingeniería ambiental urbana
 1;6;0;01;Ingeniería del agua
 1;6;1;02;Suministro hídrico
 1;6;2;10;Gestión ambiental urbana
 1;6;2;30;Parque tecnológico de Valdemingómez
 1;6;3;01;Limpieza viaria
 1;6;5;01;Equipamientos urbanos
-1;6;6;01;Mobiliario urbano
-1;7;0;00;Dir. y gest. adv. medio ambiente y movilidad
+1;7;0;00;Dirección y gestión administrativa de Medio Ambiente y Movilidad
 1;7;1;01;Patrimonio verde
 1;7;1;02;Zonas verdes
 1;7;1;03;Equipamiento de zonas ajardinadas
-1;7;2;02;Sostenibilidad y Agenda 21
-1;7;2;03;"Coordinación, educación ambiental y bienes urbanos"
-1;7;2;04;"Sostenibilidad, planificación y calidad ambiental"
 1;7;2;11;Sostenibilidad
 1;7;2;12;Control ambiental
 2;2;1;01;Acción social para empleados
 2;2;1;02;Otras prestaciones
-2;3;1;00;"Dir. y gest. admva. equidad, dchos. sociales y empleo"
-2;3;1;01;Igualdad entre mujeres y hombres
+2;3;1;00;"Dirección y gestión administrativa de Familias, Igualdad y Bienestar Social"
+2;3;1;01;"Prevención y atención frente a la violencia de género, igualdad y diversidad"
 2;3;1;02;Familia e infancia
-2;3;1;03;Personas mayores
-2;3;1;93;Atención a personas sin hogar
-2;3;1;05;Atención convivencial a personas con adicciones
-2;3;1;06;Atención e inclusión social y att. a la emergencia
+2;3;1;03;Personas mayores y servicios sociales
+2;3;1;04;"Promoción, conciliación y cooperación institucional para la igualdad de oportunidades"
+2;3;1;06;Integración comunitaria y emergencia social
 2;3;1;07;Atención a la inmigración
-2;3;1;08;Prevención y atención violencia de género
+2;3;1;09;"Innovación, estrategia social y voluntariado"
 2;3;2;00;Planes de barrio
 2;3;2;01;Fondo de reequilibrio territorial
-2;3;2;70;Promoción Plan de Derechos Humanos
-2;3;2;90;Cooperación internacional y fondos europeos
-2;3;3;02;Centros de mayores
-2;4;1;00;Direc. y gestión admtva. Ag. Empleo de Madrid
+2;3;2;70;Promoción plan de derechos humanos
+2;3;2;90;Cooperación y ciudadanía global
 2;4;1;01;Empleo
-2;4;1;02;Formación profesional para el empleo
-2;4;1;03;Políticas activas de empleo municipales
-2;4;1;04;Programa Empleo de Proximidad
-2;4;1;05;Fomento del empleo - U.E.
-2;4;1;06;Programas mixtos escuelas taller/es empleo
-2;4;1;07;Fomento del empleo para la corporación local
-2;4;1;08;Programa Integrado de Empleo
-2;4;1;09;Intermediación laboral
-3;1;1;00;Direc. y gestión admtva. Madrid Salud
-3;1;1;01;Salubridad pública
-3;1;1;02;Adicciones
-3;2;1;02;Centros educativos
 3;2;1;10;Creación centros docentes infantil y primaria
 3;2;3;01;Centros docentes enseñanza infantil y primaria
 3;2;5;01;Absentismo
 3;2;6;01;Servicios complementarios educación
-3;3;0;00;Dir. y gest. admv. de cultura y deportes
+3;3;0;00;"Dirección y gestión administrativa de Cultura, Turismo y Deporte"
 3;3;2;10;Bibliotecas públicas y patrimonio bibliográfico
 3;3;2;20;Archivos
 3;3;3;01;Museos
 3;3;3;03;Otros equipamientos culturales
 3;3;4;01;Actividades culturales
-3;3;4;02;Proyectos culturales
 3;3;4;05;Banda sinfónica municipal
-3;3;4;09;Calidad del paisaje urbano
-3;3;6;01;Patrimonio cultural y paisaje urbano
-3;3;7;01;Juventud
-3;3;7;02;Actividades de ocio y tiempo libre de juventud
+3;3;6;01;Patrimonio cultural
+3;3;7;01;Instalaciones para la juventud
+3;3;7;02;Actividades de ocio y tiempo libre para la juventud
 3;4;1;01;Actuaciones deportivas en distritos
 3;4;1;02;Coordinación y fomento del deporte
 3;4;2;01;Instalaciones deportivas
-4;3;0;00;Direc. y gest. admtva. Economía, Empleo y Part. Ciud.
-4;3;1;10;Comercio y desarrollo económico
-4;3;1;20;Mercados y comercio
-4;3;1;40;Promoción comercial y emprendimiento
-4;3;2;01;Turismo
+4;3;1;00;Comercio
 4;3;2;20;Información y promoción turística
+4;3;3;00;"Dirección y gestión administrativa de Economía, Innovación y Empleo"
 4;3;3;01;Promoción económica y desarrollo empresarial
 4;3;3;04;Atracción de inversión e internacionalización empresarial
-4;3;3;10;Economía
-4;3;3;11;Desarrollo empresarial
+4;3;3;05;Emprendimiento
 4;4;1;10;"Promoción, control y desarrollo del transporte"
 4;6;2;00;Innovación y ciudad inteligente
 4;6;3;00;"Investigación científica, técnica y aplicada"
 4;9;1;01;Servicios informáticos y comunicaciones
-4;9;1;02;Innovación y tecnología
+4;9;1;02;Oficina digital
 4;9;3;00;Consumo
 9;1;2;00;Oficina del secretario de la Junta de Gobierno
 9;1;2;01;Alcaldía
 9;1;2;02;Gabinete de la Alcaldía
-9;1;2;03;Área gob. Coordinación Territorial y Asociaciones
-9;1;2;04;"Área gob. Portavoz, Coord. Junta Gob. y Rel. Pleno"
-9;1;2;05;"Área gob. Particip. Ciudadana, Transparencia y Gobierno Abierto"
-9;1;2;06;Área de gobierno de Desarrollo Urbano Sostenible
-9;1;2;07;Área delegada de Participación Ciudadana
-9;1;2;08;"Área de gob. de Equidad, Derechos Sociales y Empleo"
-9;1;2;09;Área de gob. de Economía y Hacienda
-9;1;2;10;Área de gob. de Economía, Empleo y Part. Ciudadana
-9;1;2;11;Área de gob. de Seguridad
-9;1;2;12;Área de gob. de M. Ambiente y Movilidad
-9;1;2;13;Área de gob. Cultura y Deportes
-9;1;2;14;Área de gobierno de Obras y Espacios Públicos
-9;1;2;15;Area delegada de licencias de actividades
+9;1;2;03;"Área delegada de Coordinación Territorial, Transparencia y Participación Ciudadana"
+9;1;2;06;Área de gobierno de Desarrollo Urbano
+9;1;2;07;Área de gobierno de Obras y Equipamientos
+9;1;2;08;"Área de gobierno de Familias, Igualdad y Bienestar Social"
+9;1;2;09;Área de gobierno de Hacienda y Personal
+9;1;2;10;Área de gobierno de Vicealcaldía
+9;1;2;11;Área delegada de Deporte
+9;1;2;12;Área de gobierno de Medio Ambiente y Movilidad
+9;1;2;13;"Área de gobierno de Cultura, Turismo y Deporte"
+9;1;2;14;"Área de gobierno de Economía, Innovación y Empleo"
+9;1;2;15;Área delegada de Vivienda
 9;1;2;16;Presidencia del Pleno
-9;1;2;17;Área de Comunicación
-9;1;2;18;"Área de gob. de Salud, Seguridad y Emergencias"
-9;1;2;19;Área delegada de Deportes
-9;1;2;20;Concejalía-Presidencia del distrito
-9;1;2;21;Área de gobierno de Políticas de Género y Diversidad
+9;1;2;17;Área delegada de Emprendimiento, Empleo e Innovación
+9;1;2;18;"Área de gobierno de Portavoz, Seguridad y Emergencias"
+9;1;2;19;Área delegada de Internacionalización y Cooperación
+9;1;2;22;Área delegada de Turismo
 9;1;2;30;Secretaría general del Pleno
 9;1;2;40;Grupos políticos municipales
-9;2;0;00;Dir. y gest. admv. de la gerencia de la ciudad
-9;2;0;01;Direc. y gestión admtva. del distrito
 9;2;0;02;Organización y régimen jurídico
 9;2;0;03;Contratación y servicios
 9;2;0;04;Formación de personal
 9;2;0;05;Relaciones laborales
-9;2;0;06;Fomento de la transparencia
+9;2;0;06;Fomento de la transparencia y mejora de la gestión
 9;2;0;07;Gestión de personal
-9;2;0;08;Planificación interna e inspección de servicios
+9;2;0;08;Planificación interna
 9;2;0;09;Asesoría jurídica
-9;2;0;10;Oficina de la Presidencia del Pleno
-9;2;0;11;"Dir. gst. admv. portavoz, coord. junta gob. y rel. Pleno"
+9;2;0;10;Dirección y gestión administrativa de Vicealcaldía
+9;2;0;12;Dirección y gestión administrativa de Coordinación General de la Alcaldía
 9;2;2;01;Relaciones con el Pleno
-9;2;2;02;Medios de comunicación
-9;2;2;03;Coordinación general de estudios
-9;2;2;04;Relaciones internacionales y patrocinios
-9;2;2;05;Relaciones administrativas
+9;2;2;02;Comunicación
 9;2;2;06;Coordinación general de la alcaldía
 9;2;2;07;Relaciones institucionales
-9;2;2;08;Relaciones con los distritos
-9;2;2;09;Planif. y desarrollo descentralización municipal
+9;2;2;08;Coordinación técnica de los distritos
+9;2;2;09;Desconcentración y acción territorial
+9;2;2;10;Relaciones institucionales e internacionales
 9;2;2;22;Oficina Municipal contra el Fraude y la Corrupción
 9;2;3;10;Estadística
 9;2;3;20;Análisis socioeconómico
-9;2;4;01;Participación ciudadana y voluntariado
+9;2;4;01;Participación ciudadana
 9;2;4;02;Participación empresarial
-9;2;5;01;Atención a la ciudadanía y mejora de la gestión
+9;2;5;01;Atención a la ciudadanía
 9;2;9;01;Créditos globales
 9;2;9;02;Fondo de contingencia
-9;3;1;00;Dir. y gest. admv. de economía y hacienda
+9;3;1;00;Dirección y gestión administrativa de Hacienda y Personal
 9;3;1;01;Programación y presupuestación
 9;3;1;02;Control interno y contabilidad
-9;3;1;03;Contabilidad
 9;3;1;04;Colaboración público privada
 9;3;1;05;Sector público
 9;3;1;06;Análisis de políticas públicas
-9;3;2;00;Gestión tributaria
 9;3;2;01;Reclamaciones económico-administrativas
-9;3;2;02;Gestión y defensa del contribuyente
-9;3;3;01;Gestión y defensa del patrimonio
-9;3;3;02;Edificios
+9;3;3;01;"Construcción, mantenimiento y rehabilitación de inmuebles municipales"
 9;3;3;03;I.F.S. Gestión del patrimonio
+9;3;3;04;Gestión patrimonial
 9;3;4;01;Política financiera
 9;3;4;05;Tesorería
 #
+# Programas específicos temporalmente vigentes  de Madrid
+#
+1;3;4;03;Instalaciones de gestión de la movilidad
+2;3;1;08;Prevención y atención violencia de género
+4;3;1;40;Promoción comercial y emprendimiento
+9;1;2;04;"Área de gobierno de Portavoz, Coordinación de la Junta de Gobierno y Relaciones con el Pleno"
+9;1;2;05;"Área de gobierno de Participación Ciudadana, Transparencia y Gobierno Abierto"
+9;1;2;21;Área de gobierno de Políticas de Género y Diversidad
+9;2;0;00;Dirección y gestión administrativa de la gerencia de la ciudad
+9;2;0;11;"Dirección y gestión administrativa de Portavoz, Coordinación de la Junta de Gobierno y Relaciones con el Pleno"
+#
+# Programas específicos antiguos de Madrid
+#
+1;5;1;08;Revisión del Plan General de Ordenación Urbana de Madrid
+1;5;1;09;Gestión de licencias de actividades
+1;5;1;10;Programa refuerzo para tramitación de licencias
+1;5;5;00;Dirección y gestión administrativa de obras y espacios públicos
+1;5;5;03;Proyectos singulares
+1;5;5;05;Planificación urbana
+1;5;5;06;Evaluación urbana
+1;5;5;07;Ingeniería ambiental urbana
+1;6;6;01;Mobiliario urbano
+1;7;2;02;Sostenibilidad y Agenda 21
+1;7;2;03;"Coordinación, educación ambiental y bienes urbanos"
+1;7;2;04;"Sostenibilidad, planificación y calidad ambiental"
+2;3;1;05;Atención convivencial a personas con adicciones
+2;3;1;93;Atención a personas sin hogar
+2;3;3;02;Centros de mayores
+2;4;1;00;Dirección y gestión administrativa de la Agencia de Empleo de Madrid
+2;4;1;02;Formación profesional para el empleo
+2;4;1;03;Políticas activas de empleo municipales
+2;4;1;04;Programa empleo de proximidad
+2;4;1;05;Fomento del empleo - U.E.
+2;4;1;06;Programas mixtos escuelas taller/es empleo
+2;4;1;07;Fomento del empleo para la corporación local
+2;4;1;08;Programa integrado de empleo
+2;4;1;09;Intermediación laboral
+3;1;1;00;Dirección y gestión administrativa Madrid Salud
+3;1;1;01;Salubridad pública
+3;1;1;02;Adicciones
+3;2;1;02;Centros educativos
+3;3;4;02;Proyectos culturales
+3;3;4;09;Calidad del paisaje urbano
+4;3;0;00;"Dirección y gestión administrativa de Economía, Empleo y Participación Ciudadana"
+4;3;1;10;Comercio y desarrollo económico
+4;3;1;20;Mercados y comercio
+4;3;2;01;Turismo
+4;3;3;10;Economía
+4;3;3;11;Desarrollo empresarial
+4;9;1;0A;Innovación y tecnología
+9;1;2;1A;"Área de gobierno de Economía, Empleo y Participación Ciudadana"
+9;1;2;1B;Área de gobierno de Seguridad
+9;1;2;1C;Área de gobierno de Obras y Espacios Públicos
+9;1;2;1D;Area delegada de licencias de actividades
+9;1;2;1E;Área de Comunicación
+9;1;2;1F;Área delegada de Deportes
+9;1;2;20;Concejalía-Presidencia del distrito
+9;2;0;01;Dirección y gestión administrativa del distrito
+9;2;0;1A;Oficina de la Presidencia del Pleno
+9;2;2;03;Coordinación general de estudios
+9;2;2;04;Relaciones internacionales y patrocinios
+9;2;2;05;Relaciones administrativas
+9;3;1;03;Contabilidad
+9;3;2;00;Gestión tributaria
+9;3;2;02;Gestión y defensa del contribuyente
+9;3;3;02;Edificios
+#
 # Líneas de inversión de Madrid
+#
 X;00;;;Inversiones de carácter general
 X;01;;;Protección Civil y seguridad ciudadana
-X;02;;;Tráfico, estacionamiento y transporte público
+X;02;;;"Tráfico, estacionamiento y transporte público"
 X;03;;;Protección y promoción social
 X;04;;;Salud pública
 X;05;;;Educación
@@ -226,7 +254,7 @@ X;07;;;Infraestructuras
 X;08;;;Mantenimiento urbano
 X;09;;;Medio ambiente
 X;10;;;Cultura
-X;11;;;Deportes, juventud y esparcimiento
+X;11;;;"Deportes, juventud y esparcimiento"
 X;12;;;Otros bienes públicos de carácter social
 X;13;;;Otros bienes públicos de carácter económico
 X;14;;;Sectores productivos
