@@ -20,28 +20,25 @@
 #
 # Secciones vigentes del Ayuntamiento de Madrid
 #
-0;0;02;Presidency of the Assembly
-0;0;03;Municipal Office against Fraud and Corruption
-0;0;10;Mayor's Office
-0;0;12;Mayor's Office for General Coordination
-0;0;20;Deputy Mayor's Office
-0;0;21;Delegated Area of Territorial Coordination, Transparency and Citizen Participation
-0;0;23;Delegated Area of Internacionalization and Cooperation
-0;0;27;"Families, Equality and Social Welfare"
-0;0;31;Delegated Area of Housing
-0;0;55;Infrastructure and Public Facilities
-0;0;57;Treasury and Personnel
-0;0;60;"Economy, Innovation and Employment"
-0;0;65;Delegated Area of Sports
-0;0;66;Delegated Area of Tourism
-0;0;67;"Spokesperson, Public Safety and Emergencies"
-0;0;75;"Delegated Area of Entrepreneurship, Employment and Innovation"
-0;0;87;Urban Development
-0;0;97;Environment and Mobility
-0;0;98;Culture, Tourism and Sports
-0;1;00;Public Debt
-0;1;10;Global Credits and Contingency Fund
-0;1;20;Economic-Administrative Tribunal
+0;1;00;Presidency of the Assembly
+0;1;01;Mayor's Office
+0;1;02;Mayor's Office for General Coordination
+0;1;03;Municipal Office against Fraud and Corruption
+0;1;11;"Delegated Area of Territorial Coordination, Transparency and Citizen Participation"
+0;1;10;Deputy Mayor's Office
+0;1;12;Delegated Area of Internacionalization and Cooperation
+0;1;20;"Spokesperson, Public Safety and Emergencies"
+0;1;30;"Culture, Tourism and Sports"
+0;1;31;Delegated Area of Sports
+0;1;32;Delegated Area of Tourism
+0;1;40;"Economy, Innovation and Employment"
+0;1;41;"Delegated Area of Entrepreneurship, Employment and Innovation"
+0;1;50;Environment and Mobility
+0;1;60;Urban Development
+0;1;61;Área Delegada de Vivienda
+0;1;70;Treasury and Personnel
+0;1;80;"Families, Equality and Social Welfare"
+0;1;90;Infrastructure and Public Facilities
 0;2;01;District of Centro
 0;2;02;District of Arganzuela
 0;2;03;District of Retiro
@@ -63,18 +60,20 @@
 0;2;19;District of Vicálvaro
 0;2;20;District of San Blas-Canillejas
 0;2;21;District of Barajas
+0;3;00;Public Debt
+0;3;10;Global Credits and Contingency Fund
+0;3;20;Economic-Administrative Tribunal
 #
 # Secciones antiguas del Ayuntamiento de Madrid
 #
-0;0;11;Deputy Mayor's Office
 0;0;13;Department of Communication
 0;0;14;Department of Research
 0;0;16;City Manager's Office
-0;0;28;"Gender and Diversity Policies"
+0;0;28;Gender and Diversity Policies
 0;0;37;Department of Territorial Coordination and Associations
 0;0;45;Department of Public Safety
 0;0;47;"Department of Spokesperson, Governing Board Coordination and Assembly Relations"
 0;0;7A;"Department of Economy, Employment and Citizen Participation"
 0;0;77;"Department of Citizen Participation, Transparency and Open Government"
 0;0;99;Department of Activity Licenses
-0;1;30;Taxpayer Advocate
+0;1;3A;Taxpayer Advocate

@@ -20,28 +20,25 @@
 #
 # Secciones vigentes del Ayuntamiento de Madrid
 #
-0;0;02;Presidencia del Pleno
-0;0;03;Oficina Municipal contra el Fraude y la Corrupción
-0;0;10;Alcaldía
-0;0;12;Coordinación General de la Alcaldía
-0;0;20;Vicealcaldía
-0;0;21;"Área delegada de Coordinación Territorial, Transparencia y Participación Ciudadana"
-0;0;23;Área delegada de Internacionalización y Cooperación
-0;0;27;"Familias, Igualdad y Bienestar Social"
-0;0;31;Área Delegada de Vivienda
-0;0;55;Obras y Equipamientos
-0;0;57;Hacienda y Personal
-0;0;60;"Economía, Innovación y Empleo"
-0;0;65;Área Delegada de Deporte
-0;0;66;Área Delegada de Turismo
-0;0;67;"Portavoz, Seguridad y Emergencias"
-0;0;75;"Área Delegada de Emprendimiento, Empleo e Innovación"
-0;0;87;Desarrollo Urbano
-0;0;97;Medio Ambiente y Movilidad
-0;0;98;"Cultura, Turismo y Deporte"
-0;1;00;Endeudamiento
-0;1;10;Créditos Globales y Fondo de Contingencia
-0;1;20;Tribunal Económico-Administrativo
+0;1;00;Presidencia del Pleno
+0;1;01;Alcaldía
+0;1;02;Coordinación General de la Alcaldía
+0;1;03;Oficina Municipal contra el Fraude y la Corrupción
+0;1;10;Vicealcaldía
+0;1;11;"Área Delegada de Coordinación Territorial, Transparencia y Participación Ciudadana"
+0;1;12;Área Delegada de Internacionalización y Cooperación
+0;1;20;"Portavoz, Seguridad y Emergencias"
+0;1;30;"Cultura, Turismo y Deporte"
+0;1;31;Área Delegada de Deporte
+0;1;32;Área Delegada de Turismo
+0;1;40;"Economía, Innovación y Empleo"
+0;1;41;"Área Delegada de Emprendimiento, Empleo e Innovación"
+0;1;50;Medio Ambiente y Movilidad
+0;1;60;Desarrollo Urbano
+0;1;61;Área Delegada de Vivienda
+0;1;70;Hacienda y Personal
+0;1;80;"Familias, Igualdad y Bienestar Social"
+0;1;90;Obras y Equipamientos
 0;2;01;Distrito de Centro
 0;2;02;Distrito de Arganzuela
 0;2;03;Distrito de Retiro
@@ -63,10 +60,12 @@
 0;2;19;Distrito de Vicálvaro
 0;2;20;Distrito de San Blas-Canillejas
 0;2;21;Distrito de Barajas
+0;3;00;Endeudamiento
+0;3;10;Créditos Globales y Fondo de Contingencia
+0;3;20;Tribunal Económico-Administrativo
 #
 # Secciones antiguas del Ayuntamiento de Madrid
 #
-0;0;11;Vicealcaldía
 0;0;13;Área de Comunicación
 0;0;14;Área de Estudios
 0;0;16;Área de Gerencia de la Ciudad
@@ -77,4 +76,4 @@
 0;0;7A;"Área de Economía, Empleo y Participación Ciudadana"
 0;0;77;"Área de Participación Ciudadana, Transparencia y Gobierno Abierto"
 0;0;99;Área de Licencias de Actividades
-0;1;30;Defensor del Contribuyente
+0;1;3A;Defensor del Contribuyente

@@ -59,7 +59,9 @@
 1;5;3;22;Other activities on public roads
 1;5;3;23;Madrid Calle 30 infraestructures
 1;5;3;24;Regeneration actions on public roads
+1;5;3;30;Mobility infrastructures
 1;5;3;40;Urban infrastructures
+1;5;3;50;Accessibility Office
 1;6;0;01;Water engineering
 1;6;1;02;Water supply
 1;6;2;10;Urban environment management
@@ -110,6 +112,7 @@
 4;3;3;01;Economic promotion and business development
 4;3;3;04;Attraction of investments and business internationalization
 4;3;3;05;Entrepreneurship
+4;3;3;06;Economy coordination
 4;4;1;10;"Transportation promotion, control and development"
 4;6;2;00;Smart cities and innovation
 4;6;3;00;"Scientific, technical and applied research"
