@@ -168,7 +168,7 @@ msgid "Se realiza a través de impuestos directos -como el impuesto de bienes in
 msgstr "This is collected through direct taxes (e.g. property tax) and municipal charges"
 
 msgid "Los importes que aparecen como presupuestados corresponden a los del presupuesto inicial tras las modificaciones que se hayan producido hasta la fecha de actualización de los datos en la aplicación"
-msgstr "The amounts that appear as budgeted correspond to those of the initial budget after the modifications that may have occurred until the date the data was updated in the application"
+msgstr "The amounts that appear as budgeted correspond to those of the final budget, that is, the initial budget plus the modifications that have occurred up to the date the data was updated in the application"
 
 # Extra footer links
 msgid "Accesibilidad"

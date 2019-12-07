@@ -95,6 +95,9 @@ msgstr "Visión Global"
 msgid "Se realiza a través de impuestos directos -como el impuesto de bienes inmuebles (IBI) o el de vehículos de tracción mecánica (IVTM)- y de tasas -como la de recogida de basura"
 msgstr "Se realiza a través de impuestos directos -como el impuesto de bienes inmuebles (IBI) o el de vehículos de tracción mecánica (IVTM)- y de tasas"
 
+msgid "Los importes que aparecen como presupuestados corresponden a los del presupuesto inicial tras las modificaciones que se hayan producido hasta la fecha de actualización de los datos en la aplicación"
+msgstr "Los importes que aparecen como presupuestados corresponden al presupuesto definitivo, es decir, al presupuesto inicial más las modificaciones que se hayan producido hasta la fecha de actualización de los datos en la aplicación"
+
 # 'Política de Privacidad' refers to 'Protección de datos'
 msgid "Política de Privacidad"
 msgstr "Protección de Datos"
