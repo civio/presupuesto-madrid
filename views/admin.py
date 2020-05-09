@@ -18,18 +18,21 @@ import re
 import subprocess
 import urllib
 
+DATA_BASE_URL = "https://datos.madrid.es"
+
 GENERAL_URL = {
-    2019: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=1f95efc7b8e08610VgnVCM1000001d4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD",
-    2018: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=14f285e4b1204410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD",
+    2020: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=9062dd2e34a6f610VgnVCM1000001d4a900aRCRD",
+    'historical': "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=14f285e4b1204410VgnVCM1000000b205a0aRCRD",
 }
 
 EXECUTION_URL = {
-    2019: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=93bf1b7ba1939610VgnVCM2000001f4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD",
-    2018: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=b278b3e4a564c410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD",
-    2017: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD",
+    2020: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=ce40806727670710VgnVCM1000001d4a900aRCRD",
+    2019: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=93bf1b7ba1939610VgnVCM2000001f4a900aRCRD",
+    'historical': "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD",
 }
 
-PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd56610VgnVCM2000001f4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD"
+
+PAYMENTS_URL = "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=2fd903751cd56610VgnVCM2000001f4a900aRCRD"
 
 TEMP_BASE_PATH = "/tmp/budget_app"
 
@@ -48,7 +51,7 @@ def admin(request):
 @never_cache
 def admin_general(request):
     current_year = datetime.today().year
-    previous_years = [year for year in range(2011, current_year)]
+    previous_years = [year for year in range(2016, current_year)]
 
     context = {
         "title_prefix": _(u"Presupuesto general"),
@@ -82,7 +85,7 @@ def admin_general_load(request):
 @never_cache
 def admin_execution(request):
     current_year = datetime.today().year
-    previous_years = [year for year in range(2011, current_year)]
+    previous_years = [year for year in range(2017, current_year)]
 
     context = {
         "title_prefix": _(u"Ejecución mensual"),
@@ -274,7 +277,7 @@ def _load_general():
     data_files_path = _get_most_recent_temp_folder()
 
     if not data_files_path:
-        body = {"result": "error", "message": "<p>No hay  ficheros que cargar.</p>"}
+        body = {"result": "error", "message": "<p>No hay ficheros que cargar.</p>"}
         status = 400
         return (body, status)
 
@@ -310,7 +313,7 @@ def _load_execution():
     data_files_path = _get_most_recent_temp_folder()
 
     if not data_files_path:
-        body = {"result": "error", "message": "<p>No hay  ficheros que cargar.</p>"}
+        body = {"result": "error", "message": "<p>No hay ficheros que cargar.</p>"}
         status = 400
         return (body, status)
 
@@ -347,7 +350,7 @@ def _load_payments():
     data_files_path = _get_most_recent_temp_folder()
 
     if not data_files_path:
-        body = {"result": "error", "message": "<p>No hay  ficheros que cargar.</p>"}
+        body = {"result": "error", "message": "<p>No hay ficheros que cargar.</p>"}
         status = 400
         return (body, status)
 
@@ -463,7 +466,8 @@ def _scrape_general(url, year):
         page = _fetch(url)
 
         # Build the list of linked files
-        files = _get_files(page)
+        is_historical = (url == GENERAL_URL['historical'])
+        files = _get_files_historical(page, year) if is_historical else _get_files(page)
 
         # Create the target folder
         temp_folder_path = _create_temp_folder()
@@ -515,7 +519,8 @@ def _scrape_execution(url, month, year):
         page = _fetch(url)
 
         # Build the list of linked files
-        files = _get_files(page)
+        is_historical = (url == EXECUTION_URL['historical'])
+        files = _get_files_historical(page, year) if is_historical else _get_files(page)
 
         # Create the target folder
         temp_folder_path = _create_temp_folder()
@@ -602,7 +607,7 @@ def _scrape_payments(url, year):
 
 def _review(data_files_path):
     if not data_files_path:
-        body = {"result": "error", "message": "<p>No hay  ficheros que revisar.</p>"}
+        body = {"result": "error", "message": "<p>No hay ficheros que revisar.</p>"}
         status = 400
         return (body, status)
 
@@ -635,7 +640,7 @@ def _review(data_files_path):
 
 def _review_payments_data(data_files_path):
     if not data_files_path:
-        body = {"result": "error", "message": "<p>No hay  ficheros que revisar.</p>"}
+        body = {"result": "error", "message": "<p>No hay ficheros que revisar.</p>"}
         status = 400
         return (body, status)
 
@@ -1056,26 +1061,12 @@ def _get_year(params):
 
 
 def _get_general_url(year):
-    url = None
-
-    if year == 2019:
-        url = GENERAL_URL[year]
-
-    if year <= 2018 and year >= 2011:
-        url = GENERAL_URL[2019]
-
+    url = GENERAL_URL.get(year, GENERAL_URL['historical'])
     return url
 
 
 def _get_execution_url(year):
-    url = None
-
-    if year <= 2019 and year >= 2018:
-        url = EXECUTION_URL[year]
-
-    if year <= 2017 and year >= 2011:
-        url = EXECUTION_URL[2017]
-
+    url = EXECUTION_URL.get(year, EXECUTION_URL['historical'])
     return url
 
 
@@ -1089,8 +1080,15 @@ def _get_files(page):
     doc = BeautifulSoup(page, "html.parser")
     links = doc.find_all("a", class_="ico-csv")
 
-    base_url = "https://datos.madrid.es"
-    return [base_url + link["href"] for link in links]
+    return [DATA_BASE_URL + link["href"] for link in links]
+
+
+def _get_files_historical(page, year):
+    doc = BeautifulSoup(page, "html.parser")
+    year_block = doc.find("p", class_="info-title", text=re.compile(year)).parent.findNext("ul")
+    links = year_block.find_all("a", class_="ico-csv")
+
+    return [DATA_BASE_URL + link["href"] for link in links]
 
 
 def _get_most_recent_temp_folder():
