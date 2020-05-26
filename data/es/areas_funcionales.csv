@@ -85,6 +85,7 @@
 2;3;1;07;Atención a la inmigración
 2;3;1;09;"Innovación, estrategia social y voluntariado"
 2;3;1;10;Voluntariado
+2;3;1;99;Actuaciones extraordinarias COVID-19
 2;3;2;00;Planes de barrio
 2;3;2;01;Fondo de reequilibrio territorial
 2;3;2;70;Promoción plan de derechos humanos
@@ -179,7 +180,7 @@
 9;3;4;01;Política financiera
 9;3;4;05;Tesorería
 #
-# Programas específicos temporalmente vigentes  de Madrid
+# Programas específicos temporalmente vigentes de Madrid
 #
 1;3;4;03;Instalaciones de gestión de la movilidad
 2;3;1;08;Prevención y atención violencia de género

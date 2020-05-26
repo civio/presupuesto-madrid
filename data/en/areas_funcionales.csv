@@ -85,6 +85,7 @@
 2;3;1;07;Attention to immigrants
 2;3;1;09;"Innovation, social strategy and volunteering"
 2;3;1;10;Volunteerism
+2;3;1;99;Extraordinary actions COVID-19
 2;3;2;00;Neighborhood plans
 2;3;2;01;Territorial rebalancing fund
 2;3;2;70;Promotion of human rights plan
@@ -179,7 +180,7 @@
 9;3;4;01;Financial policy
 9;3;4;05;Treasury
 #
-# Programas específicos temporalmente vigentes  de Madrid
+# Programas específicos temporalmente vigentes de Madrid
 #
 1;3;4;03;Mobility facilities management
 2;3;1;08;Gender violence prevention and care
