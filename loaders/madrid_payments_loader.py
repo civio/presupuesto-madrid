@@ -103,7 +103,7 @@ class MadridPaymentsLoader(PaymentsLoader):
             'ic_code': ic_code,
             'date': None,
             'payee': payee,
-            'payee_fiscal_id': fiscal_id,
+            'payee_fiscal_id': fiscal_id[:15],
             'description': description + ' (' + str(budget.year) + ')',
             'amount': self._read_english_number(line[6]),
         }
