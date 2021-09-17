@@ -17,15 +17,18 @@ import os
 import re
 import subprocess
 import urllib
+import urllib2
 
 DATA_BASE_URL = "https://datos.madrid.es"
 
 GENERAL_URL = {
+    2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ca760ce04fcc6710VgnVCM2000001f4a900aRCRD",
     2020: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=9062dd2e34a6f610VgnVCM1000001d4a900aRCRD",
     'historical': "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=14f285e4b1204410VgnVCM1000000b205a0aRCRD",
 }
 
 EXECUTION_URL = {
+    2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=a1940380e0228710VgnVCM1000001d4a900aRCRD",
     2020: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=ce40806727670710VgnVCM1000001d4a900aRCRD",
     2019: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=93bf1b7ba1939610VgnVCM2000001f4a900aRCRD",
     'historical': "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD",
@@ -895,7 +898,7 @@ def _arrange_payments(data_files_path):
 # Network helpers
 def _fetch(url):
     try:
-        page = urllib.urlopen(url).read()
+        page = urllib2.urlopen(urllib2.Request(url, headers={'User-Agent': 'Mozilla'})).read()
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, str(error)))
 
@@ -903,10 +906,9 @@ def _fetch(url):
 
 
 def _download(url, temp_folder_path, filename):
-    file_path = os.path.join(temp_folder_path, filename)
-
     try:
-        urllib.urlretrieve(url, file_path)
+        file = urllib2.urlopen(urllib2.Request(url, headers={'User-Agent': 'Mozilla'})).read()
+        _write_temp(temp_folder_path, filename, file)
     except IOError as error:
         raise AdminException(
             "File at '%s' couldn't be downloaded: %s" % (url, str(error))
