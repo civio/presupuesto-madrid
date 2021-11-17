@@ -744,7 +744,9 @@ header{
 table.table-grid tr td{
   .toggle.expand,
   .toggle.collapse{
-    line-height: 21px;
+    //line-height: 21px;
+    line-height: 16px;
+    padding: 0; // For a11y reasons, this is a button now insteadof an anchor, and needs some style adjustements
   }
 }
 
