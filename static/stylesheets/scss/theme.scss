@@ -30,10 +30,12 @@
     padding: 10px 0;
     line-height: 20px;
     border: none;
-    color: $gray-light;
+    // color: $gray-light; // Causing a11y problem of low contrast
+    color: $gray;
 
     &:hover{
-      color: $text-color;
+      //color: $text-color;
+      color: $gray-base;
     }
     &:focus {
       outline: none;
@@ -339,7 +341,8 @@ header{
         .btn{
           font-size: 1.125em;
           font-weight: $font-weight-600;
-          background: $gray-light;
+          //background: $gray-light;  // Causing a11y problem of low contrast
+          background: $gray;
           border-color: $gray-light;
 
           &:hover{
@@ -377,7 +380,8 @@ header{
     }
     .desc{
       font-size: 1em;
-      background: $gray-light;
+      //background: $gray-light;  // Causing a11y problem of low contrast
+      background: $gray;
 
       b{
         font-weight: $font-weight-400;
@@ -534,7 +538,8 @@ header{
   .form-user-incomings{
 
     h3{
-      color: $gray-light;
+      //color: $gray-light;  // Causing a11y problem of low contrast
+      color: $gray;
     }
 
     label.bonus{
