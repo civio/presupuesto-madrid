@@ -741,6 +741,7 @@ table.table-grid tr td{
   .toggle.collapse{
     line-height: 16px;
     padding: 0;
+    border: none; // Remove default button styles
   }
 }
 
