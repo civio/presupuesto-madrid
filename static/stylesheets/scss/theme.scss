@@ -30,11 +30,9 @@
     padding: 10px 0;
     line-height: 20px;
     border: none;
-    // color: $gray-light; // Causing a11y problem of low contrast
     color: $gray;
 
     &:hover{
-      //color: $text-color;
       color: $gray-base;
     }
     &:focus {
@@ -341,7 +339,6 @@ header{
         .btn{
           font-size: 1.125em;
           font-weight: $font-weight-600;
-          //background: $gray-light;  // Causing a11y problem of low contrast
           background: $gray;
           border-color: $gray-light;
 
@@ -380,7 +377,6 @@ header{
     }
     .desc{
       font-size: 1em;
-      //background: $gray-light;  // Causing a11y problem of low contrast
       background: $gray;
 
       b{
@@ -538,7 +534,6 @@ header{
   .form-user-incomings{
 
     h3{
-      //color: $gray-light;  // Causing a11y problem of low contrast
       color: $gray;
     }
 
@@ -744,9 +739,8 @@ header{
 table.table-grid tr td{
   .toggle.expand,
   .toggle.collapse{
-    //line-height: 21px;
     line-height: 16px;
-    padding: 0; // For a11y reasons, this is a button now insteadof an anchor, and needs some style adjustements
+    padding: 0;
   }
 }
 
