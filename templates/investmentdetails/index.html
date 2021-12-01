@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Politicas Detalle -->
+<section class="policies policy-breakdown">
+
+  <!-- Politicas Header -->
+  <div class="policies-header section-header">
+
+    <div class="container">
+      <h2 class="page-title">{{ _('Inversiones principales') }}</h2>
+    </div>
+
+  </div>
+
+  <!-- Policies Content -->
+  <div class="policies-content">
+
+    <!-- FIXME: crappy layout code -->
+    <div class="row">
+      <br/>
+      <div class="col-md-3 hidden-xs hidden-sm">
+      </div>
+      <div class="col-md-6">
+        <p class="lead" style="text-align: center">{{ _('En esta pestaña se representan las inversiones más significativas del Ayuntamiento de Madrid, Organismos Autónomos y Empresas Municipales. Filtra y explora el siguiente mapa interactivo para ver la información en detalle de cada una de ellas') }}</p>
+      </div>
+      <div class="col-md-3 hidden-xs hidden-sm">
+      </div>
+    </div>
+
+    <!-- FIXME: Temporary Observable include -->
+    <div id="observablehq-legend-18979552"></div>
+    <div id="observablehq-mapWithFilters-18979552"></div>
+    <div id="observablehq-style-18979552"></div>
+    <script type="module">
+    import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+    import define from "https://api.observablehq.com/d/889479aac3865e23.js?v=3";
+    new Runtime().module(define, name => {
+      if (name === "mapWithFilters") return new Inspector(document.querySelector("#observablehq-mapWithFilters-18979552"));
+      if (name === "legend") return new Inspector(document.querySelector("#observablehq-legend-18979552"));
+      if (name === "style") return new Inspector(document.querySelector("#observablehq-style-18979552"));
+    });
+    </script>
+    <!-- End Observable include -->
+
+
+    {% include 'shared/social_sharing.html' %}
+  </div>
+</section>
+
+{% include 'shared/data_sources.html' %}
+
+{% endblock %}

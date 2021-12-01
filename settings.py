@@ -60,7 +60,7 @@ SHOW_PAYMENTS           = True
 # Define if payments year slider is a range (True) or a single year (False). Default: True
 PAYMENTS_YEAR_RANGE = False
 
-# Show Invesments section in menu & home options. Default: False.
+# Show Investments section in menu & home options. Default: False.
 SHOW_INVESTMENTS = True
 
 # Show Tax Receipt section in menu & home options. Default: False.
@@ -153,6 +153,7 @@ COOKIES_URL             = 'http://www.madrid.es/portales/munimadrid/cookies.html
 # to the project URL patterns list.
 EXTRA_URLS = (
     url(r"^visita-guiada$", "guidedvisit", name="guidedvisit"),
+    url(r"^detalle-inversiones$", "investmentdetails", name="investmentdetails"),
     url(r"^inflacion\.(?P<format>.+)$", "inflation_stats"),
     url(r"^poblacion\.(?P<format>.+)$", "population_stats"),
     url(r"^admin$", "admin", name="admin"),

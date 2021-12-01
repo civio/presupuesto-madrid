@@ -50,6 +50,10 @@
             <a href="{{ url('budget_app.views.investments') }}" class="icon-investments">{{ _('Inversiones por distritos') }}</a>
           </li>
           {% endif %}
+
+          <li class="page-investments {{ 'active' if active_tab == "investmentdetails"}}">
+            <a href="{{ url('presupuesto-madrid.views.investmentdetails') }}" class="icon-investments">{{ _('Inversiones principales') }}</a>
+          </li>
           
           {% if show_payments %}
           <li class="page-payments {{ 'active' if active_tab == "payments"}}">
