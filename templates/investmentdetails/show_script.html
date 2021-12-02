@@ -15,7 +15,7 @@
       return {
         title: '{{ _("Presupuesto año en curso") }}',
         data: getBreakdownValue,
-        render: Formatter.getFormatter(uiState.format, stats, Number(uiState.year), getBreakdownValue)
+        render: Formatter.getFormatter('nominal', stats, Number(uiState.year), getBreakdownValue)
       };
     }
 
@@ -24,7 +24,7 @@
       return {
         title: '{{ _("Presupuesto total") }}',
         data: getBreakdownValue,
-        render: Formatter.getFormatter(uiState.format, stats, Number(uiState.year), getBreakdownValue)
+        render: Formatter.getFormatter('nominal', stats, Number(uiState.year), getBreakdownValue)
       };
     }
 

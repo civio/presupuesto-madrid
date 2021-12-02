@@ -176,12 +176,12 @@ def investmentdetails(request, render_callback=None):
     # FIXME: Temporary data storage
     for item in data:
         # Current year
-        data_point = DataPoint(year=2021, area=item[0], description=item[1], expense=True, is_actual=True, amount=float(item[2]))
+        data_point = DataPoint(year=2021, area=item[0], description=item[1], expense=True, is_actual=True, amount=float(item[2])*100)
         column_name = str(data_point.year)
         c['area_breakdown'].add_item(column_name, data_point)
 
         # All years
-        data_point = DataPoint(year=2021, area=item[0], description=item[1], expense=True, is_actual=True, amount=float(item[3]))
+        data_point = DataPoint(year=2021, area=item[0], description=item[1], expense=True, is_actual=True, amount=float(item[3])*100)
         column_name = "total_"+str(data_point.year)
         c['area_breakdown'].add_item(column_name, data_point)
 
