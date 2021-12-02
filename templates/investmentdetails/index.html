@@ -2,20 +2,15 @@
 
 {% block content %}
 
-<!-- Politicas Detalle -->
-<section class="policies policy-breakdown">
+<section class="payments-breakdown" data-tab="area">
 
-  <!-- Politicas Header -->
-  <div class="policies-header section-header">
-
+  <div class="payments-header section-header">
     <div class="container">
       <h2 class="page-title">{{ _('Inversiones principales') }}</h2>
     </div>
-
   </div>
 
-  <!-- Policies Content -->
-  <div class="policies-content">
+  <div class="payments-content">
 
     <!-- FIXME: crappy layout code -->
     <div class="row">
@@ -45,9 +40,21 @@
     <!-- End Observable include -->
 
     <!-- FIXME: crappy layout code -->
-    <div class="container">
+    <div class="container tab-content">
       <br/>
       <br/>
+
+      <ul id="tabs" class="nav nav-tabs nav-tabs-centered" role="tablist">
+        <li role="presentation">
+          <a id="area-tab" href="#area" role="tab">{{ _('Por distrito') }}</a>
+        </li>
+        <li role="presentation">
+          <a id="policy-tab" href="#policy" role="tab">{{ _('Por línea de inversión') }}</a>
+        </li>
+        <li role="presentation">
+          <a id="department-tab" href="#department" role="tab">{{ _('Por unidad de gestión') }}</a>
+        </li>
+      </ul>
 
       <table id="myGrid" class="table-grid" width="100%"></table>
     </div>
