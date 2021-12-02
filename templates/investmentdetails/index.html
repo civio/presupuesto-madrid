@@ -44,11 +44,20 @@
     </script>
     <!-- End Observable include -->
 
+    <!-- FIXME: crappy layout code -->
+    <div class="container">
+      <br/>
+      <br/>
+
+      <table id="myGrid" class="table-grid" width="100%"></table>
+    </div>
 
     {% include 'shared/social_sharing.html' %}
   </div>
 </section>
 
 {% include 'shared/data_sources.html' %}
+
+{% include 'investmentdetails/show_script.html' %}
 
 {% endblock %}

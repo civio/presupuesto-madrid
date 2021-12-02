@@ -1,0 +1,64 @@
+<script>
+  $(function () {
+
+    // Variable Definitions
+    var stats = {},
+        areaBreakdown = {{ area_breakdown.to_json( labels=descriptions['geographic'] )|safe }},
+        myGrid;
+
+    // Translations
+    var i18n = {
+    };
+
+    function getCurrentYearColumnDefinition(uiState) {
+      var getBreakdownValue = getBreakdownValueFunction(uiState.field, uiState.year);
+      return {
+        title: '{{ _("Presupuesto año en curso") }}',
+        data: getBreakdownValue,
+        render: Formatter.getFormatter(uiState.format, stats, Number(uiState.year), getBreakdownValue)
+      };
+    }
+
+    function getAllYearsColumnDefinition(uiState) {
+      var getBreakdownValue = getBreakdownValueFunction(uiState.field, "total_" + uiState.year);
+      return {
+        title: '{{ _("Presupuesto total") }}',
+        data: getBreakdownValue,
+        render: Formatter.getFormatter(uiState.format, stats, Number(uiState.year), getBreakdownValue)
+      };
+    }
+
+    function redraw() {
+      // Update uiState
+      var uiState = getUIState();
+      uiState.year = 2021;  // FIXME: Only one year for now
+
+      // Setup myGrid if exist item #myGrid
+      if ($('#myGrid').length > 0) {
+
+        if (myGrid !== undefined) {
+          myGrid.destroy();
+        }
+
+        myGrid = createBudgetGrid("#myGrid", breakdownToTable(areaBreakdown), [
+          {
+            data: 'key',
+            title: '{{ _("Distrito") }}',
+            render: rowNameFormatter
+          },
+          getCurrentYearColumnDefinition(uiState),
+          getAllYearsColumnDefinition(uiState)
+        ], i18n.table);
+      }
+
+      // Show an alert if no data is available
+      if ( myGrid === undefined || myGrid.page.info().recordsDisplay != 0 ) {
+        $('.no-data-alert').hide();
+      } else {
+        $('.no-data-alert').show();
+      }
+    }
+
+    redraw();
+  });
+</script>
