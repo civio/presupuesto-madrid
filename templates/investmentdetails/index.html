@@ -24,20 +24,9 @@
       </div>
     </div>
 
-    <!-- FIXME: Temporary Observable include -->
-    <div id="observablehq-legend-18979552"></div>
-    <div id="observablehq-mapWithFilters-18979552"></div>
-    <div id="observablehq-style-18979552"></div>
-    <script type="module">
-    import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-    import define from "https://api.observablehq.com/d/889479aac3865e23.js?v=3";
-    new Runtime().module(define, name => {
-      if (name === "mapWithFilters") return new Inspector(document.querySelector("#observablehq-mapWithFilters-18979552"));
-      if (name === "legend") return new Inspector(document.querySelector("#observablehq-legend-18979552"));
-      if (name === "style") return new Inspector(document.querySelector("#observablehq-style-18979552"));
-    });
-    </script>
-    <!-- End Observable include -->
+    <!-- FIXME: Temporary Civio Graphs include -->
+    <iframe src="https://graphs.civio.es/posts/madrid-investments/dist/" width="100%" height="800px" scrolling="no" marginheight="0" frameborder="0"></iframe>
+    <!-- End Civio Graphs include -->
 
     <!-- FIXME: crappy layout code -->
     <div class="container tab-content">
