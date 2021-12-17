@@ -3,8 +3,21 @@
 
     // Variable Definitions
     var stats = {},
-        areaBreakdown = {{ area_breakdown.to_json( labels=descriptions['geographic'] )|safe }},
+        areaBreakdown = {{ area_breakdown.to_json()|safe }},
+        policyBreakdown = {{ policy_breakdown.to_json()|safe }},
+        departmentBreakdown = {{ department_breakdown.to_json()|safe }},
         myGrid;
+
+    var breakdowns = {
+      'area':       areaBreakdown,
+      'policy':     policyBreakdown,
+      'department': departmentBreakdown,
+    }
+    var columnNames = {
+      'area':       '{{ _("Distrito") }}',
+      'policy':     '{{ _("Línea de inversión") }}',
+      'department': '{{ _("Unidad de gestión") }}',
+    }
 
     // Translations
     var i18n = {
@@ -44,10 +57,10 @@
           myGrid.destroy();
         }
 
-        myGrid = createBudgetGrid("#myGrid", breakdownToTable(areaBreakdown), [
+        myGrid = createBudgetGrid("#myGrid", breakdownToTable(breakdowns[uiState.view]), [
           {
             data: 'key',
-            title: '{{ _("Distrito") }}',
+            title: columnNames[uiState.view],
             render: rowNameFormatter
           },
           getCurrentYearColumnDefinition(uiState),
