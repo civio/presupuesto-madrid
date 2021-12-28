@@ -1034,7 +1034,7 @@ def _commit(path, commit_message):
     _, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Path %s couldn't be commited: %s" % (path, str(error)))
+        raise AdminException("Path %s couldn't be commited: %s\n%s" % (path, str(error), _))
 
 
 # Utility helpers
