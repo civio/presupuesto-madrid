@@ -48,6 +48,22 @@
       </ul>
 
       <table id="myGrid" class="table-grid" width="100%"></table>
+
+      <!-- Panel Downloads -->
+      <!-- FIXME: should call macro -->
+      <div class="panel-downloads">
+        <p id="-downloads" class="downloads">
+          {{ _('Descarga la tabla de <strong>%s</strong> en ')|format(title)|safe }}
+          <a class="icon-file-excel" href="#" title="{{ _('Descarga la tabla en CSV') }}">
+          <span class="file-info">CSV</span>
+          </a>
+          {{ _('o') }}
+          <a class="icon-file-excel" href="#" title="{{ _('Descarga la tabla en Excel') }}">
+          Excel
+          </a>
+        </p>
+      </div>
+
     </div>
 
     {% include 'shared/social_sharing.html' %}
