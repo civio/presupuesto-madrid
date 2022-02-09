@@ -51,9 +51,11 @@
           </li>
           {% endif %}
 
+          {% if show_main_investments %}
           <li class="page-investments {{ 'active' if active_tab == "investmentdetails"}}">
             <a href="{{ url('presupuesto-madrid.views.investmentdetails') }}" class="icon-investments">{{ _('Inversiones principales') }}</a>
           </li>
+          {% endif %}
           
           {% if show_payments %}
           <li class="page-payments {{ 'active' if active_tab == "payments"}}">
@@ -67,19 +69,15 @@
           </li>
           {% endif %}
 
-          <!-- FIXME: Temporary disable, too long -->
-          <!--
+          {% if not show_main_investments %}
           <li class="page-institutions {{ 'active' if active_tab == "guidedvisit"}}">
             <a href="{{ url('presupuesto-madrid.views.guidedvisit') }}" class="icon-payments">{{ _('Visita guiada') }}</a>
           </li>
-          -->
 
-          <!-- FIXME: Temporary disable, too long -->
-          <!--
           <li class="page-glossary {{ 'active' if active_tab == "glossary"}}">
             <a href="{{ url('budget_app.views.terms') }}" class="icon-glossary">{{ _('¿Qué significa...?') }}</a>
           </li>
-          -->
+          {% endif %}
 
           <!-- Lang Selector -->
           {% if LANGUAGES|length > 1 %}
