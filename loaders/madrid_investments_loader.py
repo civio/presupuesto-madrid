@@ -42,7 +42,7 @@ class MadridInvestmentsLoader(InvestmentsLoader):
         else:
             # Investment data comes in two very different formats: when the budget is
             # approved and when provided as part of an execution update.
-            if len(line) > 12:
+            if len(line) > 13:
                 project_id = line[7]
                 description = unicode(line[8], encoding='iso-8859-1').encode('utf8')
                 investment_line = line[11]
@@ -52,9 +52,9 @@ class MadridInvestmentsLoader(InvestmentsLoader):
             else:
                 project_id = line[0]
                 description = unicode(line[1], encoding='iso-8859-1').encode('utf8')
-                investment_line = line[6]
-                gc_code = self.map_geo_code(line[10])
-                amount = self._read_spanish_number(line[5])
+                investment_line = line[7]
+                gc_code = self.map_geo_code(line[11])
+                amount = self._read_spanish_number(line[6])
 
         # Note we implement the investment lines as an extension of functional policies.
         # See #527 for further information.
