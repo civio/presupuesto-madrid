@@ -1,3 +1,4 @@
 from madrid_budget_loader import MadridBudgetLoader
 from madrid_payments_loader import MadridPaymentsLoader
 from madrid_investments_loader import MadridInvestmentsLoader
+from madrid_main_investments_loader import MadridMainInvestmentsLoader
