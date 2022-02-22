@@ -149,14 +149,14 @@ class DataPoint(object):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
-def investmentdetails(request, render_callback=None):
+def main_investments(request, render_callback=None):
     # Get request context
     c = get_context(request, css_class='body-entities', title='')
     entity = get_main_entity(c)
     set_entity(c, entity)
 
     # Setup active_tab for menu options
-    c['active_tab'] = 'investmentdetails'
+    c['active_tab'] = 'main_investments'
 
     # Get the investments breakdown
     c['area_breakdown'] = BudgetBreakdown(['area', 'description'])
@@ -190,4 +190,4 @@ def investmentdetails(request, render_callback=None):
     # Get additional information
     populate_entity_descriptions(c, entity)
 
-    return render_response('investmentdetails/index.html', c)
+    return render_response('main_investments/index.html', c)

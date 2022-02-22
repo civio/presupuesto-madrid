@@ -157,7 +157,7 @@ COOKIES_URL             = 'http://www.madrid.es/portales/munimadrid/cookies.html
 # to the project URL patterns list.
 EXTRA_URLS = (
     url(r"^visita-guiada$", "guidedvisit", name="guidedvisit"),
-    url(r"^detalle-inversiones$", "investmentdetails", name="investmentdetails"),
+    url(r"^inversiones-principales$", "main_investments", name="main_investments"),
     url(r"^inflacion\.(?P<format>.+)$", "inflation_stats"),
     url(r"^poblacion\.(?P<format>.+)$", "population_stats"),
     url(r"^admin$", "admin", name="admin"),

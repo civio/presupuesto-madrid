@@ -52,8 +52,8 @@
           {% endif %}
 
           {% if show_main_investments %}
-          <li class="page-investments {{ 'active' if active_tab == "investmentdetails"}}">
-            <a href="{{ url('presupuesto-madrid.views.investmentdetails') }}" class="icon-investments">{{ _('Inversiones principales') }}</a>
+          <li class="page-investments {{ 'active' if active_tab == "main_investments"}}">
+            <a href="{{ url('presupuesto-madrid.views.main_investments') }}" class="icon-investments">{{ _('Inversiones principales') }}</a>
           </li>
           {% endif %}
           
