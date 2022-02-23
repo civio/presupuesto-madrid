@@ -65,7 +65,7 @@ PAYMENTS_YEAR_RANGE = False
 SHOW_INVESTMENTS = True
 
 # Show Main Investments section in menu & home options. Default: False.
-# SHOW_MAIN_INVESTMENTS = True
+SHOW_MAIN_INVESTMENTS = True
 
 # Show Tax Receipt section in menu & home options. Default: False.
 # SHOW_TAX_RECEIPT        = True
