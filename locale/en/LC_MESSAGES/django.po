@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 17:16+0100\n"
-"PO-Revision-Date: 2018-07-12 13:02+0200\n"
+"PO-Revision-Date: 2022-02-23 15:40+0100\n"
 "Last-Translator: David Cabo <david@civio.es>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: templates/shared/header.html:35
 msgid "Presupuestos"
@@ -232,6 +232,15 @@ msgstr "Government Areas, Districts and Autonomous Bodies"
 
 msgid "Distrito"
 msgstr "Investments by district"
+
+msgid "Por área.inversiones"
+msgstr "By district"
+
+msgid "Por política.inversiones"
+msgstr "By investment line"
+
+msgid "Por organismo.inversiones"
+msgstr "By administrative unit"
 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"

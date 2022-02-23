@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-18 12:14+0100\n"
-"PO-Revision-Date: 2019-02-20 19:26+0100\n"
+"PO-Revision-Date: 2022-02-23 15:40+0100\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -188,6 +188,15 @@ msgstr "Organismo"
 
 msgid "Distrito"
 msgstr "Inversiones por distrito"
+
+msgid "Por área.inversiones"
+msgstr "Por distrito"
+
+msgid "Por política.inversiones"
+msgstr "Por línea de inversión"
+
+msgid "Por organismo.inversiones"
+msgstr "Por unidad de gestión"
 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"
