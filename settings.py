@@ -70,6 +70,9 @@ SHOW_MAIN_INVESTMENTS = True
 # Show Tax Receipt section in menu & home options. Default: False.
 # SHOW_TAX_RECEIPT        = True
 
+# Show Guided Visit section in menu & home options. Default: False.
+SHOW_GUIDED_VISIT = True
+
 # Show Counties & Towns links in Policies section in menu & home options. Default: False.
 # SHOW_COUNTIES_AND_TOWNS = False
 
