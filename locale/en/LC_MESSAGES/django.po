@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 17:16+0100\n"
-"PO-Revision-Date: 2022-02-23 15:40+0100\n"
+"PO-Revision-Date: 2022-02-28 16:33+0100\n"
 "Last-Translator: David Cabo <david@civio.es>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -241,6 +241,21 @@ msgstr "By investment line"
 
 msgid "Por organismo.inversiones"
 msgstr "By administrative unit"
+
+msgid "area.main_investments"
+msgstr "District"
+
+msgid "policy.main_investments"
+msgstr "Investment line"
+
+msgid "department.main_investments"
+msgstr "Administrative unit"
+
+msgid "intro.main_investments"
+msgstr "This tab displays the most significant investments of the Madrid City Council, Autonomous Bodies and Municipal Companies that can be territorialized in the Districts*. Filter and explore the following interactive map to see the detailed information of each of them."
+
+msgid "intro2.main_investments"
+msgstr "* In the City Council and Autonomous Organisms, other relevant projects are carried out that are not shown in this section because they cannot be territorialized. These projects can be consulted in the Investments by Districts section (Non-districtizable and various districts). As for the Municipal Companies, they also carry out projects of great importance that cannot be territorialized (eg, acquisition of electric buses), which can be consulted on the Municipal Companies' websites."
 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"
