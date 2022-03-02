@@ -258,6 +258,17 @@ class MadridBudgetLoader(SimpleBudgetLoader):
                 'amount': amount
             }
 
+    # We have to manually modify the 2022 budget data due to some weird amendments. Ouch.
+    # This is further explained in civio/presupuesto-management#1157
+    def load_budget(self, path, entity, year, status, items):
+        items.append(self.parse_item("municipio/2022/gastos.csv", "503;AGENCIA PARA EL EMPLEO DE MADRID;140;ECONOMÍA, INNOVACIÓN Y EMPLEO;24100;DIREC. Y GESTIÓN ADMTVA. AG. EMPLEO DE MADRID;2;GASTOS EN BIENES CORRIENTES Y SERVICIOS;22502;TRIBUTOS DE LAS ENTIDADES LOCALES;-3.000,00".split(';')))
+        items.append(self.parse_item("municipio/2022/gastos.csv", "508;MADRID SALUD;120;PORTAVOZ, SEGURIDAD Y EMERGENCIAS;31100;DIREC. Y GESTIÓN ADMTVA. MADRID SALUD;2;GASTOS EN BIENES CORRIENTES Y SERVICIOS;22502;TRIBUTOS DE LAS ENTIDADES LOCALES;-1.000,00".split(';')))
+
+        items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
+        items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
+
+        super(MadridBudgetLoader, self).load_budget(path, entity, year, status, items)
+
     # We expect the organization code to be one digit, but Madrid has a 3-digit code.
     # We can _almost_ pick the last digit, except for one case.
     def get_institution_code(self, madrid_code):
