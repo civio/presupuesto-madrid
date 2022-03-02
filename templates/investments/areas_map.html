@@ -70,10 +70,11 @@
 <script type="text/javascript">
   $(function() {
     $('#districts-map path').mousedown(function(){
-      window.location.href = getInvestmentAreaLink($(this).attr('code'), $(this).attr('id'));
-    });
-    d3.select('#districts-map').selectAll('path').on('mouseover', function(){
-      this.parentNode.appendChild(this);
+      var location = getInvestmentAreaLink($(this).attr('code'), $(this).attr('id'));
+      if ( $('body').hasClass('widget') )
+        window.open(location, '_blank');
+      else
+        window.location.href = location;
     });
   });
 </script>
