@@ -552,7 +552,8 @@ header{
 }
 
 // Payments
-.payments-content{
+.payments-content,
+.main-investments-content{
   .nav-tabs,
   .nav-tabs>li.active>a{
     border-color: $brand-primary;
@@ -894,4 +895,20 @@ table.table-grid tr td{
     > div, p{
       font-weight: 200;
     }
+}
+
+// Main investments
+.main-investments-content #myGrid{
+  margin-top: $grid-gutter-width;
+}
+
+// XXX: Temporary solutions for ongoing main investments page
+
+.main-investments-content .quantity-selection,
+.main-investments-content .layout-slider{
+  display: none;
+}
+
+.main-investments-content .data-controllers .chart-embed-btn span{
+  bottom: -30px;
 }
