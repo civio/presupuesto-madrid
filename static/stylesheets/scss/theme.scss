@@ -291,16 +291,28 @@ header{
   }
 
   .options{
+
+    // New styles needed to have 5 boxes at home page
+    .container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+    }
+
     .option{
+      float: unset;
       width: 100%;
 
       @media (min-width: $screen-md-min) {
-        width: 50%;
+        width: 33%;
       }
 
       > div{
         border: none;
         padding-top: 0;
+        height: 92%; // Trick to make them all same height without changing the whole sections layout
 
         .icon{
           margin: 0 -0.5*$grid-gutter-width $grid-gutter-width;
@@ -326,8 +338,13 @@ header{
           background-image: url(../assets/payments-picture.png);
         }
         &.option-investments .icon{
-          background-image: url(../assets/investments-picture.png);
+          background-image: url(../assets/investments-picture2.png);
         }
+        // New panel Madrid Main Investments map
+        &.option-mainInvestments .icon{
+          background-image: url(../assets/main-investments.png);
+        }
+
 
         .option-title h3{
           color: $text-color;
