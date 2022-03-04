@@ -3,6 +3,23 @@
 <header>
   <div class="container"> 
 
+    <!-- New Lang Selector -->
+		{% if LANGUAGES|length > 1 %}
+    <div id="menu-lang">
+      <ul>
+        {% for language in LANGUAGES %}
+          <li>
+            <form id="form_{{language[0]}}" method="get" action="/i18n/setlang/">
+              <input type="hidden" name="next" value="{{ request.get_full_path()|redirect_url(language[0]) }}" />
+              <input type="hidden" name="language" value="{{ language[0] }}"/>
+              <input type="submit" value="{{ language[1]|safe }}" form="form_{{language[0]}}" {% if language[0].lower() == LANGUAGE_CODE %} class="active"{% endif %}/>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
     <!-- Ayuntamiento Logo & Web Link -->
     <!-- Your logo must be located in "theme-folder/static/assets/logo.png" -->
     <div class="main-entity-logo">
@@ -87,34 +104,6 @@
               <li><a href="{{ url('budget_app.views.terms') }}">{{ _('¿Qué significa...?') }}</a></li>
             </ul>
           </li>
-
-
-          <!-- Lang Selector -->
-          <!-- {% if LANGUAGES|length > 1 %}
-          <li id="menu-lang">
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="lang-dropdown" data-toggle="dropdown" aria-label="{{ _('Seleccionar idioma') }}" aria-haspopup="true" aria-expanded="true">
-                {% for language in LANGUAGES %}
-                  {% if language[0].lower() == LANGUAGE_CODE %}
-                    {{ language[1]|safe }}
-                  {% endif %}
-                {% endfor %}
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="lang-dropdown">
-              {% for language in LANGUAGES %}
-                {% if language[0].lower() != LANGUAGE_CODE %}
-                <li>
-                  <form lang="{{ language[0] }}" id="form_{{language[0]}}" method="get" action="/{{ language[0] }}/">
-                    <input type="submit" value="{{ language[1]|safe }}" form="form_{{language[0]}}" />
-                  </form>
-                </li>
-                {% endif %}
-              {% endfor %}
-              </ul>
-            </div>
-          </li>
-          {% endif %} -->
 
         </ul>
       </div>
