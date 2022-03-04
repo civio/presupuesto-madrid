@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 17:16+0100\n"
-"PO-Revision-Date: 2022-02-28 16:33+0100\n"
+"PO-Revision-Date: 2022-03-04 13:45+0100\n"
 "Last-Translator: David Cabo <david@civio.es>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -260,3 +260,12 @@ msgstr "* In the City Council and Autonomous Organisms, other relevant projects 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"
 msgstr "City of Madrid Open Budgets Administration"
+
+msgid "Te lo explicamos"
+msgstr "Help"
+
+msgid "Conoce el detalle de lo que se invierte en cada uno."
+msgstr "Look at the details of each one."
+
+msgid "Las inversiones más significativas de la ciudad de Madrid, georeferenciadas y en detalle."
+msgstr "The most significant investments in the city of Madrid, georeferenced and in detail."
