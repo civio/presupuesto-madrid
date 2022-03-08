@@ -22,20 +22,20 @@ import urllib2
 DATA_BASE_URL = "https://datos.madrid.es"
 
 GENERAL_URL = {
+    2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa75acf8d2f1e710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ca760ce04fcc6710VgnVCM2000001f4a900aRCRD",
-    2020: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=9062dd2e34a6f610VgnVCM1000001d4a900aRCRD",
-    'historical': "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=14f285e4b1204410VgnVCM1000000b205a0aRCRD",
+    2020: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=9062dd2e34a6f610VgnVCM1000001d4a900aRCRD",
+    'historical': "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=14f285e4b1204410VgnVCM1000000b205a0aRCRD"
 }
 
 EXECUTION_URL = {
+    2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=09ad39ec02e3f710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=a1940380e0228710VgnVCM1000001d4a900aRCRD",
-    2020: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=ce40806727670710VgnVCM1000001d4a900aRCRD",
-    2019: "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=93bf1b7ba1939610VgnVCM2000001f4a900aRCRD",
-    'historical': "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD",
+    2020: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ce40806727670710VgnVCM1000001d4a900aRCRD",
+    'historical': "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD"
 }
 
-
-PAYMENTS_URL = "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=2fd903751cd56610VgnVCM2000001f4a900aRCRD"
+PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd56610VgnVCM2000001f4a900aRCRD"
 
 TEMP_BASE_PATH = "/tmp/budget_app"
 
