@@ -1,3 +1,34 @@
-<!-- FIXME: Temporary Civio Graphs include -->
-<iframe src="https://graphs.civio.es/posts/madrid-investments/dist/?20220216" width="100%" height="800px" scrolling="no" marginheight="0" frameborder="0"></iframe>
-<!-- End Civio Graphs include -->
+<div id="investments-viz">
+  <div id="investments-viz-legend" class="investments-viz-legend-wrapper investments-viz-filter"></div>
+  <div id="investments-viz-map"></div>
+</div>
+
+{% block extra_javascript %}
+<script src="https://cdn.jsdelivr.net/npm/papaparse@4.6.2/papaparse.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.css">
+<script src="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.js"></script>
+<script src="{% static 'javascripts/main_investments/cartography.js' %}"></script>
+<script src="{% static 'javascripts/main_investments/investments-map.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+    Papa.parse(`https://data.civio.es/posts/madrid-inversions/2021_GeolocalizacionInversiones.csv`, {
+      download: true,
+      header: true,
+      complete: (results) => {
+        const investmentsMap =
+          new InvestmentsMap(
+            "investments-viz-map",
+            "investments-viz-legend",
+            results.data,
+            "pk.eyJ1IjoiY2l2aW8iLCJhIjoiY2t6d3Z2MmluMDBrZTJ3cHZpMHh3NXVpYSJ9.DyjAQjftonNZuiccfL_55w");
+        investmentsMap.setup();
+
+      }
+    })
+
+  });
+</script>
+{% endblock %}
