@@ -27,7 +27,7 @@
         "Importe 2021": '{{ main_investment["current_year_amount"]/100 }}',
         "Total previsto": '{{ main_investment["total_expected_amount"]/100 }}',
         "Estado": '{{ main_investment["status"] }}',
-        "img": ""
+        "img": '{{ main_investment["image_URL"] }}',
       },
     {% endfor %}
     ];
