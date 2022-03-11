@@ -91,6 +91,12 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       }
     });
     // Paint the circle layer for each denomination
+    var circleColor = [
+      "match",
+      ["get", "DENOMINACIÓN LÍNEA DE INVERSIÓN"]
+    ];
+    denominations.forEach(d => { circleColor.push(d); circleColor.push(colorScale(d)) });
+    circleColor.push("#003DF6"); // Fallback
     map.addLayer({
       id: "geojsonLayer-points",
       type: "circle",
@@ -109,41 +115,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
           0
         ],
         "circle-stroke-color": "#000",
-        "circle-color": [
-          "match",
-          ["get", "DENOMINACIÓN LÍNEA DE INVERSIÓN"],
-          "MEDIO AMBIENTE",
-          colorScale("MEDIO AMBIENTE"),
-          "TRÁFICO, ESTACIONAMIENTO Y TRANSPORTE PÚBLICO",
-          colorScale("TRÁFICO, ESTACIONAMIENTO Y TRANSPORTE PÚBLICO"),
-          "URBANISMO",
-          colorScale("URBANISMO"),
-          "VIVENDA",
-          colorScale("VIVENDA"),
-          "EDUCACIÓN",
-          colorScale("EDUCACIÓN"),
-          "INFRAESTRUCTURAS",
-          colorScale("INFRAESTRUCTURAS"),
-          "DEPORTES, JUVENTUD  Y ESPARCIMIENTO",
-          colorScale("DEPORTES, JUVENTUD  Y ESPARCIMIENTO"),
-          "PROTECCIÓN Y PROMOCIÓN SOCIAL",
-          colorScale("PROTECCIÓN Y PROMOCIÓN SOCIAL"),
-          "CULTURA",
-          colorScale("CULTURA"),
-          "PROTECCIÓN CIVIL Y SEGURIDAD CIUDADANA",
-          colorScale("PROTECCIÓN CIVIL Y SEGURIDAD CIUDADANA"),
-          "OTROS BIENES PÚBLICOS DE CARÁCTER ECONÓMICO",
-          colorScale("OTROS BIENES PÚBLICOS DE CARÁCTER ECONÓMICO"),
-          "SALUD PÚBLICA",
-          colorScale("SALUD PÚBLICA"),
-          "MANTENIMIENTO URBANO",
-          colorScale("MANTENIMIENTO URBANO"),
-          "INVERSIONES DE CARÁCTER GENERAL",
-          colorScale("INVERSIONES DE CARÁCTER GENERAL"),
-          "SECTORES PRODUCTIVOS",
-          colorScale("SECTORES PRODUCTIVOS"),
-          "#003DF6"
-        ]
+        "circle-color": circleColor
       }
     })
     // Create tooltip
@@ -192,7 +164,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       </div>
       <table class="tooltip-section tooltip-times">
         <tr><td>Año inicio</td><td>${obj["Año inicio"]}</td></tr>
-        <tr>${obj["Año de finalización"] ? `<td>Año de finalización</td><td>${
+        <tr>${obj["Año de finalización"]!=="" ? `<td>Año de finalización</td><td>${
           obj["Año de finalización"]
         }</td>`: `<td>Año finalización previsto</td><td>${
           obj["Año de finalización previsto"]

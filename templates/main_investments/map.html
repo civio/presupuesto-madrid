@@ -3,9 +3,6 @@
   <div id="investments-viz-map"></div>
 </div>
 
-{% block extra_javascript %}
-<script src="https://cdn.jsdelivr.net/npm/papaparse@4.6.2/papaparse.min.js"></script>
-
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.css">
 <script src="https://cdn.jsdelivr.net/npm/mapbox-gl@2.6.1/dist/mapbox-gl.js"></script>
@@ -14,21 +11,34 @@
 
 <script type="text/javascript">
   $(function () {
-    Papa.parse(`https://data.civio.es/posts/madrid-inversions/2021_GeolocalizacionInversiones.csv`, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        const investmentsMap =
-          new InvestmentsMap(
-            "investments-viz-map",
-            "investments-viz-legend",
-            results.data,
-            "pk.eyJ1IjoiY2l2aW8iLCJhIjoiY2t6d3Z2MmluMDBrZTJ3cHZpMHh3NXVpYSJ9.DyjAQjftonNZuiccfL_55w");
-        investmentsMap.setup();
+    var data = [
+    {% for main_investment in all_main_investments %}
+      {
+        "Denominación": '{{ main_investment["description"] }}',
+        "Año inicio": '{{ main_investment["start_year"] }}',
+        "Año de finalización previsto": '{{ main_investment["expected_end_year"] }}',
+        "Año de finalización": '{{ "" if main_investment["actual_end_year"]==None else main_investment["actual_end_year"] }}',
+        "Denominación Distrito": '{{ main_investment["area_name"] }}',
+        "Dirección": '{{ main_investment["address"] }}',
+        "Latitud": '{{ main_investment["latitude"] }}',
+        "Longitud": '{{ main_investment["longitude"] }}',
+        "DENOMINACIÓN LÍNEA DE INVERSIÓN": '{{ main_investment["functional_category"] }}',
+        "Gasto ejecutado": '{{ main_investment["already_spent_amount"]/100 }}',
+        "Importe 2021": '{{ main_investment["current_year_amount"]/100 }}',
+        "Total previsto": '{{ main_investment["total_expected_amount"]/100 }}',
+        "Estado": '{{ main_investment["status"] }}',
+        "img": ""
+      },
+    {% endfor %}
+    ];
 
-      }
-    })
+    const investmentsMap =
+      new InvestmentsMap(
+        "investments-viz-map",
+        "investments-viz-legend",
+        data,
+        "pk.eyJ1IjoiY2l2aW8iLCJhIjoiY2t6d3Z2MmluMDBrZTJ3cHZpMHh3NXVpYSJ9.DyjAQjftonNZuiccfL_55w");
+    investmentsMap.setup();
 
   });
 </script>
-{% endblock %}
