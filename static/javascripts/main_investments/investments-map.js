@@ -1,6 +1,5 @@
-function InvestmentsMap (_mapSelector, _legendSelector, _data, _token) {
+function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   mapboxgl.accessToken = _token
-  const data = _data.filter(d => d.Centro)
   const mapNode = document.querySelector(`#${_mapSelector}`)
   const legendNode = document.querySelector(`#${_legendSelector}`)
   const map = new mapboxgl.Map({
@@ -182,7 +181,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, _data, _token) {
           <span id="tooltip-close-button">X</span>
       <h3>${obj.Denominación}</h3>
       <div class="tooltip-section tooltip-location">
-        <div>Dirección: ${obj["Tipo Vial"]} ${obj.Vial}, ${obj.Numero}</div>
+        <div>Dirección: ${obj["Dirección"]}</div>
         <div>Distrito: ${obj["Denominación Distrito"]}</div>
       </div>
       <div class="tooltip-section tooltip-denomination">
