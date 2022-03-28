@@ -947,7 +947,7 @@ def _arrange_execution(data_files_path):
     return (month, year)
 
 
-def _arrange_main_payments(data_files_path):
+def _arrange_main_investments(data_files_path):
     # Read the year of the main payments data
     year = _read_temp(data_files_path, ".budget_year")
 
