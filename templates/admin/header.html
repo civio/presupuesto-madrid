@@ -34,6 +34,10 @@
             <a href="{{ url('presupuesto-madrid.views.admin_execution') }}">{{ _('Ejecución mensual') }}</a>
           </li>
 
+          <li class="admin-main-investments {{ 'active' if active_tab == 'main-investments' }}">
+            <a href="{{ url('presupuesto-madrid.views.admin_main_investments') }}">{{ _('Inversiones principales') }}</a>
+          </li>
+
           <li class="admin-inflation {{ 'active' if active_tab == 'inflation' }}">
             <a href="{{ url('presupuesto-madrid.views.admin_inflation') }}">{{ _('Inflación') }}</a>
           </li>

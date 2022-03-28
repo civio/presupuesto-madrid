@@ -35,6 +35,8 @@ EXECUTION_URL = {
     'historical': "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD"
 }
 
+MAIN_INVESTMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=77dee5d0fed7c710VgnVCM1000001d4a900aRCRD"
+
 PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd56610VgnVCM2000001f4a900aRCRD"
 
 TEMP_BASE_PATH = "/tmp/budget_app"
@@ -65,24 +67,22 @@ def admin_general(request):
 
     return render(request, "admin/general.html", context)
 
-
 @never_cache
 def admin_general_retrieve(request):
     year = _get_year(request.GET)
     body, status = _retrieve_general(year)
     return _json_response(body, status)
 
-
 @never_cache
 def admin_general_review(request):
     body, status = _review_general()
     return _json_response(body, status)
 
-
 @never_cache
 def admin_general_load(request):
     body, status = _load_general()
     return _json_response(body, status)
+
 
 # Execution
 @never_cache
@@ -99,7 +99,6 @@ def admin_execution(request):
 
     return render(request, "admin/execution.html", context)
 
-
 @never_cache
 def admin_execution_retrieve(request):
     month = _get_month(request.GET)
@@ -107,12 +106,10 @@ def admin_execution_retrieve(request):
     body, status = _retrieve_execution(month, year)
     return _json_response(body, status)
 
-
 @never_cache
 def admin_execution_review(request):
     body, status = _review_execution()
     return _json_response(body, status)
-
 
 @never_cache
 def admin_execution_load(request):
@@ -126,19 +123,16 @@ def admin_inflation(request):
     context = {"title_prefix": _(u"Inflación"), "active_tab": "inflation"}
     return render(request, "admin/inflation.html", context)
 
-
 @never_cache
 def admin_inflation_retrieve(request):
     body, status = _retrieve_inflation()
     return _csv_response(body, status)
-
 
 @never_cache
 def admin_inflation_save(request):
     content = _get_content(request.POST)
     body, status = _save_inflation(content)
     return _json_response(body, status)
-
 
 @never_cache
 def admin_inflation_load(request):
@@ -152,12 +146,10 @@ def admin_population(request):
     context = {"title_prefix": _(u"Población"), "active_tab": "population"}
     return render(request, "admin/population.html", context)
 
-
 @never_cache
 def admin_population_retrieve(request):
     body, status = _retrieve_population()
     return _csv_response(body, status)
-
 
 @never_cache
 def admin_population_save(request):
@@ -165,10 +157,36 @@ def admin_population_save(request):
     body, status = _save_population(content)
     return _json_response(body, status)
 
-
 @never_cache
 def admin_population_load(request):
     body, status = _load_stats()
+    return _json_response(body, status)
+
+
+# Main investments
+@never_cache
+def admin_main_investments(request):
+    last_year = datetime.today().year - 1
+    previous_years = [year for year in range(2021, last_year)]
+
+    context = {
+        "title_prefix": _(u"Inversiones principales"),
+        "active_tab": "main-investments",
+        "last_year": last_year,
+        "previous_years": previous_years,
+    }
+
+    return render(request, "admin/main_investments.html", context)
+
+@never_cache
+def admin_main_investments_retrieve(request):
+    year = _get_year(request.GET)
+    body, status = _retrieve_main_investments(year)
+    return _json_response(body, status)
+
+@never_cache
+def admin_main_investments_load(request):
+    body, status = _load_main_investments()
     return _json_response(body, status)
 
 
@@ -187,19 +205,16 @@ def admin_payments(request):
 
     return render(request, "admin/payments.html", context)
 
-
 @never_cache
 def admin_payments_retrieve(request):
     year = _get_year(request.GET)
     body, status = _retrieve_payments(year)
     return _json_response(body, status)
 
-
 @never_cache
 def admin_payments_review(request):
     body, status = _review_payments()
     return _json_response(body, status)
-
 
 @never_cache
 def admin_payments_load(request):
@@ -212,18 +227,15 @@ def admin_payments_load(request):
 def admin_glossary(request):
     return redirect("admin-glossary-es")
 
-
 @never_cache
 def admin_glossary_es(request):
     context = {"title_prefix": _(u"Glosario"), "active_tab": "glossary"}
     return render(request, "admin/glossary_es.html", context)
 
-
 @never_cache
 def admin_glossary_es_retrieve(request):
     body, status = _retrieve_glossary_es()
     return _csv_response(body, status)
-
 
 @never_cache
 def admin_glossary_es_save(request):
@@ -231,31 +243,26 @@ def admin_glossary_es_save(request):
     body, status = _save_glossary_es(content)
     return _json_response(body, status)
 
-
 @never_cache
 def admin_glossary_es_load(request):
     body, status = _load_glossary_es()
     return _json_response(body, status)
-
 
 @never_cache
 def admin_glossary_en(request):
     context = {"title_prefix": _(u"Glosario"), "active_tab": "glossary"}
     return render(request, "admin/glossary_en.html", context)
 
-
 @never_cache
 def admin_glossary_en_retrieve(request):
     body, status = _retrieve_glossary_en()
     return _csv_response(body, status)
-
 
 @never_cache
 def admin_glossary_en_save(request):
     content = _get_content(request.POST)
     body, status = _save_glossary_en(content)
     return _json_response(body, status)
-
 
 @never_cache
 def admin_glossary_en_load(request):
@@ -334,6 +341,35 @@ def _load_execution():
         "load_budget %s --language=es,en" % year,
         "load_investments %s --language=es,en" % year,
     )
+    return _execute(cue, *management_commands)
+
+
+def _retrieve_main_investments(year):
+    data_url = _get_main_investments_url(year)
+    return _scrape_main_investments(data_url, year)
+
+
+def _load_main_investments():
+    # Pick up the most recent downloaded files
+    data_files_path = _get_most_recent_temp_folder()
+
+    if not data_files_path:
+        body = {"result": "error", "message": "<p>No hay ficheros que cargar.</p>"}
+        status = 400
+        return (body, status)
+
+    # Copy downloaded files to the theme destination
+    year = _arrange_main_investments(data_files_path)
+
+    cue = u"Vamos a cargar los datos disponibles en <b>%s</b> para %s" % (
+        data_files_path,
+        year,
+    )
+
+    management_commands = (
+        "load_main_investments %s --language=es,en" % year,
+    )
+
     return _execute(cue, *management_commands)
 
 
@@ -543,6 +579,49 @@ def _scrape_execution(url, month, year):
         )  # 12M means the year is fully executed
 
         _write_temp(temp_folder_path, ".budget_status", status)
+
+        message = (
+            "<p>Los datos se han descargado correctamente.</p>"
+            "<p>Puedes ver la página desde la que hemos hecho la descarga <a href='%s' target='_blank'>aquí</a>, "
+            "y para tu referencia los ficheros han sido almacenados en <b>%s</b>.</p>"
+            % (url, temp_folder_path)
+        )
+        body = {"result": "success", "message": message}
+        status = 200
+    except AdminException:
+        message = (
+            "<p>Se ha producido un error descargado los datos.</p>"
+            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
+            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+        )
+        body = {"result": "error", "message": message}
+        status = 500
+
+    return (body, status)
+
+
+def _scrape_main_investments(url, year):
+    year = str(year)
+
+    if not url:
+        body = {"result": "error", "message": "<p>Nada que descargar.</p>"}
+        status = 400
+        return (body, status)
+
+    try:
+        # Read the given page
+        page = _fetch(url)
+
+        # Build the list of linked files
+        files = _get_files(page)
+
+        # Create the target folder
+        temp_folder_path = _create_temp_folder()
+
+        # We assume a constant page layout
+        _download(files[0], temp_folder_path, "areas_y_distritos.csv")  # FIXME: No CSV available!!
+
+        _write_temp(temp_folder_path, ".budget_year", year)
 
         message = (
             "<p>Los datos se han descargado correctamente.</p>"
@@ -868,6 +947,33 @@ def _arrange_execution(data_files_path):
     return (month, year)
 
 
+def _arrange_main_payments(data_files_path):
+    # Read the year of the main payments data
+    year = _read_temp(data_files_path, ".budget_year")
+
+    action = "Add"
+
+    # Copy files around
+    try:
+        for language in ["es", "en"]:
+            target_path = os.path.join(THEME_PATH, "data", language, "municipio", year)
+
+            source = data_files_path
+            destination = target_path
+
+            action = "Update" if _exists_temp(destination, "inversiones_principales.csv") else action
+
+            _copy(source, destination, "inversiones_principales.csv")
+
+        data_path = os.path.join(THEME_PATH, "data")
+        _commit(data_path, "%s %s main investments data" % (action, year))
+
+    except AdminException as error:
+        raise Exception(error)
+
+    return year
+
+
 def _arrange_payments(data_files_path):
     # Read the year of the payments data
     year = _read_temp(data_files_path, ".budget_year")
@@ -1064,19 +1170,16 @@ def _get_year(params):
 
 
 def _get_general_url(year):
-    url = GENERAL_URL.get(year, GENERAL_URL['historical'])
-    return url
-
+    return GENERAL_URL.get(year, GENERAL_URL['historical'])
 
 def _get_execution_url(year):
-    url = EXECUTION_URL.get(year, EXECUTION_URL['historical'])
-    return url
+    return EXECUTION_URL.get(year, EXECUTION_URL['historical'])
 
+def _get_main_investments_url(year):
+    return MAIN_INVESTMENTS_URL
 
 def _get_payments_url(year):
-    url = PAYMENTS_URL
-
-    return url
+    return PAYMENTS_URL
 
 
 def _get_files(page):
