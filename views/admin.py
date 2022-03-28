@@ -1021,10 +1021,10 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
 
 def _commit(path, commit_message):
     # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
+    # Why `diff-index`? See https://stackoverflow.com/a/8123841
     cmd = (
         "cd %s "
         "&& scripts/git fetch "
-        "&& scripts/git reset origin/master "
         "&& scripts/git add -A %s "
         "&& git diff-index --quiet HEAD "
         "|| scripts/git commit -m \"%s\n\nChange performed on the admin console.\" "
@@ -1034,7 +1034,7 @@ def _commit(path, commit_message):
     _, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Path %s couldn't be commited: %s\n%s" % (path, str(error), _))
+        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n%s" % (path, str(error), cmd, _))
 
 
 # Utility helpers
