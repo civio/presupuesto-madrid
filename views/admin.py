@@ -775,7 +775,7 @@ def _execute(cue, *management_commands):
     cmd = (
         "export PYTHONIOENCODING=utf-8 "
         "&& cd %s"
-    ) % (THEME_PATH, ROOT_PATH)
+    ) % (ROOT_PATH)
 
     for management_command in management_commands:
         cmd += "&& python manage.py %s " % management_command
