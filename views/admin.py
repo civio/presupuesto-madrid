@@ -6,7 +6,7 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
-from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
+from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY, SKIP_GIT
 
 import base64
 import csv
@@ -774,9 +774,6 @@ def _execute(cue, *management_commands):
     # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
     cmd = (
         "export PYTHONIOENCODING=utf-8 "
-        "&& cd %s "
-        "&& scripts/git fetch "
-        "&& scripts/git reset --hard origin/master "
         "&& cd %s"
     ) % (THEME_PATH, ROOT_PATH)
 
@@ -958,10 +955,11 @@ def _touch(file_path):
 
 def _read(file_path):
     # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
-    cmd = ("cd %s " "&& scripts/git fetch " "&& scripts/git show origin/master:%s") % (
-        THEME_PATH,
-        file_path,
-    )
+    cmd = (
+        "cd %s "
+        "&& scripts/git fetch "
+        "&& scripts/git show origin/master:%s"
+    ) % (THEME_PATH, file_path)
 
     output, error = _execute_cmd(cmd)
 
@@ -1020,6 +1018,9 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
 
 
 def _commit(path, commit_message):
+    if SKIP_GIT:    # See #1172
+        return
+
     # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
     # Why `diff-index`? See https://stackoverflow.com/a/8123841
     cmd = (

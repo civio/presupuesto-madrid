@@ -14,7 +14,7 @@ FEATURED_PROGRAMMES = ['13610', '13510', '16301', '15321', '15210', '23103', '23
 
 
 # Use new Sankey visualization or the old one. Default: False
-# OVERVIEW_USE_NEW_VIS = True
+# OVERVIEW_USE_NEW_VIS = True
 
 OVERVIEW_INCOME_NODES = [
                           {
@@ -153,7 +153,7 @@ MAIN_ENTITY_PRIVACY_URL = 'http://www.madrid.es/portales/munimadrid/proteccionDa
 COOKIES_URL             = 'http://www.madrid.es/portales/munimadrid/cookies.html'
 
 # Allow overriding of default treemap color scheme
-# COLOR_SCALE = [ '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#e7969c', '#bcbd22', '#17becf' ]
+# COLOR_SCALE = [ '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#e7969c', '#bcbd22', '#17becf' ]
 
 
 # We can define additional URLs applicable only to the theme. These will get added
@@ -193,3 +193,6 @@ EXTRA_URLS = (
     url(r"^admin/glossary/en/save$", "admin_glossary_en_save", name="admin-glossary-en-save"),
     url(r"^admin/glossary/en/load$", "admin_glossary_en_load", name="admin-glossary-en-load")
 )
+
+# See #1172
+SKIP_GIT = ENV.get('SKIP_GIT')
