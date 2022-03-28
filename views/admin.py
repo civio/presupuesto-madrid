@@ -6,7 +6,7 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
-from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY, SKIP_GIT
+from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
 
 import base64
 import csv
@@ -773,9 +773,12 @@ def _execute(cue, *management_commands):
     # IO encoding is a nightmare. See https://stackoverflow.com/a/4027726
     # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
     cmd = (
-        "export PYTHONIOENCODING=utf-8 "
-        "&& cd %s"
-    ) % (ROOT_PATH)
+         "export PYTHONIOENCODING=utf-8 "
+         "&& cd %s "
+         "&& scripts/git fetch "
+         "&& scripts/git reset --hard origin/master "
+         "&& cd %s"
+     ) % (THEME_PATH, ROOT_PATH)
 
     for management_command in management_commands:
         cmd += "&& python manage.py %s " % management_command
@@ -1018,9 +1021,6 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
 
 
 def _commit(path, commit_message):
-    if SKIP_GIT:    # See #1172
-        return
-
     # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
     # Why `diff-index`? See https://stackoverflow.com/a/8123841
     cmd = (

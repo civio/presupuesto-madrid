@@ -193,6 +193,3 @@ EXTRA_URLS = (
     url(r"^admin/glossary/en/save$", "admin_glossary_en_save", name="admin-glossary-en-save"),
     url(r"^admin/glossary/en/load$", "admin_glossary_en_load", name="admin-glossary-en-load")
 )
-
-# See #1172
-SKIP_GIT = ENV.get('SKIP_GIT')
