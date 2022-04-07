@@ -42,7 +42,8 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
 
     def parse_item(self, filename, line):
         # Skip empty/header/subtotal lines.
-        if line[0]=='' or line[0]=='Centro':
+        # Sometimes there's a hidden U+FEFF at the beginning of the file, so don't test for exact match.
+        if line[0]=='' or 'Centro' in line[0]:
             return
 
         project_id = line[4].strip()
