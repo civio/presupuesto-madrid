@@ -619,7 +619,7 @@ def _scrape_main_investments(url, year):
         temp_folder_path = _create_temp_folder()
 
         # We assume a constant page layout
-        _download(files[0], temp_folder_path, "areas_y_distritos.csv")  # FIXME: No CSV available!!
+        _download(files[0], temp_folder_path, "inversiones_principales.csv")
 
         _write_temp(temp_folder_path, ".budget_year", year)
 
