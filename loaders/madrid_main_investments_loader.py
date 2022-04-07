@@ -65,11 +65,14 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
             'start_year': self.read_nullable_integer(line[6]),
             'expected_end_year': self.read_nullable_integer(line[7].strip()),
             'actual_end_year': self.read_nullable_integer(line[8].strip()),
-            'total_expected_amount': self._read_english_number(line[27].strip()),
-            'already_spent_amount': self._read_english_number(line[21].strip()),
-            'current_year_amount': self._read_english_number(line[22].strip()),
+            'total_expected_amount': self._read_spanish_number(line[27].strip()),
+            'already_spent_amount': self._read_spanish_number(line[21].strip()),
+            'current_year_amount': self._read_spanish_number(line[22].strip()),
             'gc_code': gc_code,
             'fc_code': 'X'+investment_line.zfill(2),
             'fc_area': 'X',
             'fc_policy': 'X'+investment_line.zfill(2),
         }
+
+    def _get_delimiter(self):
+        return ';'
