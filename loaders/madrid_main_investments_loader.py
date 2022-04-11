@@ -61,8 +61,8 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
             'section_name': line[3].strip(),
             'area_name': line[10].strip(),
             'address': line[11].strip(),
-            'latitude': line[17].strip(),
-            'longitude': line[18].strip(),
+            'latitude': line[17].strip().replace('\'', ''),     # Got an odd extra quote in dirty data at least once
+            'longitude': line[18].strip().replace('\'', ''),    # Just in case
             'start_year': self.read_nullable_integer(line[6]),
             'expected_end_year': self.read_nullable_integer(line[7].strip()),
             'actual_end_year': self.read_nullable_integer(line[8].strip()),
