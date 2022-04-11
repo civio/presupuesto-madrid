@@ -26,7 +26,7 @@
                   {% for year in previous_years %}
                   <option value="{{year}}">{{year}}</option>
                   {% endfor %}
-                  <option value="{{last_year}}" selected>{{last_year}}</option>
+                  <option value="{{current_year}}" selected>{{current_year}}</option>
                 </select>
               </div>
               <button type="submit" class="btn btn-default btn-primary" >{{ _('Descargar') }}</button>

@@ -166,13 +166,13 @@ def admin_population_load(request):
 # Main investments
 @never_cache
 def admin_main_investments(request):
-    last_year = datetime.today().year - 1
-    previous_years = [year for year in range(2021, last_year)]
+    current_year = datetime.today().year
+    previous_years = [year for year in range(2021, current_year)]
 
     context = {
         "title_prefix": _(u"Inversiones principales"),
         "active_tab": "main-investments",
-        "last_year": last_year,
+        "current_year": current_year,
         "previous_years": previous_years,
     }
 
@@ -590,7 +590,7 @@ def _scrape_execution(url, month, year):
         status = 200
     except AdminException:
         message = (
-            "<p>Se ha producido un error descargado los datos.</p>"
+            "<p>Se ha producido un error descargando los datos.</p>"
             "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
             "<a href='%s' target='_blank'>aquí</a>.</p>" % url
         )
@@ -613,7 +613,7 @@ def _scrape_main_investments(url, year):
         page = _fetch(url)
 
         # Build the list of linked files
-        files = _get_files(page)
+        files = _get_files_historical(page, year)
 
         # Create the target folder
         temp_folder_path = _create_temp_folder()
@@ -633,7 +633,7 @@ def _scrape_main_investments(url, year):
         status = 200
     except AdminException:
         message = (
-            "<p>Se ha producido un error descargado los datos.</p>"
+            "<p>Se ha producido un error descargando los datos.</p>"
             "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
             "<a href='%s' target='_blank'>aquí</a>.</p>" % url
         )
@@ -677,7 +677,7 @@ def _scrape_payments(url, year):
         status = 200
     except AdminException:
         message = (
-            "<p>Se ha producido un error descargado los datos.</p>"
+            "<p>Se ha producido un error descargando los datos.</p>"
             "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
             "<a href='%s' target='_blank'>aquí</a>.</p>" % url
         )
