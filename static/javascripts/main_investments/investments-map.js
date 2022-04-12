@@ -9,7 +9,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     style: "mapbox://styles/civio/ckrakezmj2gfp18p9j8z2bg3j",
     scrollZoom: false
   })
-  const denominations = [...new Set([...data.map(d => d["DENOMINACIÓN LÍNEA DE INVERSIÓN"])])]
+  const denominations = [...new Set([...data.map(d => d.functional_category)])]
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations)
   let hoveredStateId = null
   let denominationSelected
@@ -37,12 +37,12 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       features: []
     };
     data.forEach((d, i) => {
-      if (d.Longitud !== "") {
+      if (d.longitude !== "") {
         investments.features.push({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [Number(d.Longitud), Number(d.Latitud)]
+            coordinates: [Number(d.longitude), Number(d.latitude)]
           },
           properties: d,
           id: i 
@@ -93,7 +93,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     // Paint the circle layer for each denomination
     var circleColor = [
       "match",
-      ["get", "DENOMINACIÓN LÍNEA DE INVERSIÓN"]
+      ["get", "functional_category"]
     ];
     denominations.forEach(d => { circleColor.push(d); circleColor.push(colorScale(d)) });
     circleColor.push("#003DF6"); // Fallback
@@ -149,48 +149,55 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       { source: 'geojsonPoints', id: hoveredStateId },
       { hover: true }
     );
-    const html = `<div id="tooltip-wrapper">
-          <span id="tooltip-close-button">X</span>
-      <h3>${obj.Denominación}</h3>
-      <div class="tooltip-section tooltip-location">
-        <div>Dirección: ${obj["Dirección"]}</div>
-        <div>Distrito: ${obj["Denominación Distrito"]}</div>
-      </div>
-      <div class="tooltip-section tooltip-denomination">
-        <span class="tooltip-denomination-marker" style="background-color: ${colorScale(
-          obj["DENOMINACIÓN LÍNEA DE INVERSIÓN"]
-        )}"></span>
-        <span>${obj["DENOMINACIÓN LÍNEA DE INVERSIÓN"]}</span>
-      </div>
-      <table class="tooltip-section tooltip-times">
-        <tr><td>Año inicio</td><td>${obj["Año inicio"]}</td></tr>
-        <tr>${obj["Año de finalización"]!=="" ? `<td>Año de finalización</td><td>${
-          obj["Año de finalización"]
-        }</td>`: `<td>Año finalización previsto</td><td>${
-          obj["Año de finalización previsto"]
-        }</td>`}</tr>
-      </table>
-      <table class="tooltip-section tooltip-award">
-        <tr><th>Importes</th><th></th></tr>
-        <tr><td>Gasto ya ejecutado</td><td>${Math.round(
-          Number(obj["Gasto ejecutado"])
-        ).toLocaleString("es-ES")} €</td></tr>
-        <tr><td>Presupuesto inicial (2021)</td><td>${Math.round(
-          Number(obj["Importe 2021"])
-        ).toLocaleString("es-ES")} €</td></tr>
-        <tr><td>Anualidades futuras</td><td>${Math.abs(
-          Math.round(
-            Number(obj["Total previsto"]) - Number(obj["Gasto ejecutado"]) - Number(obj["Importe 2021"])
-          )
-        ).toLocaleString("es-ES")}
-           €</td></tr>
-        <tr><td>Presupuesto total previsto</td><td>${Math.round(
-          Number(obj["Total previsto"])
-        ).toLocaleString("es-ES")} €</td></tr>
-      </table>
-      ${ obj["img"] ? `<img src="${ obj["img"] }"` : ""}
-    </div>
-    `;
+    const html =
+      `<div id="tooltip-wrapper">
+        <span id="tooltip-close-button">X</span>
+        <h3>${ obj.description }</h3>
+        <div class="tooltip-section tooltip-location">
+          <div>Dirección: ${ obj.address }</div>
+          <div>Distrito: ${ obj.area_name }</div>
+        </div>
+        <div class="tooltip-section tooltip-denomination">
+          <span class="tooltip-denomination-marker" style="background-color: ${ colorScale(obj.functional_category) }"></span>
+          <span>${ obj.functional_category }</span>
+        </div>
+        <table class="tooltip-section tooltip-times">
+          <tr>
+            <td>Año inicio</td>
+            <td>${obj.start_year}</td>
+          </tr>
+          <tr>
+            ${obj.actual_end_year!==""
+              ? `<td>Año de finalización</td><td>${ obj.actual_end_year }</td>`
+              : `<td>Año finalización previsto</td><td>${ obj.expected_end_year }</td>`}
+          </tr>
+        </table>
+        <table class="tooltip-section tooltip-award">
+          <tr><th>Importes</th><th></th></tr>
+          <tr>
+            <td>Gasto ya ejecutado</td>
+            <td>${ Math.round(Number(obj.already_spent_amount)).toLocaleString("es-ES") } €</td>
+          </tr>
+          <tr>
+            <td>Presupuesto año en curso</td>
+            <td>${ Math.round(Number(obj.current_year_amount)).toLocaleString("es-ES") } €</td>
+          </tr>
+          <tr>
+            <td>Anualidades futuras</td>
+            <td>${
+              Math.abs(
+                Math.round(
+                  Number(obj.total_expected_amount) - Number(obj.already_spent_amount) - Number(obj.current_year_amount)
+                )
+              ).toLocaleString("es-ES")} €</td>
+          </tr>
+          <tr>
+            <td>Presupuesto total previsto</td>
+            <td>${ Math.round(Number(obj.total_expected_amount)).toLocaleString("es-ES") } €</td>
+          </tr>
+        </table>
+        ${ obj.image_URL ? `<img src="${ obj.image_URL }"` : "" }
+      </div>`;
     document.querySelector("#tooltip").innerHTML = html
     document.querySelector("#tooltip").classList.add(className)
     document.querySelector("#tooltip-close-button").addEventListener("click", (e) => {
@@ -249,7 +256,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
               el.classList.add("active")
               el.classList.remove("inactive")
               denominationSelected = dataValue
-              filters.denomination = ["==", ["get", "DENOMINACIÓN LÍNEA DE INVERSIÓN"], dataValue]
+              filters.denomination = ["==", ["get", "functional_category"], dataValue]
             } else {
               document.querySelector("#investments-viz-legend-filter").classList.remove("active")
               el.classList.remove("active")
@@ -284,7 +291,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     // Append HTML elements
     mapNode.append(filterStateNode)
     // Create buttons with filter of state
-    const states = [...new Set([...data.map(d => d["Estado"])])]
+    const states = [...new Set([...data.map(d => d.status)])]
     states.forEach(d => {
       // Create HTML elements
       const li = document.createElement("li")
@@ -313,7 +320,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         // Set filter value
         if (stateSelected !== dataValue) {
           stateSelected = dataValue
-          filters.state = ["==", ["get", "Estado"], stateSelected]
+          filters.state = ["==", ["get", "status"], stateSelected]
         } else {
           stateSelected = "all"
           filters.state = [stateSelected]
@@ -354,8 +361,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       let search = false
       // Format text that user insert
       renderedPoints.forEach(d => {
-        if (formatStr(d.properties["Denominación"]).includes(value) ||
-          formatStr(d.properties["Denominación Distrito"]).includes(value)){
+        if (formatStr(d.properties.description).includes(value) ||
+          formatStr(d.properties.area_name).includes(value)){
           search = true 
         } else {
           search = false
