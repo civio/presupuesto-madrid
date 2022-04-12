@@ -60,7 +60,7 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
             'entity_name': line[1].strip(),
             'section_name': line[3].strip(),
             'area_name': line[10].strip(),
-            'address': line[11].strip(),
+            'address': line[11].strip().replace('\n', ' '),     # New lines mess up the JSON in the template
             'latitude': line[17].strip().replace('\'', ''),     # Got an odd extra quote in dirty data at least once
             'longitude': line[18].strip().replace('\'', ''),    # Just in case
             'start_year': self.read_nullable_integer(line[6]),
