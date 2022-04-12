@@ -7,6 +7,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     style: "mapbox://styles/civio/ckrakezmj2gfp18p9j8z2bg3j",
     scrollZoom: false
   })
+  let mapLoaded = false
 
   const denominations = [...new Set([...data.map(d => d.functional_category)])]
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations)
@@ -19,7 +20,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
 
   // Create map object
-  this.setup = function () {
+  this.setup = function() {
     const mapNode = document.querySelector(`#${_mapSelector}`)
     const legendNode = document.querySelector(`#${_legendSelector}`)
     map.on("load", () => {
@@ -28,9 +29,18 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       setupLegend(legendNode)
       setupStateButtons(mapNode)
       setupInputText(mapNode)
+
+      mapLoaded = true
+      filterMap()
     })
   }
 
+  this.selectYear = function(year) {
+    selectedYear = year
+    if (mapLoaded) {  // If still loaded, filtering will happen once that's done
+      filterMap()
+    }
+  }
 
   function setupLayers(mapNode) {
     const investments = {

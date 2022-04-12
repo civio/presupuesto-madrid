@@ -41,5 +41,9 @@
         "pk.eyJ1IjoiY2l2aW8iLCJhIjoiY2t6d3Z2MmluMDBrZTJ3cHZpMHh3NXVpYSJ9.DyjAQjftonNZuiccfL_55w");
     investmentsMap.setup();
 
+    function onYearChange(e, year) {
+      investmentsMap.selectYear(year);
+    }
+    $('#investments-viz').bind('year-change', onYearChange);
   });
 </script>
