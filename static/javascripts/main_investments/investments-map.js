@@ -58,22 +58,22 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
     // Create map SOURCES
     // Districts polygons
-    map.addSource("geojsonPolyg", {
+    map.addSource("areas", {
       type: "geojson",
       data: CARTOGRAPHY
     })
     // Investments circles
-    map.addSource("geojsonPoints", {
+    map.addSource("investments", {
       type: "geojson",
       data: investments
     })
 
     // Create LAYERS
-    // Polygons borders (distritos)
+    // Polygons borders (areas)
     map.addLayer({
-      id: "geojsonLayer-outline",
+      id: "areasLayer",
       type: "line",
-      source: "geojsonPolyg",
+      source: "areas",
       paint: {
         "line-color": "#a4cdf4",
         "line-width": 3,
@@ -81,17 +81,15 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       }
     });
 
-    // Polygons names (distritos)
+    // Polygons names (areas)
     // https://docs.mapbox.com/mapbox-gl-js/example/geojson-markers/
     map.addLayer({
-      id: 'geojsonLayer-text',
+      id: 'areaNamesLayer',
       type: 'symbol',
-      source: "geojsonPolyg",
+      source: "areas",
       layout: {
         'text-field': ['get', 'NOMBRE'],
         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        //'text-offset': [0, 1.25],
-        //'text-anchor': 'top',
         'text-size': 14 // Defaults to 16
       },
       paint: {
@@ -105,13 +103,12 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       "match",
       ["get", "functional_category"]
     ];
-
     denominations.forEach(d => { circleColor.push(d); circleColor.push(colorScale(d)) });
     circleColor.push("#003DF6"); // Fallback
     map.addLayer({
-      id: "geojsonLayer-points",
+      id: "investmentsLayer",
       type: "circle",
-      source: "geojsonPoints",
+      source: "investments",
       paint: {
         "circle-radius": [
           'case',
@@ -137,15 +134,15 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     mapNode.append(tooltipNode)
 
     // Bind events for the layer
-    map.on("mousemove", "geojsonLayer-points", e => {
+    map.on("mousemove", "investmentsLayer", e => {
       showTooltip(e, 'mouseenter')
       map.getCanvas().style.cursor = 'pointer'
     });
-    map.on("mouseleave", "geojsonLayer-points", e => {
+    map.on("mouseleave", "investmentsLayer", e => {
       map.getCanvas().style.cursor = ''
       hideTooltip("mouseenter")
     });
-    map.on("click", "geojsonLayer-points", e => {
+    map.on("click", "investmentsLayer", e => {
       showTooltip(e, 'click')
     });;
   }
@@ -158,13 +155,13 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
     if (hoveredStateId !== null) {
       map.setFeatureState(
-        { source: 'geojsonPoints', id: hoveredStateId },
+        { source: 'investments', id: hoveredStateId },
         { hover: false }
       );
     }
     hoveredStateId = e.features[0].id;
     map.setFeatureState(
-      { source: 'geojsonPoints', id: hoveredStateId },
+      { source: 'investments', id: hoveredStateId },
       { hover: true }
     );
 
@@ -229,7 +226,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     document.querySelector("#tooltip").classList.remove(className)
     if (hoveredStateId !== null) {
       map.setFeatureState(
-        { source: 'geojsonPoints', id: hoveredStateId },
+        { source: 'investments', id: hoveredStateId },
         { hover: false }
       );
     }
@@ -364,7 +361,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
 
   function filterMap() {
-    map.setFilter("geojsonLayer-points", ["all",
+    map.setFilter("investmentsLayer", ["all",
       filters.denomination,
       filters.state,
       filters.year
@@ -391,13 +388,13 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     document.querySelector('#investments-viz-filter-searcher-input').addEventListener("keyup", (e) => {
       const value = formatStr(e.target.value)
       const renderedPoints = map.queryRenderedFeatures(
-        { layers: ['geojsonLayer-points'] }
+        { layers: ['investmentsLayer'] }
       );
 
       renderedPoints.forEach(d => {
         let search = formatStr(d.properties.description).includes(value) || formatStr(d.properties.area_name).includes(value)
         map.setFeatureState(
-          { source: 'geojsonPoints', id: d.id },
+          { source: 'investments', id: d.id },
           { search: search }
         );
       })
