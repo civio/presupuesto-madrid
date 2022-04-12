@@ -193,7 +193,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
           </tr>
         </table>
         <table class="tooltip-section tooltip-award">
-          <tr><th>Importes</th><th></th></tr>
+          <tr><th>Importes en ${ obj.year }</th><th></th></tr>
           <tr>
             <td>Gasto ya ejecutado</td>
             <td>${ formatAmount(Number(obj.already_spent_amount)) }</td>
