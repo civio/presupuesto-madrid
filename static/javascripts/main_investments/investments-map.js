@@ -1,5 +1,6 @@
 function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   mapboxgl.accessToken = _token
+
   const mapNode = document.querySelector(`#${_mapSelector}`)
   const legendNode = document.querySelector(`#${_legendSelector}`)
   const map = new mapboxgl.Map({
@@ -9,18 +10,21 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     style: "mapbox://styles/civio/ckrakezmj2gfp18p9j8z2bg3j",
     scrollZoom: false
   })
-  const denominations = [...new Set([...data.map(d => d.functional_category)])]
-  const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations)
-  let hoveredStateId = null
-  let denominationSelected
-  let stateSelected
-  let yearSelected
   const filters = {
     denomination: ["all"],
     state: ["all"],
     year: ["all"],
     name: ["all"]
   }
+  const denominations = [...new Set([...data.map(d => d.functional_category)])]
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations)
+
+  let hoveredStateId = null
+  let denominationSelected
+  let stateSelected
+  let yearSelected
+
+
   // Create map object
   this.setup = function () {
     map.on("load", () => {
@@ -31,6 +35,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       setupInputText()
     })
   }
+
+
   function setupLayers() {
     const investments = {
       type: "FeatureCollection",
@@ -49,6 +55,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         });
       }
     });
+
     // Create map SOURCES
     // Districts polygons
     map.addSource("geojsonPolyg", {
@@ -60,7 +67,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       type: "geojson",
       data: investments
     })
-    // Create  LAYERS
+
+    // Create LAYERS
     // Polygons borders (distritos)
     map.addLayer({
       id: "geojsonLayer-outline",
@@ -72,6 +80,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         "line-opacity": 0.8
       }
     });
+
     // Polygons names (distritos)
     // https://docs.mapbox.com/mapbox-gl-js/example/geojson-markers/
     map.addLayer({
@@ -90,11 +99,13 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         'text-color': "#4d4d4d"
       }
     });
+
     // Paint the circle layer for each denomination
     var circleColor = [
       "match",
       ["get", "functional_category"]
     ];
+
     denominations.forEach(d => { circleColor.push(d); circleColor.push(colorScale(d)) });
     circleColor.push("#003DF6"); // Fallback
     map.addLayer({
@@ -118,11 +129,13 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         "circle-color": circleColor
       }
     })
+
     // Create tooltip
-      const tooltipNode = document.createElement("div")
-      tooltipNode.setAttribute("id", "tooltip")
-      tooltipNode.classList.add("map-overlay-inner")
-      mapNode.append(tooltipNode)
+    const tooltipNode = document.createElement("div")
+    tooltipNode.setAttribute("id", "tooltip")
+    tooltipNode.classList.add("map-overlay-inner")
+    mapNode.append(tooltipNode)
+
     // Bind events for the layer
     map.on("mousemove", "geojsonLayer-points", e => {
       showTooltip(e, 'mouseenter')
@@ -136,8 +149,13 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       showTooltip(e, 'click')
     });;
   }
+
+
   function showTooltip (e, className) {
-    const obj = e.features[0].properties;
+    function formatAmount (amount) {
+      return Math.round(amount).toLocaleString("es-ES") + ' €'
+    }
+
     if (hoveredStateId !== null) {
       map.setFeatureState(
         { source: 'geojsonPoints', id: hoveredStateId },
@@ -149,6 +167,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       { source: 'geojsonPoints', id: hoveredStateId },
       { hover: true }
     );
+
+    const obj = e.features[0].properties;
     const html =
       `<div id="tooltip-wrapper">
         <span id="tooltip-close-button">X</span>
@@ -176,24 +196,23 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
           <tr><th>Importes</th><th></th></tr>
           <tr>
             <td>Gasto ya ejecutado</td>
-            <td>${ Math.round(Number(obj.already_spent_amount)).toLocaleString("es-ES") } €</td>
+            <td>${ formatAmount(Number(obj.already_spent_amount)) }</td>
           </tr>
           <tr>
             <td>Presupuesto año en curso</td>
-            <td>${ Math.round(Number(obj.current_year_amount)).toLocaleString("es-ES") } €</td>
+            <td>${ formatAmount(Number(obj.current_year_amount)) }</td>
           </tr>
           <tr>
             <td>Anualidades futuras</td>
-            <td>${
-              Math.abs(
-                Math.round(
-                  Number(obj.total_expected_amount) - Number(obj.already_spent_amount) - Number(obj.current_year_amount)
-                )
-              ).toLocaleString("es-ES")} €</td>
+            <td>${ formatAmount(
+                  Math.abs(
+                    Number(obj.total_expected_amount) - Number(obj.already_spent_amount) - Number(obj.current_year_amount)
+                  )
+                ) }</td>
           </tr>
           <tr>
             <td>Presupuesto total previsto</td>
-            <td>${ Math.round(Number(obj.total_expected_amount)).toLocaleString("es-ES") } €</td>
+            <td>${ formatAmount(Number(obj.total_expected_amount)) }</td>
           </tr>
         </table>
         ${ obj.image_URL ? `<img src="${ obj.image_URL }"` : "" }
@@ -204,6 +223,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       hideTooltip("click")
     })
   }
+
+
   function hideTooltip (className) {
     document.querySelector("#tooltip").classList.remove(className)
     if (hoveredStateId !== null) {
@@ -214,17 +235,18 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     }
     hoveredStateId = null
   }
+
+
   function setupLegend() {
     // Create H3 legend
     const legendH3 = document.createElement("h3")
     legendH3.setAttribute("id", "investments-viz-legend-title")
-    const legendH3Text = document.createTextNode("Líneas de inversion")
-    legendH3.append(legendH3Text)
+    legendH3.append( document.createTextNode("Líneas de inversion") )
+    legendNode.append(legendH3)
+
     // Create UL legend 
     const legendUl = document.createElement("ul")
     legendUl.setAttribute("id", "investments-viz-legend-filter")
-    // Append both elements
-    legendNode.append(legendH3)
     legendNode.append(legendUl)
 
     // Create legend with filters
@@ -232,13 +254,16 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       // Create HTML elements
       const node = document.createElement("li")
       node.classList.add("investments-viz-legend-filter-item")
-      node.setAttribute("data-value", d) 
+      node.setAttribute("data-value", d)
+
       const color = document.createElement("span")
       color.style.borderColor = colorScale(d)
       color.style.backgroundColor = colorScale(d)
       node.append(color)
+
       const textNode = document.createTextNode(d.substring(0, 1) + d.slice(1).toLowerCase())
       node.appendChild(textNode)
+
       // Bind event to denomination buttons
       node.addEventListener("click", (e) => {
         const denominationItems = document.querySelectorAll(".investments-viz-legend-filter-item")
@@ -249,14 +274,14 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
             el.classList.remove("active")
             el.classList.add("inactive")
           } else {
-            // Set filter and toggle the background of the circle of
-            // the legend
+            // Set filter and toggle the background of the circle of the legend
             if (denominationSelected !== dataValue) {
               document.querySelector("#investments-viz-legend-filter").classList.add("active")
               el.classList.add("active")
               el.classList.remove("inactive")
               denominationSelected = dataValue
               filters.denomination = ["==", ["get", "functional_category"], dataValue]
+
             } else {
               document.querySelector("#investments-viz-legend-filter").classList.remove("active")
               el.classList.remove("active")
@@ -271,6 +296,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       document.querySelector("#investments-viz-legend-filter").appendChild(node)
     })
   }
+
+
   function setupStateButtons() {
     // Create container with filter elements
     const filterStateNode = document.createElement("div")
@@ -279,8 +306,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
     // Create filter h3
     const filterStateTitle = document.createElement("h3")
-    const titleTextNode = document.createTextNode("SITUACIÓN DE LA INVERSION")
-    filterStateTitle.append(titleTextNode)
+    filterStateTitle.append( document.createTextNode("SITUACIÓN DE LA INVERSION") )
     filterStateNode.append(filterStateTitle)
 
     // Create filter list element 
@@ -290,25 +316,29 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     
     // Append HTML elements
     mapNode.append(filterStateNode)
+
     // Create buttons with filter of state
     const states = [...new Set([...data.map(d => d.status)])]
     states.forEach(d => {
       // Create HTML elements
       const li = document.createElement("li")
-      const a = document.createElement("a")
-      a.href = "#"
-      const div = document.createElement("div")
-      div.classList.add("tr")
-      li.appendChild(a)
-      li.appendChild(div)
       li.classList.add("investments-viz-filter-state-item")
       li.setAttribute("data-value", d)
-      const textNode = document.createTextNode(d)
-      a.appendChild(textNode)
+
+      const a = document.createElement("a")
+      a.href = "#"
+      a.appendChild( document.createTextNode(d) )
+      li.appendChild(a)
+
+      const div = document.createElement("div")
+      div.classList.add("tr")
+      li.appendChild(div)
+
       // Bind event to state buttons
       li.addEventListener("click", (e) => {
         const stateItems = document.querySelectorAll(".investments-viz-filter-state-item")
         const dataValue = e.target.getAttribute("data-value")
+
         // Remove active class from all elements except the selected one
         stateItems.forEach(el => {
           if (el.getAttribute("data-value") !== dataValue) {
@@ -317,6 +347,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
             el.classList.toggle("active")
           }
         })
+
         // Set filter value
         if (stateSelected !== dataValue) {
           stateSelected = dataValue
@@ -330,6 +361,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       document.querySelector("#investments-viz-filter-state").appendChild(li)
     })
   }
+
+
   function filterMap() {
     map.setFilter("geojsonLayer-points", ["all",
       filters.denomination,
@@ -337,6 +370,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       filters.year
     ]);
   }
+
+
   function setupInputText() {
     // Create input text container
     const inputTextContainer = document.createElement("div")
@@ -358,20 +393,15 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       const renderedPoints = map.queryRenderedFeatures(
         { layers: ['geojsonLayer-points'] }
       );
-      let search = false
-      // Format text that user insert
+
       renderedPoints.forEach(d => {
-        if (formatStr(d.properties.description).includes(value) ||
-          formatStr(d.properties.area_name).includes(value)){
-          search = true 
-        } else {
-          search = false
-        }
+        let search = formatStr(d.properties.description).includes(value) || formatStr(d.properties.area_name).includes(value)
         map.setFeatureState(
           { source: 'geojsonPoints', id: d.id },
           { search: search }
         );
       })
+
       function formatStr(str) {
         return str
           .trim()
