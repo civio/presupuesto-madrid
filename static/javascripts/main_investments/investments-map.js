@@ -1,8 +1,5 @@
 function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   mapboxgl.accessToken = _token
-
-  const mapNode = document.querySelector(`#${_mapSelector}`)
-  const legendNode = document.querySelector(`#${_legendSelector}`)
   const map = new mapboxgl.Map({
     container: _mapSelector,
     center: [-3.7, 40.42], // starting position [lng, lat]
@@ -10,16 +7,17 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     style: "mapbox://styles/civio/ckrakezmj2gfp18p9j8z2bg3j",
     scrollZoom: false
   })
-  const filters = {
-    denomination: ["all"],
-    state: ["all"],
-    year: ["all"],
-    name: ["all"]
-  }
+
   const denominations = [...new Set([...data.map(d => d.functional_category)])]
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations)
 
   let hoveredStateId = null
+
+  const filters = {
+    denomination: ["all"],
+    state: ["all"],
+    year: ["all"]
+  }
   let denominationSelected
   let stateSelected
   let yearSelected
@@ -27,17 +25,19 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
   // Create map object
   this.setup = function () {
+    const mapNode = document.querySelector(`#${_mapSelector}`)
+    const legendNode = document.querySelector(`#${_legendSelector}`)
     map.on("load", () => {
       map.addControl(new mapboxgl.NavigationControl());
-      setupLayers()
-      setupLegend()
-      setupStateButtons()
-      setupInputText()
+      setupLayers(mapNode)
+      setupLegend(legendNode)
+      setupStateButtons(mapNode)
+      setupInputText(mapNode)
     })
   }
 
 
-  function setupLayers() {
+  function setupLayers(mapNode) {
     const investments = {
       type: "FeatureCollection",
       features: []
@@ -148,8 +148,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   }
 
 
-  function showTooltip (e, className) {
-    function formatAmount (amount) {
+  function showTooltip(e, className) {
+    function formatAmount(amount) {
       return Math.round(amount).toLocaleString("es-ES") + ' €'
     }
 
@@ -222,7 +222,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   }
 
 
-  function hideTooltip (className) {
+  function hideTooltip(className) {
     document.querySelector("#tooltip").classList.remove(className)
     if (hoveredStateId !== null) {
       map.setFeatureState(
@@ -234,7 +234,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   }
 
 
-  function setupLegend() {
+  function setupLegend(legendNode) {
     // Create H3 legend
     const legendH3 = document.createElement("h3")
     legendH3.setAttribute("id", "investments-viz-legend-title")
@@ -295,7 +295,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   }
 
 
-  function setupStateButtons() {
+  function setupStateButtons(mapNode) {
     // Create container with filter elements
     const filterStateNode = document.createElement("div")
     filterStateNode.setAttribute("id", "investments-viz-filter-state-wrapper")
@@ -369,7 +369,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   }
 
 
-  function setupInputText() {
+  function setupInputText(mapNode) {
     // Create input text container
     const inputTextContainer = document.createElement("div")
     inputTextContainer.classList.add("investments-viz-filter-searcher")
