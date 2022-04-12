@@ -96,7 +96,7 @@
     float: left; 
     position: relative;
     cursor: pointer;
-  margin-right: 3px;
+    margin-right: 3px;
     user-select: none;
   }
   #investments-viz-filter-state li a {
@@ -184,4 +184,16 @@
       right: 0; 
     }
   }
+}
+
+.main-investments-content #myGrid{
+  margin-top: $grid-gutter-width;
+}
+
+.main-investments-content .quantity-selection{
+  display: none;
+}
+
+.main-investments-content .layout-slider{
+  margin-left: 80px;
 }

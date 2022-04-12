@@ -883,19 +883,3 @@ table.table-grid tr td{
       font-weight: 200;
     }
 }
-
-// Main investments
-.main-investments-content #myGrid{
-  margin-top: $grid-gutter-width;
-}
-
-// XXX: Temporary solutions for ongoing main investments page
-
-.main-investments-content .quantity-selection,
-.main-investments-content .layout-slider{
-  display: none;
-}
-
-.main-investments-content .data-controllers .chart-embed-btn span{
-  bottom: 5px;
-}
