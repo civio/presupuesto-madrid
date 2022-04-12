@@ -13,14 +13,9 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
   let hoveredStateId = null
 
-  const filters = {
-    denomination: ["all"],
-    state: ["all"],
-    year: ["all"]
-  }
-  let denominationSelected
-  let stateSelected
-  let yearSelected
+  let selectedFunctionalCategory = "all"
+  let selectedStatus = "all"
+  let selectedYear = "all"
 
 
   // Create map object
@@ -272,19 +267,17 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
             el.classList.add("inactive")
           } else {
             // Set filter and toggle the background of the circle of the legend
-            if (denominationSelected !== dataValue) {
+            if (selectedFunctionalCategory !== dataValue) {
               document.querySelector("#investments-viz-legend-filter").classList.add("active")
               el.classList.add("active")
               el.classList.remove("inactive")
-              denominationSelected = dataValue
-              filters.denomination = ["==", ["get", "functional_category"], dataValue]
+              selectedFunctionalCategory = dataValue
 
             } else {
               document.querySelector("#investments-viz-legend-filter").classList.remove("active")
               el.classList.remove("active")
               el.classList.add("inactive")
-              denominationSelected = "all"
-              filters.denomination = [denominationSelected]
+              selectedFunctionalCategory = "all"
             }
           }
         })
@@ -346,12 +339,10 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         })
 
         // Set filter value
-        if (stateSelected !== dataValue) {
-          stateSelected = dataValue
-          filters.state = ["==", ["get", "status"], stateSelected]
+        if (selectedStatus !== dataValue) {
+          selectedStatus = dataValue
         } else {
-          stateSelected = "all"
-          filters.state = [stateSelected]
+          selectedStatus = "all"
         }
         filterMap()
       })
@@ -361,10 +352,14 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
 
   function filterMap() {
+    function getFilter(field, value) {
+      return value === "all" ? ["all"] : ["==", ["get", field], value]
+    }
+
     map.setFilter("investmentsLayer", ["all",
-      filters.denomination,
-      filters.state,
-      filters.year
+      getFilter("functional_category", selectedFunctionalCategory),
+      getFilter("status", selectedStatus),
+      getFilter("year", selectedYear)
     ]);
   }
 
