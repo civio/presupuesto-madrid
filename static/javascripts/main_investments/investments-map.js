@@ -292,6 +292,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
           }
         })
         filterMap()
+
+        hideTooltip("click")  // Hide if open, as the clicked item may disappear
       })
       document.querySelector("#investments-viz-legend-filter").appendChild(node)
     })
@@ -355,6 +357,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
           selectedStatus = "all"
         }
         filterMap()
+
+        hideTooltip("click")  // Hide if open, as the clicked item may disappear
       })
       document.querySelector("#investments-viz-filter-state").appendChild(li)
     })
@@ -403,6 +407,8 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
           { search: search }
         );
       })
+
+      hideTooltip("click")  // Hide if open, as the clicked item may disappear
 
       function formatStr(str) {
         return str
