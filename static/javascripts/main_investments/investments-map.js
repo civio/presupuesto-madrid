@@ -140,20 +140,20 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
     // Bind events for the layer
     map.on("mousemove", "investmentsLayer", e => {
-      showTooltip(e, 'hover')
+      showTooltip(e)
       map.getCanvas().style.cursor = 'pointer'
     });
     map.on("mouseleave", "investmentsLayer", e => {
       map.getCanvas().style.cursor = ''
-      hideTooltip('hover')
+      hideTooltip()
     });
     map.on("click", "investmentsLayer", e => {
-      showTooltip(e, 'click')
+      stickTooltip(e)
     });;
   }
 
 
-  function showTooltip(e, className) {
+  function showTooltip(e) {
     function formatAmount(amount) {
       return Math.round(amount).toLocaleString("es-ES") + ' €'
     }
@@ -220,15 +220,15 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         ${ obj.image_URL ? `<img src="${ obj.image_URL }"` : "" }
       </div>`;
     document.querySelector("#tooltip").innerHTML = html
-    document.querySelector("#tooltip").classList.add(className)
+    document.querySelector("#tooltip").classList.add('hover')
     document.querySelector("#tooltip-close-button").addEventListener("click", (e) => {
-      hideTooltip("click")
+      unstickTooltip()
     })
   }
 
 
-  function hideTooltip(className) {
-    document.querySelector("#tooltip").classList.remove(className)
+  function hideTooltip() {
+    document.querySelector("#tooltip").classList.remove('hover')
     if (hoveredStateId !== null) {
       map.setFeatureState(
         { source: 'investments', id: hoveredStateId },
@@ -236,6 +236,16 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
       );
     }
     hoveredStateId = null
+  }
+
+
+  function stickTooltip() {
+    document.querySelector("#tooltip").classList.add('click')
+  }
+
+
+  function unstickTooltip() {
+    document.querySelector("#tooltip").classList.remove('click')
   }
 
 
@@ -293,7 +303,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         })
         filterMap()
 
-        hideTooltip("click")  // Hide if open, as the clicked item may disappear
+        unstickTooltip()  // Hide if open, as the clicked item may disappear
       })
       document.querySelector("#investments-viz-legend-filter").appendChild(node)
     })
@@ -358,7 +368,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         }
         filterMap()
 
-        hideTooltip("click")  // Hide if open, as the clicked item may disappear
+        unstickTooltip()  // Hide if open, as the clicked item may disappear
       })
       document.querySelector("#investments-viz-filter-state").appendChild(li)
     })
@@ -408,7 +418,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         );
       })
 
-      hideTooltip("click")  // Hide if open, as the clicked item may disappear
+      unstickTooltip()  // Hide if open, as the clicked item may disappear
 
       function formatStr(str) {
         return str
