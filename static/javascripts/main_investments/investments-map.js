@@ -12,7 +12,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   const denominations = [...new Set([...data.map(d => d.functional_category)])]
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations)
 
-  let hoveredStateId = null
+  let hoveredFeature = null
 
   let selectedFunctionalCategory = "all"
   let selectedStatus = "all"
@@ -40,9 +40,23 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     if (mapLoaded) {  // If still loaded, filtering will happen once that's done
       filterMap()
     }
+
+    // Try to update the tooltip, if stuck, if the selected investment exists across the years
+    if (hoveredFeature !== null) {
+      const obj = data.find(d => d.year===selectedYear && d.project_id===hoveredFeature.properties.project_id)
+      if ( obj ) {
+        const tooltip = document.querySelector("#tooltip")
+        populateTooltip(tooltip, obj)   // The investment exists across the years
+      } else {
+        unstickTooltip()                // Nothing to show
+      }
+    }
   }
 
   function setupLayers(mapNode) {
+    // Note that we generate separate features (i.e. points) for each year an investment
+    // is active. We could reuse the same point for multiple years, reducing the number
+    // of features, but the implementation is harder and it's just not that critical.
     const investments = {
       type: "FeatureCollection",
       features: []
@@ -153,24 +167,11 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
   }
 
 
-  function showTooltip(e) {
+  function populateTooltip(tooltip, obj) {
     function formatAmount(amount) {
       return Math.round(amount).toLocaleString("es-ES") + ' €'
     }
 
-    if (hoveredStateId !== null) {
-      map.setFeatureState(
-        { source: 'investments', id: hoveredStateId },
-        { hover: false }
-      );
-    }
-    hoveredStateId = e.features[0].id;
-    map.setFeatureState(
-      { source: 'investments', id: hoveredStateId },
-      { hover: true }
-    );
-
-    const obj = e.features[0].properties;
     const html =
       `<div id="tooltip-wrapper">
         <span id="tooltip-close-button">X</span>
@@ -219,23 +220,45 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
         </table>
         ${ obj.image_URL ? `<img src="${ obj.image_URL }"` : "" }
       </div>`;
-    document.querySelector("#tooltip").innerHTML = html
-    document.querySelector("#tooltip").classList.add('hover')
+    tooltip.innerHTML = html
+
     document.querySelector("#tooltip-close-button").addEventListener("click", (e) => {
       unstickTooltip()
     })
   }
 
 
+  function setFeatureHover(feature_id, hover) {
+    map.setFeatureState(
+      { source: 'investments', id: feature_id },
+      { hover: hover }
+    )
+  }
+
+
+  function showTooltip(e) {
+    if (hoveredFeature !== null) {
+      setFeatureHover(hoveredFeature.id, false)
+    }
+    hoveredFeature = e.features[0]
+    setFeatureHover(hoveredFeature, true)
+
+    const tooltip = document.querySelector("#tooltip")
+    populateTooltip(tooltip, hoveredFeature.properties)
+    tooltip.classList.add('hover')
+  }
+
+
   function hideTooltip() {
     document.querySelector("#tooltip").classList.remove('hover')
-    if (hoveredStateId !== null) {
-      map.setFeatureState(
-        { source: 'investments', id: hoveredStateId },
-        { hover: false }
-      );
+    if (hoveredFeature !== null) {
+      setFeatureHover(hoveredFeature, false)
     }
-    hoveredStateId = null
+
+    // XXX: We used to delete hoveredFeature here, but it's useful to remember what was
+    // the last hovered point when the tooltip is stuck and we change years. We could
+    // store that in a separate state variable, but setting hover to false again and
+    // again is not a big deal.
   }
 
 

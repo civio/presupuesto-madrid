@@ -14,6 +14,7 @@
     var data = [
     {% for main_investment in all_main_investments %}
       {
+        "project_id": '{{ main_investment.project_id }}',
         "year": '{{ main_investment.budget.year }}',
         "description": '{{ main_investment.description }}',
         "start_year": '{{ main_investment.start_year }}',
