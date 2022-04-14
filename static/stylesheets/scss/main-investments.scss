@@ -134,7 +134,7 @@
     pointer-events: auto;
     cursor: pointer;
   }
-  #tooltip.mouseenter, #tooltip.click {
+  #tooltip.hover, #tooltip.click {
     display: block;
   }
   #tooltip, #tooltip h3 {

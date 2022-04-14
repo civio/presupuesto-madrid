@@ -140,12 +140,12 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
     // Bind events for the layer
     map.on("mousemove", "investmentsLayer", e => {
-      showTooltip(e, 'mouseenter')
+      showTooltip(e, 'hover')
       map.getCanvas().style.cursor = 'pointer'
     });
     map.on("mouseleave", "investmentsLayer", e => {
       map.getCanvas().style.cursor = ''
-      hideTooltip("mouseenter")
+      hideTooltip('hover')
     });
     map.on("click", "investmentsLayer", e => {
       showTooltip(e, 'click')
