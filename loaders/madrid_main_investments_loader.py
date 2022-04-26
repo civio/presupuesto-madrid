@@ -11,6 +11,8 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
     # XXX: Image handling is still to be decided. We'll hardcode it for now
     def get_image_URL(self, project_id):
         IMAGES = {
+          '14': 'https://civio.box.com/shared/static/ogll2bad0qazoapnnafgql33cs76fza0.jpg',
+          '21': 'https://civio.box.com/shared/static/jsem2ks9lqgw3kovz6dtynj1q006sj23.jpg',
           '2019/000217': 'https://civio.box.com/shared/static/o606zx1wgkytvt9g6n7zve0n7c0pjw6n.jpg',
           '2016/000341': 'https://civio.box.com/shared/static/7jcyjgcrs9sb0qcy1enbotwzgivgnafc.jpg',
           '2017/000242': 'https://civio.box.com/shared/static/ywso24dp6u5mq8mgsspq3i0s2c5i0yh2.jpg',
