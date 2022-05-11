@@ -763,7 +763,7 @@ def _review_payments_data(data_files_path):
                     if line[0] != year:  # Ignore not target year
                         continue
 
-                    columns_to_write = [line[c].decode("iso-8859-1").encode("utf-8") for c in columns_for[data_file]]
+                    columns_to_write = [line[c] for c in columns_for[data_file]]
 
                     # we split the data into the amount and the other fields (which we'll use as key)
                     # and we accumulate the amounts
