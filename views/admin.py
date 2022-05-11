@@ -728,8 +728,8 @@ def _review_payments_data(data_files_path):
         return (body, status)
 
     columns_for = {
-        "areas_y_distritos.csv": [1, 3, 4, 7, 10, 11],
-        "organismos.csv": [1, 3, 4, 7, 10, 11]
+        "areas_y_distritos.csv": [1, 3, 4, 7, 9, 10, 11],
+        "organismos.csv": [1, 3, 4, 7, 9, 10, 11]
     }
 
     error = None
@@ -786,7 +786,7 @@ def _review_payments_data(data_files_path):
 
             for index, line in enumerate(reader):
                 number_of_payments += 1
-                amount_of_payments += float(line[5])
+                amount_of_payments += float(line[6])
 
     except Exception as e:
         error = str(e)
