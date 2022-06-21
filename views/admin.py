@@ -167,7 +167,7 @@ def admin_population_load(request):
 @never_cache
 def admin_main_investments(request):
     current_year = datetime.today().year
-    previous_years = [year for year in range(2021, current_year)]
+    previous_years = [year for year in range(2018, current_year)]
 
     context = {
         "title_prefix": _(u"Inversiones principales"),
