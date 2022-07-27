@@ -63,6 +63,7 @@
 1;5;3;40;Infraestructuras urbanas
 1;5;3;50;Oficina de accesibilidad
 1;5;3;60;NGEU.ZBE Transformación digital y sostenible
+1;5;3;62;NGEU. Apoyo mercados sostenibles
 1;6;0;01;Ingeniería del agua
 1;6;1;02;Suministro hídrico
 1;6;2;10;Gestión ambiental urbana
@@ -76,6 +77,7 @@
 1;7;2;11;Sostenibilidad
 1;7;2;12;Control ambiental
 1;7;2;13;Renaturalización del patrimonio
+1;7;2;62;NGEU. Apoyo mercados sostenibles
 2;2;1;01;Acción social para empleados
 2;2;1;02;Otras prestaciones
 2;3;1;00;"Dirección y gestión administrativa de Familias, Igualdad y Bienestar Social"
@@ -114,6 +116,7 @@
 3;4;1;02;Coordinación y fomento del deporte
 3;4;2;01;Instalaciones deportivas
 4;3;1;00;Comercio
+4;3;1;62;NGEU. Apoyo mercados sostenibles
 4;3;2;20;Información y promoción turística
 4;3;3;00;"Dirección y gestión administrativa de Economía, Innovación y Empleo"
 4;3;3;01;Promoción económica y desarrollo empresarial
@@ -167,6 +170,7 @@
 9;2;2;10;Oficina de coordinación
 9;2;2;11;Coordinación de Vicealcaldía
 9;2;2;22;Oficina Municipal contra el Fraude y la Corrupción
+9;2;2;65;NGEU. Planes acción local agenda urbana española
 9;2;3;10;Estadística
 9;2;3;20;Análisis socioeconómico
 9;2;4;01;Participación ciudadana
@@ -184,6 +188,7 @@
 9;3;3;01;"Construcción, mantenimiento y rehabilitación de inmuebles municipales"
 9;3;3;03;I.F.S. Gestión del patrimonio
 9;3;3;04;Gestión patrimonial
+9;3;3;62;NGEU. Apoyo mercados sostenibles
 9;3;4;01;Política financiera
 9;3;4;05;Tesorería
 #
