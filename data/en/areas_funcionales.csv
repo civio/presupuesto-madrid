@@ -63,6 +63,7 @@
 1;5;3;40;Urban infrastructures
 1;5;3;50;Accessibility Office
 1;5;3;60;NGEU.ZBE Digital and sustainable transformation
+1;5;3;62;NGEU. Support sustainable markets
 1;6;0;01;Water engineering
 1;6;1;02;Water supply
 1;6;2;10;Urban environment management
@@ -76,6 +77,7 @@
 1;7;2;11;Sustainability
 1;7;2;12;Environmental control
 1;7;2;13;Renaturation of heritage
+1;7;2;62;NGEU. Support sustainable markets
 2;2;1;01;Social actions for employees
 2;2;1;02;Other benefits
 2;3;1;00;"Families, Equality and Social Welfare administration and management"
@@ -114,6 +116,7 @@
 3;4;1;02;Sports coordination and promotion
 3;4;2;01;Sports facilities
 4;3;1;00;Trade
+4;3;1;62;NGEU. Support sustainable markets
 4;3;2;20;Tourist information and promotion
 4;3;3;00;"Economy, Innovation and Employment administration and management"
 4;3;3;01;Economic promotion and business development
@@ -167,6 +170,7 @@
 9;2;2;10;Coordination Office
 9;2;2;11;Deputy Mayor's Office Coordination
 9;2;2;22;Municipal Office against Fraud and Corruption
+9;2;2;65;NGEU. Local action plans Spanish Urban Agenda
 9;2;3;10;Statistics
 9;2;3;20;Socioeconomic analysis
 9;2;4;01;Citizen participation
@@ -184,6 +188,7 @@
 9;3;3;01;Construction, maintenance and rehabilitation of municipal buildings
 9;3;3;03;Wealth management
 9;3;3;04;Asset management
+9;3;3;62;NGEU. Support sustainable markets
 9;3;4;01;Financial policy
 9;3;4;05;Treasury
 #
