@@ -167,14 +167,8 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             budget_position = 12 if len(line) > 11 else 10
             amount = parse_amount(line[15 if is_actual else budget_position])
 
-            # Ignore transfers to dependent organisations
-            if ec_code[:-2] in ['410', '710', '400', '700']:
-                print "Eliminando gasto (artículo %s): %s €" % (ec_code, amount)
-                amount = 0
-
-            # Get institutional code. We ignore sections in autonomous bodies,
-            # since they get assigned to different sections in main body but that's
-            # not relevant.
+            # Get institutional code. We ignore sections in autonomous bodies, since they
+            # get assigned to different sections in main body but that's not relevant.
             # Note: in the most recent 2016 data the leading zeros were missing,
             # so add them back using zfill.
             institution = self.get_institution_code(line[0].zfill(3))
@@ -182,7 +176,23 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
             # We've been asked to ignore data for a special department, not really an organism (#756)
             if ic_code == '200':
+                print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
                 return
+
+            # Ignore transfers to dependent organisations
+            if ec_code[:-2] in ['410', '710', '400', '700']:
+                print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                return
+
+            # We have to manually modify the 2022 budget data due to some weird amendments. Ouch.
+            # This is further explained in civio/presupuesto-management#1157
+            if year=='2022':
+                if ic_code == '300' and ec_code == '22502': # AGENCIA PARA EL EMPLEO (503)
+                    print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                    return
+                if ic_code == '800' and ec_code == '22502': # MADRID SALUD (508)
+                    print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                    return
 
             # Apply institutional mapping to make codes consistent across years
             if int(year) <= 2015:
@@ -242,7 +252,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
             # Ignore transfers from parent organisation.
             if ec_code[:-2] in ['410', '710', '400', '700']:
-                print "Eliminando ingreso (artículo %s): %s €" % (ec_code, amount)
+                print "Eliminando ingreso (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
                 amount = 0
 
             # See note above
@@ -262,8 +272,6 @@ class MadridBudgetLoader(SimpleBudgetLoader):
     # This is further explained in civio/presupuesto-management#1157
     def load_budget(self, path, entity, year, status, items):
         if year=='2022':
-            items.append(self.parse_item("municipio/2022/gastos.csv", "503;AGENCIA PARA EL EMPLEO DE MADRID;140;ECONOMÍA, INNOVACIÓN Y EMPLEO;24100;DIREC. Y GESTIÓN ADMTVA. AG. EMPLEO DE MADRID;2;GASTOS EN BIENES CORRIENTES Y SERVICIOS;22502;TRIBUTOS DE LAS ENTIDADES LOCALES;-3.000,00".split(';')))
-            items.append(self.parse_item("municipio/2022/gastos.csv", "508;MADRID SALUD;120;PORTAVOZ, SEGURIDAD Y EMERGENCIAS;31100;DIREC. Y GESTIÓN ADMTVA. MADRID SALUD;2;GASTOS EN BIENES CORRIENTES Y SERVICIOS;22502;TRIBUTOS DE LAS ENTIDADES LOCALES;-1.000,00".split(';')))
             items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
             items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
 
