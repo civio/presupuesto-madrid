@@ -176,22 +176,22 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
             # We've been asked to ignore data for a special department, not really an organism (#756)
             if ic_code == '200':
-                print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
                 return
 
             # Ignore transfers to dependent organisations
             if ec_code[:-2] in ['410', '710', '400', '700']:
-                print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
                 return
 
             # We have to manually modify the 2022 budget data due to some weird amendments. Ouch.
             # This is further explained in civio/presupuesto-management#1157
             if year=='2022':
                 if ic_code == '300' and ec_code == '22502': # AGENCIA PARA EL EMPLEO (503)
-                    print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                    print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
                     return
                 if ic_code == '800' and ec_code == '22502': # MADRID SALUD (508)
-                    print "Eliminando gasto (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                    print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
                     return
 
             # Apply institutional mapping to make codes consistent across years
@@ -252,7 +252,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
             # Ignore transfers from parent organisation.
             if ec_code[:-2] in ['410', '710', '400', '700']:
-                print "Eliminando ingreso (organismo %s, artículo %s): %s €" % (line[0], ec_code, '{:>12,.0f}'.format(amount/100))
+                print "Eliminando ingreso (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
                 amount = 0
 
             # See note above
