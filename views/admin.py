@@ -1133,6 +1133,7 @@ def _commit(path, commit_message):
     cmd = (
         "cd %s "
         "&& scripts/git fetch "
+        "&& scripts/git reset --hard origin/master "
         "&& scripts/git add -A %s "
         "&& git diff-index --quiet HEAD "
         "|| scripts/git commit -m \"%s\n\nChange performed on the admin console.\" "
