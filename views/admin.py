@@ -285,7 +285,6 @@ def _review_general():
 def _load_general():
     # Pick up the most recent downloaded files
     data_files_path = _get_most_recent_temp_folder()
-
     if not data_files_path:
         body = {"result": "error", "message": "<p>No hay ficheros que cargar.</p>"}
         status = 400
@@ -820,6 +819,7 @@ def _review_payments_data(data_files_path):
 
 def _retrieve(file_path):
     try:
+        _reset_git_status()
         body = _read(file_path)
         status = 200
         return (body, status)
@@ -834,6 +834,7 @@ def _save(file_path, content, commit_message):
         return (body, status)
 
     try:
+        _reset_git_status()
         _write(file_path, content)
         _commit(file_path, commit_message)
 
@@ -852,6 +853,40 @@ def _save(file_path, content, commit_message):
     return (body, status)
 
 
+def _execute_loading_task(cue, *management_commands):
+    # IO encoding is a nightmare. See https://stackoverflow.com/a/4027726
+    cmd = (
+        "export PYTHONIOENCODING=utf-8 "
+        "&& cd %s"
+    )% (ROOT_PATH, )
+
+    for management_command in management_commands:
+        cmd += "&& python manage.py %s " % management_command
+
+    output, error = _execute_cmd(cmd)
+
+    if error:
+        message = (
+            "<p>No se han podido ejecutar los comandos <code>%s</code>:"
+            "<pre>%s</pre></p>"
+        ) % (" && ".join(management_commands), output)
+        body = {"result": "error", "message": message}
+        status = 500
+        return (body, status)
+
+    # Touch project/wsgi.py so the app restarts
+    _touch(os.path.join(ROOT_PATH, "project", "wsgi.py"))
+
+    message = (
+        u"<p>%s.</p>"
+        "<p>Ejecutado: <pre>%s</pre></p>"
+        "<p>Resultado: <pre>%s</pre></p>" % (cue, cmd, output)
+    )
+    body = {"result": "success", "message": message}
+    status = 200
+    return (body, status)
+
+
 # Orchestration helpers
 def _arrange_general(data_files_path):
     # Read the year of the budget data
@@ -859,6 +894,7 @@ def _arrange_general(data_files_path):
 
     # Copy files around
     try:
+        _reset_git_status()
         for language in ["es", "en"]:
             target_path = os.path.join(THEME_PATH, "data", language, "municipio", year)
 
@@ -890,6 +926,7 @@ def _arrange_execution(data_files_path):
 
     # Copy files around
     try:
+        _reset_git_status()
         for language in ["es", "en"]:
             target_path = os.path.join(THEME_PATH, "data", language, "municipio", year)
 
@@ -921,6 +958,7 @@ def _arrange_main_investments(data_files_path):
 
     # Copy files around
     try:
+        _reset_git_status()
         for language in ["es", "en"]:
             target_path = os.path.join(THEME_PATH, "data", language, "municipio", year)
 
@@ -948,6 +986,7 @@ def _arrange_payments(data_files_path):
 
     # Copy files around
     try:
+        _reset_git_status()
         for language in ["es", "en"]:
             target_path = os.path.join(THEME_PATH, "data", language, "municipio", year)
 
@@ -1029,11 +1068,9 @@ def _touch(file_path):
 
 
 def _write(file_path, content):
-    # IO encoding is a nightmare. See https://stackoverflow.com/a/4027726
     # The scripts/cat executable must be manually deployed and setuid'ed
     cmd = (
-        "export PYTHONIOENCODING=utf-8 "
-        "&& cd %s "
+        "cd %s "
         "&& cat <<EOF | scripts/tee %s\n"
         "%s"
         "EOF"
@@ -1078,13 +1115,26 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
 
 # Git helpers
 # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
-def _read(file_path):
+def _reset_git_status():
     cmd = (
         "cd %s "
         "&& scripts/git fetch "
+        "&& scripts/git reset --hard origin/master "
+     ) % (THEME_PATH, )
+
+    output, error = _execute_cmd(cmd)
+
+    if error:
+        raise AdminException("Couldn't reset git status." % file_path)
+
+    return output
+
+
+def _read(file_path):
+    cmd = (
+        "cd %s "
         "&& scripts/git show origin/master:%s"
     ) % (THEME_PATH, file_path)
-
     output, error = _execute_cmd(cmd)
 
     if error:
@@ -1096,56 +1146,17 @@ def _read(file_path):
 def _commit(path, commit_message):
     # Why `diff-index`? See https://stackoverflow.com/a/8123841
     cmd = (
-        "cd %s "
-        "&& scripts/git fetch "
-        "&& scripts/git reset --hard origin/master "
+        "cd %s"
         "&& scripts/git add -A %s "
         "&& git diff-index --quiet HEAD "
         "|| scripts/git commit -m \"%s\n\nChange performed on the admin console.\" "
         "&& scripts/git push"
     ) % (THEME_PATH, path, commit_message)
 
-    _, error = _execute_cmd(cmd)
-
-    if error:
-        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n%s" % (path, str(error), cmd, _))
-
-
-def _execute_loading_task(cue, *management_commands):
-    # IO encoding is a nightmare. See https://stackoverflow.com/a/4027726
-    cmd = (
-         "export PYTHONIOENCODING=utf-8 "
-         "&& cd %s "
-         "&& scripts/git fetch "
-         "&& scripts/git reset --hard origin/master "
-         "&& cd %s"
-     ) % (THEME_PATH, ROOT_PATH)
-
-    for management_command in management_commands:
-        cmd += "&& python manage.py %s " % management_command
-
     output, error = _execute_cmd(cmd)
 
     if error:
-        message = (
-            "<p>No se han podido ejecutar los comandos <code>%s</code>:"
-            "<pre>%s</pre></p>"
-        ) % (" && ".join(management_commands), output)
-        body = {"result": "error", "message": message}
-        status = 500
-        return (body, status)
-
-    # Touch project/wsgi.py so the app restarts
-    _touch(os.path.join(ROOT_PATH, "project", "wsgi.py"))
-
-    message = (
-        u"<p>%s.</p>"
-        "<p>Ejecutado: <pre>%s</pre></p>"
-        "<p>Resultado: <pre>%s</pre></p>" % (cue, cmd, output)
-    )
-    body = {"result": "success", "message": message}
-    status = 200
-    return (body, status)
+        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n%s" % (path, str(error), cmd, output))
 
 
 # Utility helpers
