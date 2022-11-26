@@ -9,6 +9,7 @@ BUDGET_LOADER = 'MadridBudgetLoader'
 PAYMENTS_LOADER = 'MadridPaymentsLoader'
 INVESTMENTS_LOADER = 'MadridInvestmentsLoader'
 MAIN_INVESTMENTS_LOADER = 'MadridMainInvestmentsLoader'
+MONITORING_LOADER = 'MadridMonitoringLoader'
 
 FEATURED_PROGRAMMES = ['13610', '13510', '16301', '15321', '15210', '23103', '23102', '33401', '33210']
 
