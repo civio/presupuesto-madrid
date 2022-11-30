@@ -10,7 +10,8 @@ class MadridMonitoringLoader(MonitoringLoader):
 
     def parse_goal(self, filename, line):
         # Skip empty/header/subtotal lines.
-        if line[0]=='' or line[0]=='Entidad CP':
+        # Note: we use second field to check for header to avoid BOM issues.
+        if line[0]=='' or line[1]=='Ejercicio':
             return
 
         # The original Madrid institutional code requires some mapping.
@@ -20,5 +21,10 @@ class MadridMonitoringLoader(MonitoringLoader):
             'ic_code': ic_code,
             'fc_code': line[5],
             'goal_number': line[6],
-            'description': line[7]
+            'description': line[14],
+            'report': line[15]
         }
+
+
+    def _get_delimiter(self):
+        return ';'
