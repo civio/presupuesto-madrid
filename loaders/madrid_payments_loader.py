@@ -1,10 +1,9 @@
 # -*- coding: UTF-8 -*-
+import re
 
 from budget_app.loaders import PaymentsLoader
 from budget_app.models import Budget
-
-import re
-
+from madrid_utils import MadridUtils
 
 class MadridPaymentsLoader(PaymentsLoader):
     # Parse an input line into fields
@@ -79,12 +78,10 @@ class MadridPaymentsLoader(PaymentsLoader):
         fiscal_id = line[4]
         payee = payee + ' (' + fiscal_id + ')'
 
-        # Get institutional code. See the budget_loader for more details on this process for Madrid.
+        # The original Madrid institutional code requires some mapping.
         # Note: in the most recent 2018 data leading zeros were missing in some rows,
         # so add them back using zfill.
-        raw_ic_code = line[0].zfill(6)
-        institution = self.get_institution_code(raw_ic_code[0:3])
-        ic_code = institution + (raw_ic_code[3:6] if institution == '0' else '00')
+        ic_code = MadridUtils.map_institutional_code(line[0].zfill(6))
 
         # Apply institutional mapping to make codes consistent across years
         if budget.year <= 2015:

@@ -3,3 +3,4 @@ from madrid_payments_loader import MadridPaymentsLoader
 from madrid_investments_loader import MadridInvestmentsLoader
 from madrid_main_investments_loader import MadridMainInvestmentsLoader
 from madrid_monitoring_loader import MadridMonitoringLoader
+from madrid_utils import MadridUtils

@@ -1,11 +1,12 @@
 # -*- coding: UTF-8 -*-
-from budget_app.models import *
-from budget_app.loaders import SimpleBudgetLoader
-from decimal import *
 import csv
 import os
 import re
 
+from budget_app.models import *
+from budget_app.loaders import SimpleBudgetLoader
+from decimal import *
+from madrid_utils import MadridUtils
 
 class MadridBudgetLoader(SimpleBudgetLoader):
 
@@ -167,12 +168,10 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             budget_position = 12 if len(line) > 11 else 10
             amount = parse_amount(line[15 if is_actual else budget_position])
 
-            # Get institutional code. We ignore sections in autonomous bodies, since they
-            # get assigned to different sections in main body but that's not relevant.
+            # The original Madrid institutional code requires some mapping
             # Note: in the most recent 2016 data the leading zeros were missing,
             # so add them back using zfill.
-            institution = self.get_institution_code(line[0].zfill(3))
-            ic_code = institution + (line[2].zfill(3) if institution == '0' else '00')
+            ic_code = MadridUtils.map_institutional_code(line[0].zfill(3)+line[2].zfill(3))
 
             # We've been asked to ignore data for a special department, not really an organism (#756)
             if ic_code == '200':
@@ -240,7 +239,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
         else:
             ec_code = line[4]
-            ic_code = self.get_institution_code(line[0].zfill(3)) + '00'
+            ic_code = MadridUtils.get_institution_code(line[0].zfill(3)) + '00'
 
             # Select the column from which to read amounts. See similar comment above.
             budget_position = 8 if len(line) > 7 else 6
@@ -276,12 +275,6 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
 
         super(MadridBudgetLoader, self).load_budget(path, entity, year, status, items)
-
-    # We expect the organization code to be one digit, but Madrid has a 3-digit code.
-    # We can _almost_ pick the last digit, except for one case.
-    def get_institution_code(self, madrid_code):
-        institution_code = madrid_code if madrid_code != '001' else '000'
-        return institution_code[2]
 
     def parse_spanish_amount(self, amount):
         amount = amount.replace('.', '')    # Remove thousands delimiters, if any
