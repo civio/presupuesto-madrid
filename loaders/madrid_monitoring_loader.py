@@ -22,7 +22,7 @@ class MadridMonitoringLoader(MonitoringLoader):
             'fc_code': line[5],
             'goal_number': line[6],
             'description': line[14],
-            'report': line[15]
+            'report': line[15].replace("  ", "<br/><br/>")  # XXX: Temporary solution
         }
 
 
