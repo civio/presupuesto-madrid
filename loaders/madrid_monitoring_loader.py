@@ -61,14 +61,20 @@ class MadridMonitoringLoader(MonitoringLoader):
         fc_code = line[5]
         goal_number = line[6]
 
+        # Calculate the indicator score, from 0 to 1
+        target = int(line[12])
+        actual = int(line[13])
+        # Note: If goal is 0 then set score to 1 to avoid division by zero. It's very rare in any case.
+        score = 1 if target==0 else min(float(actual)/float(target), 1.0)
+
         return {
             'goal_uid': self._get_goal_uid(ic_code, fc_code, goal_number),
             'indicator_number': line[8],
             'description': line[10].decode("utf8"),
             'unit': line[11],
-            'target': line[12],
-            'actual': line[13],
-            'score': 1              # XXX: Should calculate here
+            'target': target,
+            'actual': actual,
+            'score': score
         }
 
 
