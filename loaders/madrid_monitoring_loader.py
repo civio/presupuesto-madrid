@@ -26,7 +26,7 @@ class MadridMonitoringLoader(MonitoringLoader):
             'fc_code': fc_code,
             'goal_number': goal_number,
             'description': line[14].decode("utf8"),
-            'report': line[15].replace("  ", "<br/><br/>")  # XXX: Temporary solution
+            'report': line[15].replace("  ", "<br/><br/>")  # FIXME: Temporary solution
         }
 
 
