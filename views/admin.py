@@ -36,6 +36,8 @@ EXECUTION_URL = {
     'historical': "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=b404f67f5b35b410VgnVCM2000000c205a0aRCRD"
 }
 
+MONITORING_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=16d65b932be71810VgnVCM2000001f4a900aRCRD"
+
 MAIN_INVESTMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=77dee5d0fed7c710VgnVCM1000001d4a900aRCRD"
 
 PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd56610VgnVCM2000001f4a900aRCRD"
@@ -372,6 +374,35 @@ def _load_execution():
     return _execute_loading_task(cue, *management_commands)
 
 
+def _retrieve_monitoring(year):
+    data_url = _get_monitoring_url(year)
+    return _scrape_monitoring(data_url, year)
+
+
+def _load_monitoring():
+    # Pick up the most recent downloaded files
+    data_files_path = _get_most_recent_temp_folder()
+
+    if not data_files_path:
+        body = {"result": "error", "message": "<p>No hay ficheros que cargar.</p>"}
+        status = 400
+        return (body, status)
+
+    # Copy downloaded files to the theme destination
+    year = _arrange_monitoring(data_files_path)
+
+    cue = u"Vamos a cargar los datos disponibles en <b>%s</b> para %s" % (
+        data_files_path,
+        year,
+    )
+
+    management_commands = (
+        "load_monitoring %s --language=es,en" % year,
+    )
+
+    return _execute_loading_task(cue, *management_commands)
+
+
 def _retrieve_main_investments(year):
     data_url = _get_main_investments_url(year)
     return _scrape_main_investments(data_url, year)
@@ -610,6 +641,48 @@ def _scrape_execution(url, month, year):
         )  # 12M means the year is fully executed
 
         _write_temp(temp_folder_path, ".budget_status", status)
+
+        message = (
+            "<p>Los datos se han descargado correctamente.</p>"
+            "<p>Puedes ver la página desde la que hemos hecho la descarga <a href='%s' target='_blank'>aquí</a>, "
+            "y para tu referencia los ficheros han sido almacenados en <b>%s</b>.</p>"
+            % (url, temp_folder_path)
+        )
+        body = {"result": "success", "message": message}
+        status = 200
+    except AdminException:
+        message = (
+            "<p>Se ha producido un error descargando los datos.</p>"
+            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
+            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+        )
+        body = {"result": "error", "message": message}
+        status = 500
+
+    return (body, status)
+
+
+def _scrape_monitoring(url, year):
+    year = str(year)
+
+    if not url:
+        body = {"result": "error", "message": "<p>Nada que descargar.</p>"}
+        status = 400
+        return (body, status)
+
+    try:
+        # Read the given page
+        page = _fetch(url)
+
+        # Build the list of linked files
+        files = _get_files_historical(page, year)
+
+        # Create the target folder
+        temp_folder_path = _create_temp_folder()
+
+        # We assume a constant page layout
+        _download(files[0], temp_folder_path, "indicadores.csv")
+        _download(files[1], temp_folder_path, "actividades.csv")
 
         message = (
             "<p>Los datos se han descargado correctamente.</p>"
@@ -1217,6 +1290,9 @@ def _get_general_url(year):
 
 def _get_execution_url(year):
     return EXECUTION_URL.get(year, EXECUTION_URL['historical'])
+
+def _get_monitoring_url(year):
+    return MONITORING_URL
 
 def _get_main_investments_url(year):
     return MAIN_INVESTMENTS_URL
