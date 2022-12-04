@@ -10,68 +10,65 @@ class MadridMonitoringLoader(MonitoringLoader):
 
     def parse_goal(self, filename, line):
         # Skip empty/header/subtotal lines.
-        # Note: we use second field to check for header to avoid BOM issues.
-        if line[0]=='' or line[1]=='Ejercicio':
+        if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[4])
-        fc_code = line[5]
-        goal_number = line[6]
+        ic_code = MadridUtils.map_institutional_code(line[0])
+        fc_code = line[1]
+        goal_number = line[2]
 
         return {
             'uid': self._get_goal_uid(ic_code, fc_code, goal_number),
             'ic_code': ic_code,
             'fc_code': fc_code,
             'goal_number': goal_number,
-            'description': line[14].decode("utf8"),
-            'report': line[15].replace("  ", "<br/><br/>")  # FIXME: Temporary solution
+            'description': line[3].decode("utf8"),
+            'report': line[4].replace("  ", "<br/><br/>")  # FIXME: Temporary solution
         }
 
 
     def parse_activity(self, filename, line):
         # Skip empty/header/subtotal lines.
-        # Note: we use second field to check for header to avoid BOM issues.
-        if line[0]=='' or line[1]=='Ejercicio':
+        if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[4])
-        fc_code = line[9]
-        goal_number = line[11]
+        ic_code = MadridUtils.map_institutional_code(line[0])
+        fc_code = line[1]
+        goal_number = line[2]
 
         return {
             'goal_uid': self._get_goal_uid(ic_code, fc_code, goal_number),
-            'activity_number': line[14],
-            'description': line[15].decode("utf8"),
+            'activity_number': line[3],
+            'description': line[4].decode("utf8"),
         }
 
 
     def parse_indicator(self, filename, line):
         # Skip empty/header/subtotal lines.
-        # Note: we use second field to check for header to avoid BOM issues.
-        if line[0]=='' or line[1]=='Ejercicio':
+        if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[4])
-        fc_code = line[5]
-        goal_number = line[6]
+        ic_code = MadridUtils.map_institutional_code(line[0])
+        fc_code = line[1]
+        goal_number = line[2]
 
         # Calculate the indicator score, from 0 to 1
-        target = int(line[12])
-        actual = int(line[13])
+        target = int(line[6])
+        actual = int(line[7])
         # Note: If goal is 0 then set score to 1 to avoid division by zero. It's very rare in any case.
         score = 1 if target==0 else min(float(actual)/float(target), 1.0)
 
         return {
             'goal_uid': self._get_goal_uid(ic_code, fc_code, goal_number),
-            'indicator_number': line[8],
-            'description': line[10].decode("utf8"),
-            'unit': line[11],
+            'indicator_number': line[3],
+            'description': line[4].decode("utf8"),
+            'unit': line[5],
             'target': target,
             'actual': actual,
             'score': score

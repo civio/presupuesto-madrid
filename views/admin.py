@@ -681,8 +681,13 @@ def _scrape_monitoring(url, year):
         temp_folder_path = _create_temp_folder()
 
         # We assume a constant page layout
-        _download(files[0], temp_folder_path, "indicadores.csv")
-        _download(files[1], temp_folder_path, "actividades.csv")
+        _download(files[0], temp_folder_path, "objetivos_e_indicadores.csv")
+        _download(files[1], temp_folder_path, "objetivos_y_actividades.csv")
+
+        # Based on the two denormalized source files, create three nicer normalized final ones
+        _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "objetivos.csv", [4, 5, 6, 14, 15])
+        _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12, 13])
+        _csv_cut_columns(temp_folder_path, "objetivos_y_actividades.csv", "actividades.csv", [4, 9, 11, 14, 15])
 
         _write_temp(temp_folder_path, ".budget_year", year)
 
@@ -1067,8 +1072,9 @@ def _arrange_monitoring(data_files_path):
             source = data_files_path
             destination = target_path
 
-            action = "Update" if _exists_temp(destination, "actividades.csv") else action
+            action = "Update" if _exists_temp(destination, "objetivos.csv") else action
 
+            _copy(source, destination, "objetivos.csv")
             _copy(source, destination, "actividades.csv")
             _copy(source, destination, "indicadores.csv")
 
@@ -1392,3 +1398,22 @@ def _json_response(data, status=200):
 
 def _csv_response(data, status=200):
     return HttpResponse(data, content_type="text/csv; charset=utf-8", status=status)
+
+
+# A poor man's version of `csvcut`, it can create a target file using
+# a subset of columns from the given source file.
+# Note that it also removes duplicates! It was useful for goals data,
+# it could be made optional or removed if we use this somewhere else.
+def _csv_cut_columns(path, source_filename, target_filename, columns):
+    last_line = []
+    with open(os.path.join(path, target_filename), "ab") as target:
+        target.truncate(0)
+        writer = csv.writer(target, delimiter=';')
+        with open(os.path.join(path, source_filename), "rb") as source:
+            reader = csv.reader(source, delimiter=';')
+            for index, line in enumerate(reader):
+                columns_to_write = [line[c] for c in columns]
+                if ( columns_to_write==last_line ):
+                    continue
+                writer.writerow(columns_to_write)
+                last_line = columns_to_write
