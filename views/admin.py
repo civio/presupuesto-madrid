@@ -684,6 +684,8 @@ def _scrape_monitoring(url, year):
         _download(files[0], temp_folder_path, "indicadores.csv")
         _download(files[1], temp_folder_path, "actividades.csv")
 
+        _write_temp(temp_folder_path, ".budget_year", year)
+
         message = (
             "<p>Los datos se han descargado correctamente.</p>"
             "<p>Puedes ver la página desde la que hemos hecho la descarga <a href='%s' target='_blank'>aquí</a>, "
@@ -1051,8 +1053,35 @@ def _arrange_execution(data_files_path):
     return (month, year)
 
 
+def _arrange_monitoring(data_files_path):
+    year = _read_temp(data_files_path, ".budget_year")
+
+    action = "Add"
+
+    # Copy files around
+    try:
+        _reset_git_status()
+        for language in ["es", "en"]:
+            target_path = os.path.join(THEME_PATH, "data", language, "municipio", year)
+
+            source = data_files_path
+            destination = target_path
+
+            action = "Update" if _exists_temp(destination, "actividades.csv") else action
+
+            _copy(source, destination, "actividades.csv")
+            _copy(source, destination, "indicadores.csv")
+
+        data_path = os.path.join(THEME_PATH, "data")
+        _commit(data_path, "%s %s monitoring data" % (action, year))
+
+    except AdminException as error:
+        raise Exception(error)
+
+    return year
+
+
 def _arrange_main_investments(data_files_path):
-    # Read the year of the main payments data
     year = _read_temp(data_files_path, ".budget_year")
 
     action = "Add"
