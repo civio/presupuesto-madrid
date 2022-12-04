@@ -27,15 +27,23 @@
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="admin-general {{ 'active' if active_tab == 'general' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_general') }}">{{ _('Presupuesto general') }}</a>
+            <a href="{{ url('presupuesto-madrid.views.admin_general') }}">{{ _('Presupuesto') }}</a>
           </li>
 
           <li class="admin-execution {{ 'active' if active_tab == 'execution' }}">
             <a href="{{ url('presupuesto-madrid.views.admin_execution') }}">{{ _('Ejecución mensual') }}</a>
           </li>
 
+          <li class="admin-monitoring {{ 'active' if active_tab == 'monitoring' }}">
+            <a href="{{ url('presupuesto-madrid.views.admin_monitoring') }}">{{ _('Objetivos') }}</a>
+          </li>
+
           <li class="admin-main-investments {{ 'active' if active_tab == 'main-investments' }}">
             <a href="{{ url('presupuesto-madrid.views.admin_main_investments') }}">{{ _('Inversiones principales') }}</a>
+          </li>
+
+          <li class="admin-payments {{ 'active' if active_tab == 'payments' }}">
+            <a href="{{ url('presupuesto-madrid.views.admin_payments') }}">{{ _('Pagos e inversiones') }}</a>
           </li>
 
           <li class="admin-inflation {{ 'active' if active_tab == 'inflation' }}">
@@ -44,10 +52,6 @@
 
           <li class="admin-population {{ 'active' if active_tab == 'population' }}">
             <a href="{{ url('presupuesto-madrid.views.admin_population') }}">{{ _('Población') }}</a>
-          </li>
-
-          <li class="admin-payments {{ 'active' if active_tab == 'payments' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_payments') }}">{{ _('Pagos e inversiones') }}</a>
           </li>
 
           <li class="admin-glossary dropdown {{ 'active' if active_tab == 'glossary' }}">

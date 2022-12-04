@@ -1,0 +1,63 @@
+{% extends 'admin.html' %}
+
+{% load static %}
+
+{% block content %}
+<section class="admin" role="region">
+  <div class="admin-header section-header">
+    <div class="container">
+      <h2 class="page-title">{{ _('Objetivos') }}</h2>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="container">
+      <div class="data-panel">
+
+        <div class="panel">
+          <div class="panel-content">
+            <h3>1. Descargar datos</h3>
+            <p>El primer paso es descargar los ficheros de datos del portal de Datos Abiertos de Madrid. Para ello, especifica el año de los datos que quieres descargar (por defecto estamos utilizando el ejercicio anterior al ejercicio en curso). Al pulsar el botón 'Descargar', los datos se bajarán del Portal y se guardarán en el servidor, listos para el siguiente paso.</p>
+
+            <form id="data-download">
+              <div class="form-group">
+                <label for="year">{{ _('Selecciona año') }}</label>
+                <select id="year" class="form-control" name="year">
+                  {% for year in previous_years %}
+                  <option value="{{year}}">{{year}}</option>
+                  {% endfor %}
+                  <option value="{{current_year}}" selected>{{current_year}}</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-default btn-primary" >{{ _('Descargar') }}</button>
+            </form>
+            <div id="data-download-output" class="data-output">
+              <div class="loading"><img src="{% static 'assets/loader.png' %}"> Descargando datos</div>
+              <div class="output"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-content">
+            <h3>2. Cargar datos</h3>
+            <p>Finalmente, podemos cargar los datos descargados en la base de datos, haciéndolos visibles al exterior, tanto en español como en inglés.</p>
+            <form class="form-inline" id="data-load">
+              <button type="submit" class="btn btn-default btn-primary" >{{ _('Cargar') }}</button>
+            </form>
+            <div id="data-load-output" class="data-output">
+              <div class="loading"><img src="{% static 'assets/loader.png' %}"> Cargando datos</div>
+              <div class="output"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_javascript %}
+<script src="{% static 'javascripts/admin/csv_download.js' %}"></script>
+<script src="{% static 'javascripts/admin/monitoring.js' %}"></script>
+{% endblock %}

@@ -21,6 +21,7 @@ import urllib2
 
 DATA_BASE_URL = "https://datos.madrid.es"
 
+# XXX: All the "general" stuff should be renamed just "budget"
 GENERAL_URL = {
     2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa75acf8d2f1e710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ca760ce04fcc6710VgnVCM2000001f4a900aRCRD",
@@ -160,6 +161,33 @@ def admin_population_save(request):
 @never_cache
 def admin_population_load(request):
     body, status = _load_stats()
+    return _json_response(body, status)
+
+
+# Monitoring
+@never_cache
+def admin_monitoring(request):
+    current_year = datetime.today().year
+    previous_years = [year for year in range(2018, current_year)]
+
+    context = {
+        "title_prefix": _(u"Objetivos"),
+        "active_tab": "monitoring",
+        "current_year": current_year,
+        "previous_years": previous_years,
+    }
+
+    return render(request, "admin/monitoring.html", context)
+
+@never_cache
+def admin_monitoring_retrieve(request):
+    year = _get_year(request.GET)
+    body, status = _retrieve_monitoring(year)
+    return _json_response(body, status)
+
+@never_cache
+def admin_monitoring_load(request):
+    body, status = _load_monitoring()
     return _json_response(body, status)
 
 
