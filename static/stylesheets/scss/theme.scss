@@ -301,6 +301,7 @@ header{
           opacity: 1;
         }
 
+        // FIXME: Replace this images by jpg so they are lighter in size!
         &.option-policies .icon{
           background-image: url(../assets/politicas-picture.png);
         }
@@ -310,7 +311,9 @@ header{
         &.option-investments .icon{
           background-image: url(../assets/investments-picture2.png);
         }
-        // New panel Madrid Main Investments map
+        &.option-monitoring .icon{
+          background-image: url(../assets/monitoring-picture.jpg);
+        }
         &.option-mainInvestments .icon{
           background-image: url(../assets/main-investments.png);
         }
