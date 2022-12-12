@@ -8,14 +8,14 @@ from madrid_utils import MadridUtils
 
 class MadridMonitoringLoader(MonitoringLoader):
 
-    def parse_goal(self, filename, line):
+    def parse_goal(self, filename, line, year):
         # Skip empty/header/subtotal lines.
         if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[0])
+        ic_code = MadridUtils.map_institutional_code(line[0], int(year))
         fc_code = line[1]
         goal_number = line[2]
 
@@ -29,14 +29,14 @@ class MadridMonitoringLoader(MonitoringLoader):
         }
 
 
-    def parse_activity(self, filename, line):
+    def parse_activity(self, filename, line, year):
         # Skip empty/header/subtotal lines.
         if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[0])
+        ic_code = MadridUtils.map_institutional_code(line[0], int(year))
         fc_code = line[1]
         goal_number = line[2]
 
@@ -47,14 +47,14 @@ class MadridMonitoringLoader(MonitoringLoader):
         }
 
 
-    def parse_indicator(self, filename, line):
+    def parse_indicator(self, filename, line, year):
         # Skip empty/header/subtotal lines.
         if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[0])
+        ic_code = MadridUtils.map_institutional_code(line[0], int(year))
         fc_code = line[1]
         goal_number = line[2]
 
