@@ -16,7 +16,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         # Get key fields.
         # The original Madrid institutional code requires some mapping.
         ic_code = MadridUtils.map_institutional_code(line[0], int(year))
-        fc_code = line[1]
+        fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
         return {
@@ -37,7 +37,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
         ic_code = MadridUtils.map_institutional_code(line[0], int(year))
-        fc_code = line[1]
+        fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
         return {
@@ -55,7 +55,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
         ic_code = MadridUtils.map_institutional_code(line[0], int(year))
-        fc_code = line[1]
+        fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
         # Calculate the indicator score, from 0 to 1
