@@ -8,15 +8,15 @@ from madrid_utils import MadridUtils
 
 class MadridMonitoringLoader(MonitoringLoader):
 
-    def parse_goal(self, filename, line):
+    def parse_goal(self, filename, line, year):
         # Skip empty/header/subtotal lines.
         if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[0])
-        fc_code = line[1]
+        ic_code = MadridUtils.map_institutional_code(line[0], int(year))
+        fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
         return {
@@ -25,19 +25,19 @@ class MadridMonitoringLoader(MonitoringLoader):
             'fc_code': fc_code,
             'goal_number': goal_number,
             'description': line[3].decode("utf8"),
-            'report': line[4].replace("  ", "<br/><br/>")  # FIXME: Temporary solution
+            'report': line[4]
         }
 
 
-    def parse_activity(self, filename, line):
+    def parse_activity(self, filename, line, year):
         # Skip empty/header/subtotal lines.
         if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[0])
-        fc_code = line[1]
+        ic_code = MadridUtils.map_institutional_code(line[0], int(year))
+        fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
         return {
@@ -47,15 +47,15 @@ class MadridMonitoringLoader(MonitoringLoader):
         }
 
 
-    def parse_indicator(self, filename, line):
+    def parse_indicator(self, filename, line, year):
         # Skip empty/header/subtotal lines.
         if line[0]=='' or line[0]=='CeGe':
             return
 
         # Get key fields to identify the parent goal.
         # The original Madrid institutional code requires some mapping.
-        ic_code = MadridUtils.map_institutional_code(line[0])
-        fc_code = line[1]
+        ic_code = MadridUtils.map_institutional_code(line[0], int(year))
+        fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
         # Calculate the indicator score, from 0 to 1

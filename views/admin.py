@@ -170,7 +170,7 @@ def admin_population_load(request):
 @never_cache
 def admin_monitoring(request):
     current_year = datetime.today().year
-    previous_years = [year for year in range(2018, current_year)]
+    previous_years = [year for year in range(2011, current_year)]
 
     context = {
         "title_prefix": _(u"Objetivos"),
