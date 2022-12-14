@@ -20,7 +20,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         goal_number = line[2]
 
         return {
-            'uid': self._get_goal_uid(ic_code, fc_code, goal_number),
+            'uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
             'ic_code': ic_code,
             'fc_code': fc_code,
             'goal_number': goal_number,
@@ -41,7 +41,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         goal_number = line[2]
 
         return {
-            'goal_uid': self._get_goal_uid(ic_code, fc_code, goal_number),
+            'goal_uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
             'activity_number': line[3],
             'description': line[4].decode("utf8"),
         }
@@ -65,7 +65,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         score = 1 if target==0 else min(float(actual)/float(target), 1.0)
 
         return {
-            'goal_uid': self._get_goal_uid(ic_code, fc_code, goal_number),
+            'goal_uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
             'indicator_number': line[3],
             'description': line[4].decode("utf8"),
             'unit': line[5],
@@ -75,8 +75,8 @@ class MadridMonitoringLoader(MonitoringLoader):
         }
 
 
-    def _get_goal_uid(self, ic_code, fc_code, goal_number):
-        return "%s/%s/%s" % (ic_code, fc_code, goal_number)
+    def _get_goal_uid(self, year, ic_code, fc_code, goal_number):
+        return "%s/%s/%s/%s" % (year, ic_code, fc_code, goal_number)
 
     def _get_delimiter(self):
         return ';'
