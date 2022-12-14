@@ -76,7 +76,7 @@ class MadridMonitoringLoader(MonitoringLoader):
 
 
     def _get_goal_uid(self, year, ic_code, fc_code, goal_number):
-        return "%s/%s/%s/%s" % (year, ic_code, fc_code, goal_number)
+        return "%s-%s-%s-%s" % (year, ic_code, fc_code, goal_number)
 
     def _get_delimiter(self):
         return ';'
