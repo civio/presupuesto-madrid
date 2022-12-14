@@ -172,6 +172,7 @@ $(document).ready(function(){
 
   addChartsAlert('.policies-chart');
   addChartsAlert('.sankey-container');
+  addChartsAlert('.monitoring-content');
 
   swapTotalsInOverview();
 
