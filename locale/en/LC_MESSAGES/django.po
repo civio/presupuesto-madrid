@@ -269,3 +269,9 @@ msgstr "Look at the details of each one."
 
 msgid "Las inversiones más significativas de la ciudad de Madrid, georeferenciadas y en detalle."
 msgstr "The most significant investments in the city of Madrid, georeferenced and in detail."
+
+msgid "Objetivos"
+msgstr "Objectives"
+
+msgid "Descubre de un vistazo el cumplimiento de los Objetivos presupuestarios del Ayuntamiento de Madrid."
+msgstr "Find out at a glance how Madrid City Council's budget objectives are being met."
