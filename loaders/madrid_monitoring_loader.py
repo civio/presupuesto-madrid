@@ -49,7 +49,7 @@ class MadridMonitoringLoader(MonitoringLoader):
 
     def parse_indicator(self, filename, line, year):
         # Skip empty/header/subtotal lines.
-        if line[0]=='' or line[0]=='CeGe':
+        if line[0]=='' or line[0]=='CeGe' or line[3]=='':
             return
 
         # Get key fields to identify the parent goal.
