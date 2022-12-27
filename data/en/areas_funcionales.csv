@@ -189,9 +189,11 @@
 9;3;1;06;Public policy analysis
 9;3;2;01;Economic and administrative claims
 9;3;3;01;Construction, maintenance and rehabilitation of municipal buildings
+9;3;3;02;Buildings
 9;3;3;03;Wealth management
 9;3;3;04;Asset management
 9;3;3;62;NGEU. Support sustainable markets
+9;3;3;79;NGEU. Social Services agreement
 9;3;4;01;Financial policy
 9;3;4;05;Treasury
 #
@@ -262,7 +264,6 @@
 9;3;1;03;Accounting
 9;3;2;00;Tax management
 9;3;2;02;Taxpayer management and protection
-9;3;3;02;Buildings
 #
 # Líneas de inversión de Madrid
 #

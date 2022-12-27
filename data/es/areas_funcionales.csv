@@ -189,9 +189,11 @@
 9;3;1;06;Análisis de políticas públicas
 9;3;2;01;Reclamaciones económico-administrativas
 9;3;3;01;"Construcción, mantenimiento y rehabilitación de inmuebles municipales"
+9;3;3;02;Edificios
 9;3;3;03;I.F.S. Gestión del patrimonio
 9;3;3;04;Gestión patrimonial
 9;3;3;62;NGEU. Apoyo mercados sostenibles
+9;3;3;79;NGEU. Convenio Servicios Sociales
 9;3;4;01;Política financiera
 9;3;4;05;Tesorería
 #
@@ -262,7 +264,6 @@
 9;3;1;03;Contabilidad
 9;3;2;00;Gestión tributaria
 9;3;2;02;Gestión y defensa del contribuyente
-9;3;3;02;Edificios
 #
 # Líneas de inversión de Madrid
 #
