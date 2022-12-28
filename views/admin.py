@@ -1141,9 +1141,13 @@ def _arrange_payments(data_files_path):
 # Network helpers
 def _fetch(url):
     try:
+        # Disable SSL validation due to environment issues. See https://stackoverflow.com/a/35799458
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+
         request = urllib2.Request(url, headers={'User-Agent': 'Mozilla'})
-        # Disable SSL validation due to environment issues. See https://stackoverflow.com/a/42302755
-        page = urllib2.urlopen(request, context=ssl._create_unverified_context()).read()
+        page = urllib2.urlopen(request, context=ctx).read()
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, str(error)))
 
