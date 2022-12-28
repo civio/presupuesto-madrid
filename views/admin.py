@@ -594,11 +594,10 @@ def _scrape_general(url, year):
         )
         body = {"result": "success", "message": message}
         status = 200
-    except AdminException:
+    except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargado los datos.</p>"
-            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
-            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+            "<p>Se ha producido un error descargado los datos."
+            "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -650,11 +649,10 @@ def _scrape_execution(url, month, year):
         )
         body = {"result": "success", "message": message}
         status = 200
-    except AdminException:
+    except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargando los datos.</p>"
-            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
-            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+            "<p>Se ha producido un error descargado los datos."
+            "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -898,8 +896,8 @@ def _review_payments_data(data_files_path):
                 number_of_payments += 1
                 amount_of_payments += float(line[6])
 
-    except Exception as e:
-        error = str(e)
+    except Exception as error:
+        error = str(error)
 
     output = "Hay %s pagos que suman un total de %s euros en %s" % (
         _format_number_as_spanish(number_of_payments),
@@ -951,10 +949,10 @@ def _save(file_path, content, commit_message):
             "message": "<p>Los datos se han guardado correctamente.</p>",
         }
         status = 200
-    except AdminException:
+    except AdminException as error:
         body = {
             "result": "error",
-            "message": "<p>Se ha producido un error guardando los datos.</p>",
+            "message": "<p>Se ha producido un error guardando los datos: <pre>%s</pre>.</p>" % str(error),
         }
         status = 500
 
