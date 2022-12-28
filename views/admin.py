@@ -18,7 +18,6 @@ import re
 import subprocess
 import urllib
 import urllib2
-import ssl
 
 DATA_BASE_URL = "https://datos.madrid.es"
 
@@ -1141,13 +1140,8 @@ def _arrange_payments(data_files_path):
 # Network helpers
 def _fetch(url):
     try:
-        # Disable SSL validation due to environment issues. See https://stackoverflow.com/a/35799458
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-
         request = urllib2.Request(url, headers={'User-Agent': 'Mozilla'})
-        page = urllib2.urlopen(request, context=ctx).read()
+        page = urllib2.urlopen(request).read()
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, str(error)))
 
