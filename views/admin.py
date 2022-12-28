@@ -596,7 +596,7 @@ def _scrape_general(url, year):
         status = 200
     except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargado los datos."
+            "<p>Se ha producido un error descargando los datos."
             "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
@@ -651,7 +651,7 @@ def _scrape_execution(url, month, year):
         status = 200
     except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargado los datos."
+            "<p>Se ha producido un error descargando los datos."
             "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
@@ -697,11 +697,10 @@ def _scrape_monitoring(url, year):
         )
         body = {"result": "success", "message": message}
         status = 200
-    except AdminException:
+    except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargando los datos.</p>"
-            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
-            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+            "<p>Se ha producido un error descargando los datos."
+            "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -740,11 +739,10 @@ def _scrape_main_investments(url, year):
         )
         body = {"result": "success", "message": message}
         status = 200
-    except AdminException:
+    except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargando los datos.</p>"
-            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
-            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+            "<p>Se ha producido un error descargando los datos."
+            "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -784,11 +782,10 @@ def _scrape_payments(url, year):
         )
         body = {"result": "success", "message": message}
         status = 200
-    except AdminException:
+    except AdminException as error:
         message = (
-            "<p>Se ha producido un error descargando los datos.</p>"
-            "<p>Puedes ver la página desde la que hemos intentado hacer la descarga "
-            "<a href='%s' target='_blank'>aquí</a>.</p>" % url
+            "<p>Se ha producido un error descargando los datos."
+            "<pre>%s</pre></p>" % str(error)
         )
         body = {"result": "error", "message": message}
         status = 500
