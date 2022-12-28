@@ -58,23 +58,45 @@ class MadridMonitoringLoader(MonitoringLoader):
         fc_code = MadridUtils.map_functional_code(line[1], int(year))
         goal_number = line[2]
 
-        # Calculate the indicator score, from 0 to 1
+        # Some other basic fields
+        description = line[4].decode("utf8")
+        unit = line[5]
         target = int(line[6])
         actual = int(line[7])
+        _is_inverse_indicator = self._is_inverse_indicator(description, unit)
+
+        # Calculate the indicator score, from 0 to 1
         # Note: If goal is 0 then set score to 0, there's nothing to calculate, and
-        # it wouldn't be fair to give a score, it would be "free". It's very rare anyway.
-        score = 0 if target==0 else min(float(actual)/float(target), 1.0)
+        # it wouldn't be fair to give a score, it would be "free" (or "impossible" for
+        # the reverse ones). It's very rare anyway.
+        if _is_inverse_indicator:
+            # You get 0 points for doubling the target, and better from that.
+            # Note that you could be worse than that (while "normal" indicators don't
+            # go below zero), so we need to cap both the minimum and the maximum.
+            score = 0 if target==0 else max(min(float(2*target-actual)/float(target), 1.0), 0.0)
+        else:
+            # Note: we assume negative values do not exist, simpler this way.
+            score = 0 if target==0 else min(float(actual)/float(target), 1.0)
 
         return {
             'goal_uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
             'indicator_number': line[3],
-            'description': line[4].decode("utf8"),
-            'unit': line[5],
+            'description': description,
+            'unit': unit,
             'target': target,
             'actual': actual,
             'score': score
         }
 
+
+    # Some indicators (like average waiting time for a public service) are "reversed",
+    # i.e. they're better the lower the value is. The source data doesn't identify these
+    # indicators, so we do our best to guess.
+    # XXX: This is definitely not the final version.
+    def _is_inverse_indicator(self, description, unit):
+        if unit in ['SEGUNDOS', 'MINUTOS', 'DÍAS']:
+            return True
+        return False
 
     def _get_goal_uid(self, year, ic_code, fc_code, goal_number):
         return "%s-%s-%s-%s" % (year, ic_code, fc_code, goal_number)
