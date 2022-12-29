@@ -617,7 +617,6 @@ def _scrape_execution(url, month, year):
     try:
         # Read the given page
         page = _fetch(url)
-        _write_temp(temp_folder_path, "index.html", page)   # FIXME: temporary
 
         # Build the list of linked files
         is_historical = (url == EXECUTION_URL['historical'])
@@ -625,6 +624,7 @@ def _scrape_execution(url, month, year):
 
         # Create the target folder
         temp_folder_path = _create_temp_folder()
+        _write_temp(temp_folder_path, "index.html", page)   # FIXME: temporary
 
         # We assume a constant page layout: ingresos, gastos, inversiones
         _download(files[0], temp_folder_path, "ingresos.csv")
