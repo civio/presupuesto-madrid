@@ -617,6 +617,7 @@ def _scrape_execution(url, month, year):
     try:
         # Read the given page
         page = _fetch(url)
+        _write_temp(temp_folder_path, "index.html", page)   # FIXME: temporary
 
         # Build the list of linked files
         is_historical = (url == EXECUTION_URL['historical'])
