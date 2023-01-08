@@ -1333,15 +1333,21 @@ def _get_payments_url(year):
     return PAYMENTS_URL
 
 
+def _parse_HTML_file(page):
+    # There's a weird line that's breaking BeautifulSoup in the PRE/PROD environment,
+    # but not in development. Is it the Python version? See civio/presupuesto-management#1234
+    # Deleting it is a hacky way of getting rid of the issue, but the best I could find.
+    page = re.sub("!function\(t,e\).*", "", page)
+    return BeautifulSoup(page, "html.parser")
+
 def _get_files(page):
-    doc = BeautifulSoup(page, "html.parser")
+    doc = _parse_HTML_file(page)
     links = doc.find_all("a", class_="ico-csv")
 
     return [DATA_BASE_URL + link["href"] for link in links]
 
-
 def _get_files_historical(page, year):
-    doc = BeautifulSoup(page, "html.parser")
+    doc = _parse_HTML_file(page)
     year_block = doc.find("p", class_="info-title", text=re.compile(year)).parent.findNext("ul")
     links = year_block.find_all("a", class_="ico-csv")
 
