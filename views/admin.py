@@ -1338,6 +1338,7 @@ def _parse_HTML_file(page):
     # but not in development. Is it the Python version? See civio/presupuesto-management#1234
     # Deleting it is a hacky way of getting rid of the issue, but the best I could find.
     page = re.sub("!function\(t,e\).*", "", page)
+    page = re.sub("window.NREUM.*", "", page)
     return BeautifulSoup(page, "html.parser")
 
 def _get_files(page):
