@@ -23,6 +23,7 @@ DATA_BASE_URL = "https://datos.madrid.es"
 
 # XXX: All the "general" stuff should be renamed just "budget"
 GENERAL_URL = {
+    2023: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa75acf8d2f1e710VgnVCM2000001f4a900aRCRD",
     2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa75acf8d2f1e710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ca760ce04fcc6710VgnVCM2000001f4a900aRCRD",
     2020: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=9062dd2e34a6f610VgnVCM1000001d4a900aRCRD",
