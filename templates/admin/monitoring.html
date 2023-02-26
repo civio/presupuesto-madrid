@@ -29,6 +29,13 @@
                   <option value="{{current_year}}" selected>{{current_year}}</option>
                 </select>
               </div>
+              <div class="form-group">
+                <label for="year-completed">{{ _('¿Está el año completado?') }}</label>
+                <select id="year-completed" class="form-control" name="year-completed">
+                  <option value="Sí">Sí</option>
+                  <option value="No" selected>No</option>
+                </select>
+              </div>
               <button type="submit" class="btn btn-default btn-primary" >{{ _('Descargar') }}</button>
             </form>
             <div id="data-download-output" class="data-output">

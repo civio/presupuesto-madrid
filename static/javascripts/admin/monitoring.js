@@ -11,7 +11,8 @@ $(document).ready(function () {
     $.ajax({
       url: "monitoring/retrieve",
       data: {
-        year:  $('#year').val()
+        year:  $('#year').val(),
+        yearCompleted:  $('#year-completed').val()
       },
       contentType: 'application/json; charset=utf-8',
       success: onDownloadSuccess,

@@ -185,7 +185,8 @@ def admin_monitoring(request):
 @never_cache
 def admin_monitoring_retrieve(request):
     year = _get_year(request.GET)
-    body, status = _retrieve_monitoring(year)
+    is_year_completed = request.GET.get("yearCompleted", "No")=='Sí'
+    body, status = _retrieve_monitoring(year, is_year_completed)
     return _json_response(body, status)
 
 @never_cache
@@ -375,9 +376,9 @@ def _load_execution():
     return _execute_loading_task(cue, *management_commands)
 
 
-def _retrieve_monitoring(year):
+def _retrieve_monitoring(year, is_year_completed):
     data_url = _get_monitoring_url(year)
-    return _scrape_monitoring(data_url, year)
+    return _scrape_monitoring(data_url, year, is_year_completed)
 
 
 def _load_monitoring():
@@ -662,7 +663,7 @@ def _scrape_execution(url, month, year):
     return (body, status)
 
 
-def _scrape_monitoring(url, year):
+def _scrape_monitoring(url, year, is_year_completed):
     year = str(year)
 
     if not url:
@@ -686,8 +687,13 @@ def _scrape_monitoring(url, year):
 
         # Based on the two denormalized source files, create three nicer normalized final ones
         _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "objetivos.csv", [4, 5, 6, 14, 15])
-        _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12, 13])
         _csv_cut_columns(temp_folder_path, "objetivos_y_actividades.csv", "actividades.csv", [4, 9, 11, 14, 15])
+        print("Year completed ###")
+        print(is_year_completed)
+        if is_year_completed:
+            _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12, 13])
+        else:
+            _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12])
 
         _write_temp(temp_folder_path, ".budget_year", year)
 
