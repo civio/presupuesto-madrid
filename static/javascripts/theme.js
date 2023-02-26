@@ -46,7 +46,6 @@ $(document).ready(function(){
   };
 
   var addYearSelectorCustomLabels = function() {
-    console.log('fof');
     var extension = {
       'es': 'Prórroga',
       'en': 'Extension',
