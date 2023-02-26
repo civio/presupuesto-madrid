@@ -66,17 +66,21 @@ class MadridMonitoringLoader(MonitoringLoader):
         _is_inverse_indicator = self._is_inverse_indicator(description, unit)
 
         # Calculate the indicator score, from 0 to 1
-        # Note: If goal is 0 then set score to 0, there's nothing to calculate, and
-        # it wouldn't be fair to give a score, it would be "free" (or "impossible" for
-        # the reverse ones). It's very rare anyway.
         if _is_inverse_indicator:
             # You get 0 points for doubling the target, and better from that.
             # Note that you could be worse than that (while "normal" indicators don't
             # go below zero), so we need to cap both the minimum and the maximum.
+            # Note: If the goal is 0 (sometimes the data is flawed) then the score
+            # is zero. We can't calculate it anyway. It's rare, but it happens.
             score = 0 if target==0 else max(min(float(2*target-actual)/float(target), 1.0), 0.0)
         else:
-            # Note: we assume negative values do not exist, simpler this way.
-            score = 0 if target==0 else min(float(actual)/float(target), 1.0)
+            if target==0:
+                # This is probably a mistake, but it happens sometimes. We've been
+                # asked explicitely (#1203) to "grant" the score.
+                score = 1.0 if (float(actual)>0) else 0.0
+            else:
+                # Note: we assume negative values do not exist, simpler this way.
+                score = min(float(actual)/float(target), 1.0)
 
         return {
             'goal_uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
