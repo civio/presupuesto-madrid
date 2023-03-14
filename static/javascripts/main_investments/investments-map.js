@@ -410,6 +410,24 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     ]);
   }
 
+  // Go through all the features (not just the visible ones), setting a property indicating
+  // whether they match the search query. Since the property is set and remains there,
+  // we don't need to call this again when changing year or category or other filters.
+  // (The alternative would be to iterate through visible features, but then we have to
+  // keep calling this all the time, and there was some race condition or something
+  // generating some weird behaviour I couldn't fix easily.)
+  function filterSearchResults(searchQuery) {
+    const sourceFeaturs = map.querySourceFeatures(
+      'investments'
+    )
+    sourceFeaturs.forEach(d => {
+      let search = normalizeString(d.properties.description).includes(searchQuery) || normalizeString(d.properties.area_name).includes(searchQuery)
+      map.setFeatureState(
+        { source: 'investments', id: d.id },
+        { search: search }
+      );
+    })
+  }
 
   function setupInputText(mapNode) {
     // Create input text container
@@ -428,28 +446,16 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
 
     // Bind event to input search
     document.querySelector('#investments-viz-filter-searcher-input').addEventListener("keyup", (e) => {
-      const value = formatStr(e.target.value)
-      const renderedPoints = map.queryRenderedFeatures(
-        { layers: ['investmentsLayer'] }
-      );
-
-      renderedPoints.forEach(d => {
-        let search = formatStr(d.properties.description).includes(value) || formatStr(d.properties.area_name).includes(value)
-        map.setFeatureState(
-          { source: 'investments', id: d.id },
-          { search: search }
-        );
-      })
-
+      filterSearchResults(normalizeString(e.target.value))
       unstickTooltip()  // Hide if open, as the clicked item may disappear
-
-      function formatStr(str) {
-        return str
-          .trim()
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-      }
     })
+  }
+
+  function normalizeString(str) {
+    return str
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
   }
 }
