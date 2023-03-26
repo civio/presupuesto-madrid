@@ -42,6 +42,7 @@
 1;3;2;01;Safety
 1;3;3;01;Traffic
 1;3;3;02;Parking management
+1;3;3;60;NGEU.ZBE Digital and sustainable transformation
 1;3;4;02;Mobility planning
 1;3;4;04;Mobility management
 1;3;4;60;NGEU.ZBE Digital and sustainable transformation
@@ -71,6 +72,7 @@
 1;6;1;02;Water supply
 1;6;2;10;Urban environment management
 1;6;2;30;Valdemingómez Technology Park
+1;6;2;78;NGEU. Waste regulation implementation
 1;6;3;01;Street cleaning
 1;6;5;01;Urban equipments
 1;7;0;00;Environment and Mobility administration and management
@@ -129,6 +131,7 @@
 4;3;3;05;Entrepreneurship
 4;3;3;06;Economy coordination
 4;3;3;07;Development strategies and economic analysis of Madrid
+4;3;3;75;NGEU. Digital Ecosystems
 4;4;1;10;"Transportation promotion, control and development"
 4;6;2;00;Smart cities and innovation
 4;6;3;00;"Scientific, technical and applied research"
