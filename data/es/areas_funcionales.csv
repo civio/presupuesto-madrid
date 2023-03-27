@@ -96,6 +96,7 @@
 2;3;1;10;Voluntariado
 2;3;1;66;NGEU. Itinerario de inclusión social
 2;3;1;68;NGEU. Eje REACT-UE Ayudas Emergencia
+2;3;1;79;NGEU. Convenio Servicios Sociales
 2;3;1;99;Actuaciones extraordinarias COVID-19
 2;3;2;00;Planes de barrio
 2;3;2;01;Fondo de reequilibrio territorial
@@ -125,6 +126,7 @@
 4;3;1;00;Comercio
 4;3;1;62;NGEU. Apoyo mercados sostenibles
 4;3;2;20;Información y promoción turística
+4;3;2;61;NGEU. Sostenibilidad turística
 4;3;3;00;"Dirección y gestión administrativa de Economía, Innovación y Empleo"
 4;3;3;01;Promoción económica y desarrollo empresarial
 4;3;3;04;Atracción de inversión e internacionalización empresarial
@@ -133,6 +135,9 @@
 4;3;3;07;Estrategias de desarrollo y análisis económico de Madrid
 4;3;3;75;NGEU. Ecosistemas Digitales
 4;4;1;10;"Promoción, control y desarrollo del transporte"
+4;4;1;60;NGEU. ZBE Transformación digital y sostenible
+4;4;1;61;NGEU. Sostenibilidad turística
+4;4;1;63;NGEU. Actividad comercial zonas turísticas
 4;6;2;00;Innovación y ciudad inteligente
 4;6;3;00;"Investigación científica, técnica y aplicada"
 4;9;1;01;Servicios informáticos y comunicaciones

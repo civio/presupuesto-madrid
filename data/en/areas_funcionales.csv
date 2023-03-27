@@ -42,10 +42,10 @@
 1;3;2;01;Safety
 1;3;3;01;Traffic
 1;3;3;02;Parking management
-1;3;3;60;NGEU.ZBE Digital and sustainable transformation
+1;3;3;60;NGEU. ZBE Digital and sustainable transformation
 1;3;4;02;Mobility planning
 1;3;4;04;Mobility management
-1;3;4;60;NGEU.ZBE Digital and sustainable transformation
+1;3;4;60;NGEU. ZBE Digital and sustainable transformation
 1;3;5;10;SAMUR-Civil Protection
 1;3;6;10;Firefighting
 1;5;0;00;Urban Development administration and management
@@ -95,7 +95,8 @@
 2;3;1;09;"Innovation, social strategy and volunteering"
 2;3;1;10;Volunteerism
 2;3;1;66;NGEU. Social inclusion itineraries
-2;3;1;68;NGEU. Axis REACT-EU Emergency support
+2;3;1;68;NGEU. REACT-EU Emergency support axis
+2;3;1;79;NGEU. Social Services agreement
 2;3;1;99;Extraordinary actions COVID-19
 2;3;2;00;Neighborhood plans
 2;3;2;01;Territorial rebalancing fund
@@ -125,6 +126,7 @@
 4;3;1;00;Trade
 4;3;1;62;NGEU. Support sustainable markets
 4;3;2;20;Tourist information and promotion
+4;3;2;61;NGEU. Tourism sustainability
 4;3;3;00;"Economy, Innovation and Employment administration and management"
 4;3;3;01;Economic promotion and business development
 4;3;3;04;Attraction of investments and business internationalization
@@ -133,6 +135,9 @@
 4;3;3;07;Development strategies and economic analysis of Madrid
 4;3;3;75;NGEU. Digital Ecosystems
 4;4;1;10;"Transportation promotion, control and development"
+4;4;1;60;NGEU. ZBE Digital and sustainable transformation
+4;4;1;61;NGEU. Tourism sustainability
+4;4;1;63;NGEU. Commercial activity of tourist areas
 4;6;2;00;Smart cities and innovation
 4;6;3;00;"Scientific, technical and applied research"
 4;9;1;01;Computer services and communications
