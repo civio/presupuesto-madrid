@@ -132,10 +132,6 @@ LANGUAGES = (
   ('en', 'English'),
 )
 
-# Facebook Aplication ID used in social_sharing temaplate. Default: ''
-# In order to get the ID create an app in https://developers.facebook.com/
-FACEBOOK_ID             = '979582332174600'
-
 # Setup Data Source Budget link
 DATA_SOURCE_BUDGET      = 'http://datos.madrid.es/portal/site/egob/menuitem.754985278d15ab64b2c3b244a8a409a0/?vgnextoid=20d612b9ace9f310VgnVCM100000171f5a0aRCRD&text=presupuestos+municipales&buscarEnTitulo=true&btn1=buscar'
 
