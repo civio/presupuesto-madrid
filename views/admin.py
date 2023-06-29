@@ -1205,7 +1205,7 @@ def _touch(file_path):
     _, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File '%s' couldn't be touched" % file_path)
+        raise AdminException("File '%s' couldn't be touched: %s" % (file_path, error))
 
 
 def _write(file_path, content):
@@ -1220,7 +1220,7 @@ def _write(file_path, content):
     _, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be written." % file_path)
+        raise AdminException("File %s couldn't be written: %s" % (file_path, error))
 
 
 def _remove(folder_path, filename):
@@ -1232,7 +1232,7 @@ def _remove(folder_path, filename):
     _, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be removed." % target)
+        raise AdminException("File %s couldn't be removed: %s" % (target, error))
 
 
 def _copy(source_path, destination_path, source_filename, destination_filename=None):
@@ -1251,7 +1251,7 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
     _, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be copied." % source_filename)
+        raise AdminException("File %s couldn't be copied: %s" % (source_filename, error))
 
 
 # Git helpers
@@ -1266,7 +1266,7 @@ def _reset_git_status():
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Couldn't reset git status.")
+        raise AdminException("Couldn't reset git status: %s" % (error, ))
 
     return output
 
@@ -1279,7 +1279,7 @@ def _read(file_path):
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be read." % file_path)
+        raise AdminException("File %s couldn't be read: %s" % (file_path, error))
 
     return output
 
