@@ -813,7 +813,7 @@ def _review(data_files_path):
 
     cmd = "export PYTHONIOENCODING=utf-8 && "
     cmd += "cd %s && " % script_path
-    cmd += "python madrid_check_datafiles.py %s" % data_files_path
+    cmd += "python2 madrid_check_datafiles.py %s" % data_files_path
 
     output, error = _execute_cmd(cmd)
 
@@ -973,7 +973,7 @@ def _execute_loading_task(cue, *management_commands):
     )% (ROOT_PATH, )
 
     for management_command in management_commands:
-        cmd += "&& python manage.py %s " % management_command
+        cmd += "&& python2 manage.py %s " % management_command
 
     output, error = _execute_cmd(cmd)
 
