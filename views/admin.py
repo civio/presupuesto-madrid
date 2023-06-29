@@ -1202,10 +1202,10 @@ def _touch(file_path):
     # The scripts/touch executable must be manually deployed and setuid'ed
     cmd = "cd %s && scripts/touch %s" % (THEME_PATH, file_path)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File '%s' couldn't be touched: %s" % (file_path, error))
+        raise AdminException("File '%s' couldn't be touched: %s\n\n%s" % (file_path, error, output))
 
 
 def _write(file_path, content):
@@ -1217,10 +1217,10 @@ def _write(file_path, content):
         "EOF"
     ) % (THEME_PATH, file_path, content)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be written: %s" % (file_path, error))
+        raise AdminException("File %s couldn't be written: %s\n\n%s" % (file_path, error, output))
 
 
 def _remove(folder_path, filename):
@@ -1229,10 +1229,10 @@ def _remove(folder_path, filename):
     # The scripts/rm executable must be manually deployed and setuid'ed
     cmd = ("cd %s " "&& scripts/rm -f %s") % (THEME_PATH, target)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be removed: %s" % (target, error))
+        raise AdminException("File %s couldn't be removed: %s\n\n%s" % (target, error, output))
 
 
 def _copy(source_path, destination_path, source_filename, destination_filename=None):
@@ -1248,10 +1248,10 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
     # The scripts/cp executable must be manually deployed and setuid'ed
     cmd = ("cd %s " "&& scripts/cp -f %s %s") % (THEME_PATH, source, destination)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be copied: %s" % (source_filename, error))
+        raise AdminException("File %s couldn't be copied: %s\n\n%s" % (source_filename, error, output))
 
 
 # Git helpers
@@ -1266,7 +1266,7 @@ def _reset_git_status():
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Couldn't reset git status: %s" % (error, ))
+        raise AdminException("Couldn't reset git status: %s\n\n%s" % (error, output))
 
     return output
 
@@ -1279,7 +1279,7 @@ def _read(file_path):
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be read: %s" % (file_path, error))
+        raise AdminException("File %s couldn't be read: %s\n\n%s" % (file_path, error, output))
 
     return output
 
@@ -1297,7 +1297,7 @@ def _commit(path, commit_message):
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n%s" % (path, str(error), cmd, output))
+        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n\n%s" % (path, str(error), cmd, output))
 
 
 # Utility helpers
