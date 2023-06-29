@@ -1266,7 +1266,7 @@ def _reset_git_status():
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Couldn't reset git status." % file_path)
+        raise AdminException("Couldn't reset git status.")
 
     return output
 
