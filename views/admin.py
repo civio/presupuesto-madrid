@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+# Some environment setup is needed for this to work.
+# See https://github.com/civio/presupuesto-management/issues/1235#issuecomment-1614674582 for details.
+
 from bs4 import BeautifulSoup
 from coffin.shortcuts import render, redirect
 from datetime import datetime
