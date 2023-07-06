@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+# Some environment setup is needed for this to work.
+# See https://github.com/civio/presupuesto-management/issues/1235#issuecomment-1614674582 for details.
+
 from bs4 import BeautifulSoup
 from coffin.shortcuts import render, redirect
 from datetime import datetime
@@ -813,7 +816,7 @@ def _review(data_files_path):
 
     cmd = "export PYTHONIOENCODING=utf-8 && "
     cmd += "cd %s && " % script_path
-    cmd += "python madrid_check_datafiles.py %s" % data_files_path
+    cmd += "python2 madrid_check_datafiles.py %s" % data_files_path
 
     output, error = _execute_cmd(cmd)
 
@@ -973,7 +976,7 @@ def _execute_loading_task(cue, *management_commands):
     )% (ROOT_PATH, )
 
     for management_command in management_commands:
-        cmd += "&& python manage.py %s " % management_command
+        cmd += "&& python2 manage.py %s " % management_command
 
     output, error = _execute_cmd(cmd)
 
@@ -1202,10 +1205,10 @@ def _touch(file_path):
     # The scripts/touch executable must be manually deployed and setuid'ed
     cmd = "cd %s && scripts/touch %s" % (THEME_PATH, file_path)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File '%s' couldn't be touched" % file_path)
+        raise AdminException("File '%s' couldn't be touched: %s\n\n%s" % (file_path, error, output))
 
 
 def _write(file_path, content):
@@ -1217,10 +1220,10 @@ def _write(file_path, content):
         "EOF"
     ) % (THEME_PATH, file_path, content)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be written." % file_path)
+        raise AdminException("File %s couldn't be written: %s\n\n%s" % (file_path, error, output))
 
 
 def _remove(folder_path, filename):
@@ -1229,10 +1232,10 @@ def _remove(folder_path, filename):
     # The scripts/rm executable must be manually deployed and setuid'ed
     cmd = ("cd %s " "&& scripts/rm -f %s") % (THEME_PATH, target)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be removed." % target)
+        raise AdminException("File %s couldn't be removed: %s\n\n%s" % (target, error, output))
 
 
 def _copy(source_path, destination_path, source_filename, destination_filename=None):
@@ -1248,10 +1251,10 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
     # The scripts/cp executable must be manually deployed and setuid'ed
     cmd = ("cd %s " "&& scripts/cp -f %s %s") % (THEME_PATH, source, destination)
 
-    _, error = _execute_cmd(cmd)
+    output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be copied." % source_filename)
+        raise AdminException("File %s couldn't be copied: %s\n\n%s" % (source_filename, error, output))
 
 
 # Git helpers
@@ -1266,7 +1269,7 @@ def _reset_git_status():
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Couldn't reset git status." % file_path)
+        raise AdminException("Couldn't reset git status: %s\n\n%s" % (error, output))
 
     return output
 
@@ -1279,7 +1282,7 @@ def _read(file_path):
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("File %s couldn't be read." % file_path)
+        raise AdminException("File %s couldn't be read: %s\n\n%s" % (file_path, error, output))
 
     return output
 
@@ -1297,7 +1300,7 @@ def _commit(path, commit_message):
     output, error = _execute_cmd(cmd)
 
     if error:
-        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n%s" % (path, str(error), cmd, output))
+        raise AdminException("Path %s couldn't be commited: %s\nExecuting: %s\n\n%s" % (path, str(error), cmd, output))
 
 
 # Utility helpers
