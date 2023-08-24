@@ -4,12 +4,18 @@
 # See https://github.com/civio/presupuesto-management/issues/1235#issuecomment-1614674582 for details.
 
 from bs4 import BeautifulSoup
-from coffin.shortcuts import render, redirect
 from datetime import datetime
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
+
+# Make code work across Django versions (see #80)
+import django
+if django.VERSION >= (1, 8):
+    from django.shortcuts import render, redirect
+else:
+    from coffin.shortcuts import render, redirect
 
 import base64
 import csv
