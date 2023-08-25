@@ -3,6 +3,8 @@
   var last_budget_status = '{{ latest_budget.status if latest_budget }}';
 </script>
 
+{% if not debug %}
 <script>
 { const manager = new IAMCookieManager("GTM-MLKZ85D;GTM-MN45SBL"); manager.start(); }
 </script>
+{% endif %}
