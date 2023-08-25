@@ -5,18 +5,18 @@
 
   <title>{{ meta_title | safe }}</title>
 
-  <link href="{{ STATIC_URL }}assets/favicon.png" rel="icon" type="image/x-icon" />
+  <link href="{{ static('assets/favicon.png') }}" rel="icon" type="image/x-icon" />
 
   {% include 'shared/fonts.html' %}
 
   {% compress css %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/main.css" media="all" type="text/css" />
+  <link rel="stylesheet" href="{{ static('stylesheets/main.css') }}" media="all" type="text/css" />
   {% endcompress %}
 
   {% compress js %}
-  <script src="{{ STATIC_URL }}javascripts/jquery-2.2.4.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery-migrate-1.4.1.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/modernizr-2.6.3.min.js"></script>
+  <script src="{{ static('javascripts/jquery-2.2.4.js') }}"></script>
+  <script src="{{ static('javascripts/jquery-migrate-1.4.1.js') }}"></script>
+  <script src="{{ static('javascripts/modernizr-2.6.3.min.js') }}"></script>
   {% endcompress %}
 </head>
 <body class="{{ page_css_class }}">
@@ -32,26 +32,26 @@
 
   {% compress js %}
   <!-- Jquery plugins -->
-  <script src="{{ STATIC_URL }}javascripts/jquery.ba-bbq.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery.cookie.min.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery.cookiebar.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery.event.drag-2.0.min.js"></script>
+  <script src="{{ static('javascripts/jquery.ba-bbq.js') }}"></script>
+  <script src="{{ static('javascripts/jquery.cookie.min.js') }}"></script>
+  <script src="{{ static('javascripts/jquery.cookiebar.js') }}"></script>
+  <script src="{{ static('javascripts/jquery.event.drag-2.0.min.js') }}"></script>
   <!-- Other dependencies -->
-  <script src="{{ STATIC_URL }}javascripts/underscore-1-5-2.min.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/datatables.min.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/select2.min.js"></script>
+  <script src="{{ static('javascripts/underscore-1-5-2.min.js') }}"></script>
+  <script src="{{ static('javascripts/datatables.min.js') }}"></script>
+  <script src="{{ static('javascripts/select2.min.js') }}"></script>
   <!-- Bootstrap plugins -->
-  <script src="{{ STATIC_URL }}javascripts/bootstrap/collapse.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/bootstrap/dropdown.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/bootstrap/modal.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/bootstrap/tooltip.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/bootstrap/popover.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/bootstrap/transition.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/bootstrap-slider.js"></script>
+  <script src="{{ static('javascripts/bootstrap/collapse.js') }}"></script>
+  <script src="{{ static('javascripts/bootstrap/dropdown.js') }}"></script>
+  <script src="{{ static('javascripts/bootstrap/modal.js') }}"></script>
+  <script src="{{ static('javascripts/bootstrap/tooltip.js') }}"></script>
+  <script src="{{ static('javascripts/bootstrap/popover.js') }}"></script>
+  <script src="{{ static('javascripts/bootstrap/transition.js') }}"></script>
+  <script src="{{ static('javascripts/bootstrap-slider.js') }}"></script>
   <!-- Custom modules -->
-  <script src="{{ STATIC_URL }}javascripts/script.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/theme.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/admin.js"></script>
+  <script src="{{ static('javascripts/script.js') }}"></script>
+  <script src="{{ static('javascripts/theme.js') }}"></script>
+  <script src="{{ static('javascripts/admin.js') }}"></script>
   {% block extra_javascript %}{% endblock %}
   {% endcompress %}
 
@@ -61,7 +61,7 @@
   <script src="https://cdn.jsdelivr.net/npm/js-base64@2.5.0/base64.min.js"></script>
 
   {% if debug %}
-  <script src="{{ STATIC_URL }}javascripts/count-css-rules.js"></script>
+  <script src="{{ static('javascripts/count-css-rules.js') }}"></script>
   {% endif %}
 
   {% include 'shared/cookiebar.html' %}
