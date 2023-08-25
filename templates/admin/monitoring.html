@@ -37,7 +37,7 @@
               <button type="submit" class="btn btn-default btn-primary" >{{ _('Descargar') }}</button>
             </form>
             <div id="data-download-output" class="data-output">
-              <div class="loading"><img src="{% static 'assets/loader.png' %}"> Descargando datos</div>
+              <div class="loading"><img src="{{ static('assets/loader.png') }}"> Descargando datos</div>
               <div class="output"></div>
             </div>
           </div>
@@ -51,7 +51,7 @@
               <button type="submit" class="btn btn-default btn-primary" >{{ _('Cargar') }}</button>
             </form>
             <div id="data-load-output" class="data-output">
-              <div class="loading"><img src="{% static 'assets/loader.png' %}"> Cargando datos</div>
+              <div class="loading"><img src="{{ static('assets/loader.png') }}"> Cargando datos</div>
               <div class="output"></div>
             </div>
           </div>
@@ -63,6 +63,6 @@
 {% endblock %}
 
 {% block extra_javascript %}
-<script src="{% static 'javascripts/admin/csv_download.js' %}"></script>
-<script src="{% static 'javascripts/admin/monitoring.js' %}"></script>
+<script src="{{ static('javascripts/admin/csv_download.js') }}"></script>
+<script src="{{ static('javascripts/admin/monitoring.js') }}"></script>
 {% endblock %}

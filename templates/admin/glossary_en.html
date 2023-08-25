@@ -28,7 +28,7 @@
               <button type="submit" class="btn btn-default btn-primary" >{{ _('Guardar') }}</button>
             </form>
             <div id="data-save-output" class="data-output">
-              <div class="loading"><img src="/static/assets/loader.png"> Guardando datos</div>
+              <div class="loading"><img src="{{ static('assets/loader.png') }}"> Guardando datos</div>
               <div class="output"></div>
             </div>
           </div>
@@ -42,7 +42,7 @@
               <button type="submit" class="btn btn-default btn-primary" >{{ _('Cargar') }}</button>
             </form>
             <div id="data-load-output" class="data-output">
-              <div class="loading"><img src="/static/assets/loader.png"> Cargando datos</div>
+              <div class="loading"><img src="{{ static('assets/loader.png') }}"> Cargando datos</div>
               <div class="output"></div>
             </div>
           </div>
@@ -54,6 +54,6 @@
 {% endblock %}
 
 {% block extra_javascript %}
-<script src="{% static 'javascripts/admin/csv_edit.js' %}"></script>
-<script src="{% static 'javascripts/admin/glossary_en.js' %}"></script>
+<script src="{{ static('javascripts/admin/csv_edit.js') }}"></script>
+<script src="{{ static('javascripts/admin/glossary_en.js') }}"></script>
 {% endblock %}
