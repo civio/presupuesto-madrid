@@ -207,7 +207,7 @@ EXTRA_URLS = (
     url(r'^admin/glossary/es/load$', 'admin_glossary_es_load'),
 
     url(r'^admin/glossary/en$', 'admin_glossary_en', name='admin_glossary_en'),
-    url(r'^admin/glossary/en/retrieve$'),
-    url(r'^admin/glossary/en/save$'),
-    url(r'^admin/glossary/en/load$')
+    url(r'^admin/glossary/en/retrieve$', 'admin_glossary_en_retrieve'),
+    url(r'^admin/glossary/en/save$', 'admin_glossary_en_save'),
+    url(r'^admin/glossary/en/load$', 'admin_glossary_en_load'),
 )
