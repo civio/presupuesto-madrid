@@ -13,7 +13,14 @@ from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
 # Make code work across Django versions (see #80)
 import django
 if django.VERSION >= (1, 8):
-    from django.shortcuts import render, redirect
+    from django.shortcuts import redirect
+    def render(request, template_name, c):
+        from budget_app.views.helpers import _set_meta_fields
+        _set_meta_fields(c)
+
+        from django.shortcuts import render as render_django
+        return render_django(request, template_name, c)
+
 else:
     from coffin.shortcuts import redirect
     def render(request, template_name, c):
