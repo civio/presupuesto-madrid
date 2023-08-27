@@ -63,7 +63,7 @@ class AdminException(Exception):
 # Main
 @never_cache
 def admin(request):
-    return redirect("admin-execution")
+    return redirect("presupuesto-madrid.views.admin_execution")
 
 
 # General budget
@@ -267,7 +267,7 @@ def admin_payments_load(request):
 # Glossary
 @never_cache
 def admin_glossary(request):
-    return redirect("admin-glossary-es")
+    return redirect("presupuesto-madrid.views.admin_glossary_es")
 
 @never_cache
 def admin_glossary_es(request):
