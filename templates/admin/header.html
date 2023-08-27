@@ -9,7 +9,7 @@
 
     <!-- DVMI Title & Home Link -->
     <h1 class="navbar-brand">
-      <a href="{{ url('presupuesto-madrid.views.admin') }}">
+      <a href="{{ url('admin') }}">
         {{ _('Administración de Presupuestos') }}
       </a>
     </h1>
@@ -25,38 +25,38 @@
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="admin-general {{ 'active' if active_tab == 'general' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_general') }}">{{ _('Presupuesto') }}</a>
+            <a href="{{ url('admin_general') }}">{{ _('Presupuesto') }}</a>
           </li>
 
           <li class="admin-execution {{ 'active' if active_tab == 'execution' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_execution') }}">{{ _('Ejecución mensual') }}</a>
+            <a href="{{ url('admin_execution') }}">{{ _('Ejecución mensual') }}</a>
           </li>
 
           <li class="admin-monitoring {{ 'active' if active_tab == 'monitoring' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_monitoring') }}">{{ _('Objetivos') }}</a>
+            <a href="{{ url('admin_monitoring') }}">{{ _('Objetivos') }}</a>
           </li>
 
           <li class="admin-main-investments {{ 'active' if active_tab == 'main-investments' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_main_investments') }}">{{ _('Inversiones principales') }}</a>
+            <a href="{{ url('admin_main_investments') }}">{{ _('Inversiones principales') }}</a>
           </li>
 
           <li class="admin-payments {{ 'active' if active_tab == 'payments' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_payments') }}">{{ _('Pagos e inversiones') }}</a>
+            <a href="{{ url('admin_payments') }}">{{ _('Pagos e inversiones') }}</a>
           </li>
 
           <li class="admin-inflation {{ 'active' if active_tab == 'inflation' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_inflation') }}">{{ _('Inflación') }}</a>
+            <a href="{{ url('admin_inflation') }}">{{ _('Inflación') }}</a>
           </li>
 
           <li class="admin-population {{ 'active' if active_tab == 'population' }}">
-            <a href="{{ url('presupuesto-madrid.views.admin_population') }}">{{ _('Población') }}</a>
+            <a href="{{ url('admin_population') }}">{{ _('Población') }}</a>
           </li>
 
           <li class="admin-glossary dropdown {{ 'active' if active_tab == 'glossary' }}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ _('Glosario') }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url('presupuesto-madrid.views.admin_glossary_es') }}">{{ _('Español') }}</a></li>
-              <li><a href="{{ url('presupuesto-madrid.views.admin_glossary_en') }}">{{ _('Inglés') }}</a></li>
+              <li><a href="{{ url('admin_glossary_es') }}">{{ _('Español') }}</a></li>
+              <li><a href="{{ url('admin_glossary_en') }}">{{ _('Inglés') }}</a></li>
             </ul>
           </li>
         </ul>

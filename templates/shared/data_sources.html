@@ -7,15 +7,15 @@
           <li><a href="{{ data_source_budget }}" target="_blank">{{ _('Datos presupuestarios') }} · <strong>{{ _('Gobierno de Aragón') }}</strong></a></li>
           <li>
             <a href="{{ data_source_population }}" target="_blank">{{ _('Datos de población') }} · <strong>{{ _('Instituto Nacional de Estadística (INE)') }}</strong></a> ·
-            <a class="icon-file-excel" href="{{ url('presupuesto-madrid.views.population_stats', 'csv') }}" title="{{ _('Descarga la tabla en CSV') }}"><span class="file-info">CSV</span></a>
+            <a class="icon-file-excel" href="{{ url('population_stats', 'csv') }}" title="{{ _('Descarga la tabla en CSV') }}"><span class="file-info">CSV</span></a>
             o
-            <a class="icon-file-excel" href="{{ url('presupuesto-madrid.views.population_stats', 'xlsx') }}" title="{{ _('Descarga la tabla en Excel') }}"><span class="file-info">Excel</span></a>
+            <a class="icon-file-excel" href="{{ url('population_stats', 'xlsx') }}" title="{{ _('Descarga la tabla en Excel') }}"><span class="file-info">Excel</span></a>
           </li>
           <li>
             <a href="{{ data_source_inflation }}" target="_blank">{{ _('Datos de inflación (Medias anuales de IPC para Aragón)') }} · <strong>{{ _('Instituto Nacional de Estadística (INE)') }}</strong></a> ·
-            <a class="icon-file-excel" href="{{ url('presupuesto-madrid.views.inflation_stats', 'csv') }}" title="{{ _('Descarga la tabla en CSV') }}"><span class="file-info">CSV</span></a>
+            <a class="icon-file-excel" href="{{ url('inflation_stats', 'csv') }}" title="{{ _('Descarga la tabla en CSV') }}"><span class="file-info">CSV</span></a>
             o
-            <a class="icon-file-excel" href="{{ url('presupuesto-madrid.views.inflation_stats', 'xlsx') }}" title="{{ _('Descarga la tabla en Excel') }}"><span class="file-info">Excel</span></a>
+            <a class="icon-file-excel" href="{{ url('inflation_stats', 'xlsx') }}" title="{{ _('Descarga la tabla en Excel') }}"><span class="file-info">Excel</span></a>
           </li>
         </ul>
         <div class="alert">

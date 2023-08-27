@@ -88,7 +88,7 @@
     disableButtons();
     $("#data-download-output").show().find('.content').html('');
     $.ajax({
-      url: "{{ url('presupuesto-madrid.views.admin_download') }}",
+      url: "{{ url('admin_download') }}",
       data: {
         source_path:  $('#source-path').val(),
         month:  $('#month').val(),
@@ -104,7 +104,7 @@
     disableButtons();
     $("#data-review-output").show().find('.content').html('');
     $.ajax({
-      url: "{{ url('presupuesto-madrid.views.admin_review') }}",
+      url: "{{ url('admin_review') }}",
       contentType:    'application/json; charset=utf-8',
       success:        onCommandSuccess,
       error:          onCommandError,
@@ -116,7 +116,7 @@
     disableButtons();
     $("#data-load-output").show().find('.content').html('');
     $.ajax({
-      url: "{{ url('presupuesto-madrid.views.admin_load') }}",
+      url: "{{ url('admin_load') }}",
       contentType:    'application/json; charset=utf-8',
       success:        onCommandSuccess,
       error:          onCommandError,

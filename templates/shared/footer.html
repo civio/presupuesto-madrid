@@ -2,25 +2,25 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
-        <a href="{{ url('budget_app.views.welcome') }}">{{ _('Visor de presupuestos') }}</a>
+        <a href="{{ url('welcome') }}">{{ _('Visor de presupuestos') }}</a>
         <p class="sitemap-title">{{ _('Web dedicada a la visualización de los presupuestos del Ayuntamiento de Madrid') }}</p>
         <p class="sitemap-more">{{ _('Más sobre presupuestos en') }} <a href="http://www.madrid.es/presupuestos" target="_blank">www.madrid.es</a></p>
       </div>
       <div class="col-sm-4 internal-links">
         <ul>
-          <li><a href="{{ url('budget_app.views.budgets') }}">{{ _('Visión global') }}</a></li>
-          <li><a href="{{ url('budget_app.views.policies') }}#view=income">{{ _('Políticas') }}</a></li>
-          <li><a href="{{ url('presupuesto-madrid.views.guidedvisit') }}">{{ _('Visita guiada') }}</a></li>
+          <li><a href="{{ url('budgets') }}">{{ _('Visión global') }}</a></li>
+          <li><a href="{{ url('policies') }}#view=income">{{ _('Políticas') }}</a></li>
+          <li><a href="{{ url('guidedvisit') }}">{{ _('Visita guiada') }}</a></li>
           {% if show_payments %}
-          <li><a href="{{ url('budget_app.views.payments') }}">{{ _('Pagos e inversiones') }}</a></li>
+          <li><a href="{{ url('payments') }}">{{ _('Pagos e inversiones') }}</a></li>
           {% endif %}
           {% if show_tax_receipt %}
-          <li><a href="{{ url('budget_app.views.tax_receipt') }}">{{ _('Lo que tú aportas') }}</a></li>
+          <li><a href="{{ url('tax_receipt') }}">{{ _('Lo que tú aportas') }}</a></li>
           {% endif %}
           {% if show_investments %}
-          <li><a href="{{ url('budget_app.views.investments') }}">{{ _('Inversiones por distritos') }}</a></li>
+          <li><a href="{{ url('investments') }}">{{ _('Inversiones por distritos') }}</a></li>
           {% endif %}
-          <li><a href="{{ url('budget_app.views.terms') }}">{{ _('¿Qué significa...?') }}</a></li>
+          <li><a href="{{ url('glossary') }}">{{ _('¿Qué significa...?') }}</a></li>
         </ul>
       </div>
       <div class="col-sm-4 external-links">
