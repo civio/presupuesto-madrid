@@ -163,7 +163,7 @@ EXTRA_URLS = (
     url(r"^visita-guiada$", "guidedvisit"),
     url(r"^inflacion\.(?P<format>.+)$", "inflation_stats"),
     url(r"^poblacion\.(?P<format>.+)$", "population_stats"),
-    url(r"^admin$", "admin"),
+    url(r"^admin/?$", "admin"),
     url(r"^admin/general$", "admin_general"),
     url(r"^admin/general/retrieve$", "admin_general_retrieve"),
     url(r"^admin/general/review$", "admin_general_review"),

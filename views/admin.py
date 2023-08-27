@@ -15,7 +15,14 @@ import django
 if django.VERSION >= (1, 8):
     from django.shortcuts import render, redirect
 else:
-    from coffin.shortcuts import render, redirect
+    from coffin.shortcuts import redirect
+    def render(request, template_name, c):
+        from budget_app.views.helpers import _set_meta_fields
+        _set_meta_fields(c)
+
+        from coffin.shortcuts import render as render_coffin
+        return render_coffin(request, template_name, c)
+
 
 import base64
 import csv
