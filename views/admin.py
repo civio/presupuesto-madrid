@@ -650,7 +650,6 @@ def _scrape_execution(url, month, year):
 
         # Create the target folder
         temp_folder_path = _create_temp_folder()
-        _write_temp(temp_folder_path, "index.html", page)   # FIXME: temporary
 
         # We assume a constant page layout: ingresos, gastos, inversiones
         _download(files[0], temp_folder_path, "ingresos.csv")
