@@ -24,35 +24,35 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="admin-general {{ 'active' if active_tab == 'general' }}">
+          <li class="admin-general {{ 'active' if active_tab == 'general' else '' }}">
             <a href="{{ url('admin_general') }}">{{ _('Presupuesto') }}</a>
           </li>
 
-          <li class="admin-execution {{ 'active' if active_tab == 'execution' }}">
+          <li class="admin-execution {{ 'active' if active_tab == 'execution' else '' }}">
             <a href="{{ url('admin_execution') }}">{{ _('Ejecución mensual') }}</a>
           </li>
 
-          <li class="admin-monitoring {{ 'active' if active_tab == 'monitoring' }}">
+          <li class="admin-monitoring {{ 'active' if active_tab == 'monitoring' else '' }}">
             <a href="{{ url('admin_monitoring') }}">{{ _('Objetivos') }}</a>
           </li>
 
-          <li class="admin-main-investments {{ 'active' if active_tab == 'main-investments' }}">
+          <li class="admin-main-investments {{ 'active' if active_tab == 'main-investments' else '' }}">
             <a href="{{ url('admin_main_investments') }}">{{ _('Inversiones principales') }}</a>
           </li>
 
-          <li class="admin-payments {{ 'active' if active_tab == 'payments' }}">
+          <li class="admin-payments {{ 'active' if active_tab == 'payments' else '' }}">
             <a href="{{ url('admin_payments') }}">{{ _('Pagos e inversiones') }}</a>
           </li>
 
-          <li class="admin-inflation {{ 'active' if active_tab == 'inflation' }}">
+          <li class="admin-inflation {{ 'active' if active_tab == 'inflation' else '' }}">
             <a href="{{ url('admin_inflation') }}">{{ _('Inflación') }}</a>
           </li>
 
-          <li class="admin-population {{ 'active' if active_tab == 'population' }}">
+          <li class="admin-population {{ 'active' if active_tab == 'population' else '' }}">
             <a href="{{ url('admin_population') }}">{{ _('Población') }}</a>
           </li>
 
-          <li class="admin-glossary dropdown {{ 'active' if active_tab == 'glossary' }}">
+          <li class="admin-glossary dropdown {{ 'active' if active_tab == 'glossary' else '' }}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ _('Glosario') }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="{{ url('admin_glossary_es') }}">{{ _('Español') }}</a></li>

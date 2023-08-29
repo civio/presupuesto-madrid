@@ -1,6 +1,8 @@
 <script>
-  var last_budget_year = '{{ latest_budget.year if latest_budget }}';
-  var last_budget_status = '{{ latest_budget.status if latest_budget }}';
+{% if latest_budget %}
+  var last_budget_year = '{{ latest_budget.year }}';
+  var last_budget_status = '{{ latest_budget.status }}';
+{% endif %}
 </script>
 
 {% if not debug %}

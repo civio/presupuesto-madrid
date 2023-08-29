@@ -1,8 +1,8 @@
-<li class="page-budgets {{ 'active' if active_tab == 'general'}} ">
+<li class="page-budgets {{ 'active' if active_tab == 'general' else '' }}">
   <a href="{{ url('budgets') }}" class="icon-budget">{{ _('Visión global') }}</a>
 </li>
 
-<li class="page-policies {{ 'active' if active_tab == 'policies'}} ">
+<li class="page-policies {{ 'active' if active_tab == 'policies' else '' }}">
   <a href="{{ url('policies') }}" class="icon-policy">{{ _('Políticas') }}</a>
 </li>
 
@@ -15,21 +15,21 @@
   </ul>
 </li>
 
-<li class="page-monitoring {{ 'active' if active_tab == 'monitoring' }}">
+<li class="page-monitoring {{ 'active' if active_tab == 'monitoring' else '' }}">
   <a href="{{ url('monitoring') }}" class="icon-monitoring">{{ _('Objetivos') }}</a>
 </li>
 {% else %}
-<li class="page-investments {{ 'active' if active_tab == 'investments'}} ">
+<li class="page-investments {{ 'active' if active_tab == 'investments' else '' }}">
   <a href="{{ url('investments') }}" class="icon-investments">{{ _('Inversiones por distritos') }}</a>
 </li>
 
-<li class="page-investments {{ 'active' if active_tab == 'main_investments'}} ">
+<li class="page-investments {{ 'active' if active_tab == 'main_investments' else '' }}">
   <a href="{{ url('main_investments') }}" class="icon-investments">{{ _('Inversiones principales') }}</a>
 </li>
 {% endif %}
 
 {% if show_payments %}
-<li class="page-payments {{ 'active' if active_tab == 'payments'}} ">
+<li class="page-payments {{ 'active' if active_tab == 'payments' else '' }}">
   <a href="{{ url('payments') }}" class="icon-payments">{{ _('Pagos e inversiones') }}</a>
 </li>
 {% endif %}
