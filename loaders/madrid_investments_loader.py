@@ -23,7 +23,7 @@ class MadridInvestmentsLoader(InvestmentsLoader):
     def parse_item(self, filename, line):
         # Skip empty/header/subtotal lines.
         # Careful with 2017 data, first two columns are usually empty
-        if unicode(line[0], encoding='iso-8859-1').encode('utf8') in ['*', 'Fondo', 'Programa de financiación']:
+        if unicode(line[0], encoding='iso-8859-1').encode('utf8') in ['*', 'Fondo', 'Fondos', 'Programa de financiación']:
             return
         if line[0]=='' and line[2]=='':
             return
