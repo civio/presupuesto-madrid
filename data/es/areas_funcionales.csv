@@ -37,7 +37,7 @@
 # Programas específicos vigentes de Madrid
 #
 0;1;1;11;Endeudamiento
-1;3;0;00;"Dirección y gestión administrativa de Portavoz, Seguridad y Emergencias"
+1;3;0;00;"Dirección y gestión administrativa de Vicealcaldía, Portavoz, Seguridad y Emergencias"
 1;3;0;01;Coordinación general de seguridad y emergencias
 1;3;2;01;Seguridad
 1;3;3;01;Tráfico
@@ -76,7 +76,7 @@
 1;6;2;78;NGEU. Implementación normativa de residuos
 1;6;3;01;Limpieza viaria
 1;6;5;01;Equipamientos urbanos
-1;7;0;00;Dirección y gestión administrativa de Medio Ambiente y Movilidad
+1;7;0;00;Dirección y gestión administrativa de Urbanismo, Medio Ambiente y Movilidad
 1;7;1;01;Patrimonio verde
 1;7;1;02;Zonas verdes
 1;7;1;03;Equipamiento de zonas ajardinadas
@@ -86,7 +86,7 @@
 1;7;2;62;NGEU. Apoyo mercados sostenibles
 2;2;1;01;Acción social para empleados
 2;2;1;02;Otras prestaciones
-2;3;1;00;"Dirección y gestión administrativa de Familias, Igualdad y Bienestar Social"
+2;3;1;00;"Dirección y gestión administrativa de Políticas Sociales, Familia e Igualdad"
 2;3;1;01;"Prevención y atención frente a la violencia de género, igualdad y diversidad"
 2;3;1;02;Familia e infancia
 2;3;1;03;Personas mayores y servicios sociales
@@ -102,7 +102,7 @@
 2;3;2;00;Planes de barrio
 2;3;2;01;Fondo de reequilibrio territorial
 2;3;2;70;Promoción plan de derechos humanos
-2;3;2;90;Cooperación y ciudadanía global
+2;3;2;90;Cooperación al desarrollo
 2;4;1;01;Empleo
 2;4;1;66;NGEU. Itinerario de inclusión social
 2;4;1;67;NGEU. Reequilibrio y equidad colectivos vulnerables
@@ -145,20 +145,20 @@
 4;9;1;02;Oficina digital
 4;9;1;79;NGEU. Convenio Servicios Sociales
 4;9;3;00;Consumo
-9;1;2;00;Oficina del secretario de la Junta de Gobierno
+9;1;2;00;Oficina de la secretaría de la Junta de Gobierno
 9;1;2;01;Alcaldía
 9;1;2;02;Gabinete de la Alcaldía
 9;1;2;03;"Área delegada de Coordinación Territorial, Transparencia y Participación Ciudadana"
-9;1;2;06;Área de gobierno de Desarrollo Urbano
+9;1;2;06;Área de gobierno de Urbanismo, Medio Ambiente y Movilidad
 9;1;2;07;Área de gobierno de Obras y Equipamientos
-9;1;2;08;"Área de gobierno de Familias, Igualdad y Bienestar Social"
-9;1;2;09;Área de gobierno de Hacienda y Personal
-9;1;2;10;Área de gobierno de Vicealcaldía
+9;1;2;08;"Área de gobierno de Políticas Sociales, Familia e Igualdad"
+9;1;2;09;Área de gobierno de Economía, Innovación y Hacienda
+9;1;2;10;Área de gobierno de Vicealcaldía, Portavoz, Seguridad y Emergencias
 9;1;2;11;Área delegada de Deporte
 9;1;2;12;Área de gobierno de Medio Ambiente y Movilidad
 9;1;2;13;"Área de gobierno de Cultura, Turismo y Deporte"
 9;1;2;14;"Área de gobierno de Economía, Innovación y Empleo"
-9;1;2;15;Área delegada de Vivienda
+9;1;2;15;Área delegada de Políticas de Vivienda
 9;1;2;16;Presidencia del Pleno
 9;1;2;17;Área delegada de Emprendimiento, Empleo e Innovación
 9;1;2;18;"Área de gobierno de Portavoz, Seguridad y Emergencias"
@@ -166,7 +166,7 @@
 9;1;2;22;Área delegada de Turismo
 9;1;2;30;Secretaría general del Pleno
 9;1;2;40;Grupos políticos municipales
-9;2;0;02;Organización y régimen jurídico
+9;2;0;02;Organización, régimen jurídico y calidad regulatoria
 9;2;0;03;Contratación y servicios
 9;2;0;04;Formación de personal
 9;2;0;05;Relaciones laborales
@@ -180,7 +180,7 @@
 9;2;2;01;Relaciones con el Pleno
 9;2;2;02;Comunicación
 9;2;2;06;Coordinación general de la alcaldía
-9;2;2;07;Relaciones institucionales
+9;2;2;07;Relaciones internacionales
 9;2;2;08;Coordinación técnica de los distritos
 9;2;2;09;Desconcentración y acción territorial
 9;2;2;10;Oficina de coordinación
@@ -190,11 +190,11 @@
 9;2;3;10;Estadística
 9;2;3;20;Análisis socioeconómico
 9;2;4;01;Participación ciudadana
-9;2;4;02;Participación empresarial
+9;2;4;02;Relaciones institucionales, proyectos estratégicos y participación empresarial
 9;2;5;01;Atención a la ciudadanía
 9;2;9;01;Créditos globales
 9;2;9;02;Fondo de contingencia
-9;3;1;00;Dirección y gestión administrativa de Hacienda y Personal
+9;3;1;00;Dirección y gestión administrativa de Economía, Innovación y Hacienda
 9;3;1;01;Programación y presupuestación
 9;3;1;02;Control interno y contabilidad
 9;3;1;04;Colaboración público privada
