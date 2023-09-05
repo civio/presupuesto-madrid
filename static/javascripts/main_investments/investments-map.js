@@ -440,6 +440,14 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     inputTextNode.setAttribute("id", "investments-viz-filter-searcher-input")
     inputTextNode.setAttribute("placeholder", "Busca por nombre o distrito")
 
+    // Every input needs a label
+    const labelNode = document.createElement("label")
+    labelNode.setAttribute("for", "investments-viz-filter-searcher-input")
+    labelNode.classList.add("visually-hidden")
+
+    labelNode.innerHTML = "Busca por nombre o distrito"
+
+    inputTextContainer.append(labelNode)
     inputTextContainer.append(inputTextNode)
 
     mapNode.append(inputTextContainer)
