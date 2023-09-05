@@ -9,7 +9,7 @@
 {% if show_monitoring %}
 <li class="page-glossary">
   <a class="icon-glossary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ _('Inversiones') }}<span class="caret"></span></a>
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu" aria-expanded=”false”>
     <li><a href="{{ url('investments') }}" class="icon-investments">{{ _('Inversiones por distritos') }}</a></li>
     <li><a href="{{ url('main_investments') }}" class="icon-investments">{{ _('Inversiones principales') }}</a></li>
   </ul>
@@ -36,7 +36,7 @@
 
 <li class="page-glossary">
   <a class="icon-glossary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ _('Te lo explicamos') }}<span class="caret"></span></a>
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu" aria-expanded=”false”>
     <li><a href="{{ url('guidedvisit') }}">{{ _('Visita guiada') }}</a></li>
     <li><a href="{{ url('glossary') }}">{{ _('¿Qué significa...?') }}</a></li>
   </ul>
