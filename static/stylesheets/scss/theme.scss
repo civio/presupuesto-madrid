@@ -902,3 +902,16 @@ table.table-grid tr td{
       font-weight: 200;
     }
 }
+
+
+// a11y: Improve constrast on placeholders
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $gray!important;
+  opacity: 1; /* Firefox */
+}
+input::-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $gray-light!important;
+}
+input::-ms-input-placeholder { /* Microsoft Edge */
+  color: $gray-light!important;
+}
