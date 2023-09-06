@@ -83,8 +83,7 @@ SHOW_GUIDED_VISIT = True
 SHOW_GLOBAL_INSTITUTIONAL_TREEMAP  = True
 
 # Show a monitoring section and an extra tab in the Policy page, with budget goals and indicators. Default: False.
-# FIXME: This is temporarily enabled via local settings during development. See end of project/settings.py
-# SHOW_MONITORING  = True
+SHOW_MONITORING  = True
 
 # How many levels to show in the global institutional treemap? Default: 1.
 INSTITUTIONAL_MAX_LEVELS = 2
