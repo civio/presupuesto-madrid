@@ -34,27 +34,6 @@
   }
 }
 
-// New Glosary dropdown selector
-.page-glossary {
-  .dropdown-menu a {
-   color: $gray-base!important;
-
-    // a11y
-    &:hover{
-      color: $brand-primary!important;
-    }
-    &:focus {
-      color: $brand-primary!important;
-      @include box-shadow(none);
-    }
-
-    .caret{
-      margin-left: 5px;
-    }
-  }
-}
-
-
 
 @media (min-width: $grid-float-breakpoint) {
 
@@ -135,14 +114,26 @@ header{
 
     > li{
 
-      > a{
+      // Dropdowns nav elements
+      > button {
+        float: none;
+        width: 100%;
+        margin: 0;
+        padding: $grid-gutter-width/2 0;
+        border: none;
+        border-radius: 0;
+        line-height: 20px;
+        background: transparent;
+      }
+
+      > a, > button {
         color: $text-color;
         font-size: 1.25em;
         font-weight: $font-weight-700;
         text-transform: none;
 
         &:hover,
-        &:focus{
+        &:focus {
           color: $brand-primary;
         }
       }
@@ -151,11 +142,16 @@ header{
 
         > a,
         > a:hover,
-        > a:focus{
+        > a:focus, 
+        > button,
+        > button:hover,
+        > button:focus {
           color: $brand-primary;
           font-weight: $font-weight-700;
         }
       }
+
+      
     }
   }
 }
@@ -178,7 +174,7 @@ header{
           margin-left: 0;
         }
 
-        > a{
+        > a, > button {
           line-height: 50px;
           padding: 2px 0 0;
           text-align: left;
