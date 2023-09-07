@@ -444,7 +444,6 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     const labelNode = document.createElement("label")
     labelNode.setAttribute("for", "investments-viz-filter-searcher-input")
     labelNode.classList.add("visually-hidden")
-
     labelNode.innerHTML = "Busca por nombre o distrito"
 
     inputTextContainer.append(labelNode)
