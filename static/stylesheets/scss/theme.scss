@@ -151,7 +151,14 @@ header{
         }
       }
 
-      
+      // Fix dropdown elements color
+       .dropdown-menu > li > a {
+        color: $text-color;
+       }
+       .dropdown-menu > li {
+        > a:hover, a:focus {
+         color: $brand-primary;
+        }
     }
   }
 }
