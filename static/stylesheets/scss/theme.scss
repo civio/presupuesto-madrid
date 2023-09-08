@@ -151,15 +151,34 @@ header{
         }
       }
 
-      // Fix dropdown elements color
-       .dropdown-menu > li > a {
+      // Fix dropdown elements color on desktop
+      .dropdown-menu > li > a {
         color: $text-color;
-       }
-       .dropdown-menu > li {
-        > a:hover, a:focus {
-         color: $brand-primary;
+      }
+      .dropdown-menu > li {
+        > a:hover, > a:focus {
+          color: $brand-primary;
         }
-    }
+      }
+
+      // Fix on mobile
+      .dropdown-menu a {
+        color: $gray-base!important;
+     
+         // a11y
+         &:hover{
+           color: $brand-primary!important;
+         }
+         &:focus {
+           color: $brand-primary!important;
+           @include box-shadow(none);
+         }
+     
+         .caret{
+           margin-left: 5px;
+         }
+       }
+    }  
   }
 }
 
