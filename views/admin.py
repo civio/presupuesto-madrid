@@ -991,7 +991,8 @@ def _execute_loading_task(cue, *management_commands):
     # IO encoding is a nightmare. See https://stackoverflow.com/a/4027726
     cmd = (
         "export PYTHONIOENCODING=utf-8 "
-        "&& cd %s"
+        "&& cd %s "
+        "&& source env/bin/activate "
     )% (ROOT_PATH, )
 
     for management_command in management_commands:
