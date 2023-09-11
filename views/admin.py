@@ -209,7 +209,7 @@ def admin_monitoring(request):
 @never_cache
 def admin_monitoring_retrieve(request):
     year = _get_year(request.GET)
-    is_year_completed = request.GET.get("yearCompleted", "No")=='Sí'
+    is_year_completed = request.GET.get("yearCompleted", "No")==u'Sí'
     body, status = _retrieve_monitoring(year, is_year_completed)
     return _json_response(body, status)
 
