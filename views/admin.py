@@ -711,8 +711,7 @@ def _scrape_monitoring(url, year, is_year_completed):
         # Based on the two denormalized source files, create three nicer normalized final ones
         _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "objetivos.csv", [4, 5, 6, 14, 15])
         _csv_cut_columns(temp_folder_path, "objetivos_y_actividades.csv", "actividades.csv", [4, 9, 11, 14, 15])
-        print("Year completed ###")
-        print(is_year_completed)
+
         if is_year_completed:
             _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12, 13])
         else:
