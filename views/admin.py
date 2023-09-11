@@ -6,30 +6,11 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
 from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
-
-# Make code work across Django versions (see #80)
-import django
-if django.VERSION >= (1, 8):
-    from django.shortcuts import redirect
-    def render(request, template_name, c):
-        from budget_app.views.helpers import _set_meta_fields
-        _set_meta_fields(c)
-
-        from django.shortcuts import render as render_django
-        return render_django(request, template_name, c)
-
-else:
-    from coffin.shortcuts import redirect
-    def render(request, template_name, c):
-        from budget_app.views.helpers import _set_meta_fields
-        _set_meta_fields(c)
-
-        from coffin.shortcuts import render as render_coffin
-        return render_coffin(request, template_name, c)
-
+from budget_app.views.helpers import _set_meta_fields
 
 import base64
 import csv
@@ -93,7 +74,7 @@ def admin_general(request):
         "previous_years": previous_years,
     }
 
-    return render(request, "admin/general.html", context)
+    return _html_response(request, "admin/general.html", context)
 
 @never_cache
 def admin_general_retrieve(request):
@@ -125,7 +106,7 @@ def admin_execution(request):
         "previous_years": previous_years,
     }
 
-    return render(request, "admin/execution.html", context)
+    return _html_response(request, "admin/execution.html", context)
 
 @never_cache
 def admin_execution_retrieve(request):
@@ -149,7 +130,7 @@ def admin_execution_load(request):
 @never_cache
 def admin_inflation(request):
     context = {"title_prefix": _(u"Inflación"), "active_tab": "inflation"}
-    return render(request, "admin/inflation.html", context)
+    return _html_response(request, "admin/inflation.html", context)
 
 @never_cache
 def admin_inflation_retrieve(request):
@@ -172,7 +153,7 @@ def admin_inflation_load(request):
 @never_cache
 def admin_population(request):
     context = {"title_prefix": _(u"Población"), "active_tab": "population"}
-    return render(request, "admin/population.html", context)
+    return _html_response(request, "admin/population.html", context)
 
 @never_cache
 def admin_population_retrieve(request):
@@ -204,7 +185,7 @@ def admin_monitoring(request):
         "previous_years": previous_years,
     }
 
-    return render(request, "admin/monitoring.html", context)
+    return _html_response(request, "admin/monitoring.html", context)
 
 @never_cache
 def admin_monitoring_retrieve(request):
@@ -232,7 +213,7 @@ def admin_main_investments(request):
         "previous_years": previous_years,
     }
 
-    return render(request, "admin/main_investments.html", context)
+    return _html_response(request, "admin/main_investments.html", context)
 
 @never_cache
 def admin_main_investments_retrieve(request):
@@ -259,7 +240,7 @@ def admin_payments(request):
         "previous_years": previous_years,
     }
 
-    return render(request, "admin/payments.html", context)
+    return _html_response(request, "admin/payments.html", context)
 
 @never_cache
 def admin_payments_retrieve(request):
@@ -286,7 +267,7 @@ def admin_glossary(request):
 @never_cache
 def admin_glossary_es(request):
     context = {"title_prefix": _(u"Glosario"), "active_tab": "glossary"}
-    return render(request, "admin/glossary_es.html", context)
+    return _html_response(request, "admin/glossary_es.html", context)
 
 @never_cache
 def admin_glossary_es_retrieve(request):
@@ -307,7 +288,7 @@ def admin_glossary_es_load(request):
 @never_cache
 def admin_glossary_en(request):
     context = {"title_prefix": _(u"Glosario"), "active_tab": "glossary"}
-    return render(request, "admin/glossary_en.html", context)
+    return _html_response(request, "admin/glossary_en.html", context)
 
 @never_cache
 def admin_glossary_en_retrieve(request):
@@ -1424,11 +1405,14 @@ def _execute_cmd(cmd):
     return (output, error)
 
 
+def _html_response(request, template_name, c):
+    _set_meta_fields(c)
+    return render(request, template_name, c)
+
 def _json_response(data, status=200):
     return HttpResponse(
         json.dumps(data), content_type="application/json; charset=utf-8", status=status
     )
-
 
 def _csv_response(data, status=200):
     return HttpResponse(data, content_type="text/csv; charset=utf-8", status=status)
