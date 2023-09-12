@@ -130,25 +130,25 @@ LANGUAGES = (
 )
 
 # Setup Data Source Budget link
-DATA_SOURCE_BUDGET      = 'http://datos.madrid.es/portal/site/egob/menuitem.754985278d15ab64b2c3b244a8a409a0/?vgnextoid=20d612b9ace9f310VgnVCM100000171f5a0aRCRD&text=presupuestos+municipales&buscarEnTitulo=true&btn1=buscar'
+DATA_SOURCE_BUDGET      = 'https://datos.madrid.es/portal/site/egob/menuitem.754985278d15ab64b2c3b244a8a409a0/?vgnextoid=20d612b9ace9f310VgnVCM100000171f5a0aRCRD&text=presupuestos+municipales&buscarEnTitulo=true&btn1=buscar'
 
 # Setup Data Source Population link
-DATA_SOURCE_POPULATION  = 'http://www.ine.es/jaxiT3/Tabla.htm?t=2881&L=0'
+DATA_SOURCE_POPULATION  = 'https://www.ine.es/jaxiT3/Tabla.htm?t=2881&L=0'
 
 # Setup Data Source Inflation link
-DATA_SOURCE_INFLATION   = 'http://www.ine.es/jaxiT3/Tabla.htm?t=22350&L=0'
+DATA_SOURCE_INFLATION   = 'https://www.ine.es/jaxiT3/Tabla.htm?t=22350&L=0'
 
 # Setup Main Entity Web Url
-MAIN_ENTITY_WEB_URL     = 'http://www.madrid.es/'
+MAIN_ENTITY_WEB_URL     = 'https://www.madrid.es/'
 
 # Setup Main Entity Legal Url (if empty we hide the link)
-MAIN_ENTITY_LEGAL_URL   = 'http://www.madrid.es/portales/munimadrid/avisoLegal.html'
+MAIN_ENTITY_LEGAL_URL   = 'https://www.madrid.es/portales/munimadrid/avisoLegal.html'
 
 # Setup Main Entity Legal Url (if empty we hide the link)
-MAIN_ENTITY_PRIVACY_URL = 'http://www.madrid.es/portales/munimadrid/proteccionDatos.html'
+MAIN_ENTITY_PRIVACY_URL = 'https://www.madrid.es/portales/munimadrid/proteccionDatos.html'
 
 # External URL for Cookies Policy (if empty we use out template page/cookies.html)
-COOKIES_URL             = 'http://www.madrid.es/portales/munimadrid/cookies.html'
+COOKIES_URL             = 'https://www.madrid.es/portales/munimadrid/cookies.html'
 
 # Allow overriding of default treemap color scheme
 # COLOR_SCALE = [ '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#e7969c', '#bcbd22', '#17becf' ]
