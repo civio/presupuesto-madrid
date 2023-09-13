@@ -43,6 +43,7 @@ class MadridUtils:
         }
         programme_mapping_2011 = {
             '13303': '13302',   # Aparcamientos
+            '15110': '15199',   # Programa refuerzo para tramitación de licencias
             '17102': '16601',   # Mobiliario urbano
             '23103': '23106',   # Servicios sociales
             '23104': '23106',   # Servicios sociales
@@ -53,6 +54,7 @@ class MadridUtils:
             '91204': '91203',   # Área de coordinación territorial
             '91205': '91204',   # Área de portavoz
             '92202': '92208',   # Relaciones con distritos
+            '93103': '93199',   # Contabilidad
         }
         programme_mapping_2012 = {
             # old programme: new programme

@@ -233,7 +233,7 @@
 #
 1;5;1;08;Revisión del Plan General de Ordenación Urbana de Madrid
 1;5;1;09;Gestión de licencias de actividades
-1;5;1;10;Programa refuerzo para tramitación de licencias
+1;5;1;99;Programa refuerzo para tramitación de licencias
 1;5;5;00;Dirección y gestión administrativa de obras y espacios públicos
 1;5;5;03;Proyectos singulares
 1;5;5;05;Planificación urbana
@@ -282,7 +282,7 @@
 9;2;2;03;Coordinación general de estudios
 9;2;2;04;Relaciones internacionales y patrocinios
 9;2;2;05;Relaciones administrativas
-9;3;1;03;Contabilidad
+9;3;1;99;Contabilidad
 9;3;2;00;Gestión tributaria
 9;3;2;02;Gestión y defensa del contribuyente
 #

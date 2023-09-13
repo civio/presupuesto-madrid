@@ -233,7 +233,7 @@
 #
 1;5;1;08;Madrid's general urban plan revision
 1;5;1;09;Activity licenses management
-1;5;1;10;License processing reinforcement programme
+1;5;1;99;License processing reinforcement programme
 1;5;5;00;Infraestructure and Public Spaces administration and management
 1;5;5;03;Singular projects
 1;5;5;05;Urban planning
@@ -282,7 +282,7 @@
 9;2;2;03;Research general coordination
 9;2;2;04;International relations and sponsorships
 9;2;2;05;Administrative relations
-9;3;1;03;Accounting
+9;3;1;99;Accounting
 9;3;2;00;Tax management
 9;3;2;02;Taxpayer management and protection
 #
