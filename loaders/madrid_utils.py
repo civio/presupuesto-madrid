@@ -153,6 +153,11 @@ class MadridUtils:
             '0130': '013A',     # Defensor del Contribuyente
         }
 
+        institutional_mapping_2023 = {
+            '0120': '012A',     # Vicealcaldía, Portavoz, Seguridad y Emergencias
+            '0140': '014A',     # Economía, Innovación y Hacienda
+        }
+
         # Get institutional code. We ignore sections in autonomous bodies, since they
         # get assigned to different sections in main body but that's not relevant.
         institution = MadridUtils.get_institution_code(raw_ic_code[0:3])
@@ -167,6 +172,10 @@ class MadridUtils:
 
         if year < 2020:
             ic_code = institutional_mapping_pre_2020.get(ic_code, ic_code)
+
+        # New structure, see #1277
+        if year >= 2023:
+            ic_code = institutional_mapping_2023.get(ic_code, ic_code)
 
         return ic_code
 

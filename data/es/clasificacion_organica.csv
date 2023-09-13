@@ -24,13 +24,14 @@
 0;1;01;Alcaldía
 0;1;02;Coordinación General de la Alcaldía
 0;1;03;Oficina Municipal contra el Fraude y la Corrupción
-0;1;20;"Vicealcaldía, Portavoz, Seguridad y Emergencias"
+0;1;2A;"Vicealcaldía, Portavoz, Seguridad y Emergencias"
 0;1;30;"Cultura, Turismo y Deporte"
 0;1;31;Área Delegada de Deporte
 0;1;32;Área Delegada de Turismo
-0;1;40;"Economía, Innovación y Hacienda"
+0;1;4A;"Economía, Innovación y Hacienda"
 0;1;41;"Área Delegada de Innovación y Emprendimiento"
 0;1;50;Urbanismo, Medio Ambiente y Movilidad
+0;1;51;Área Delegada de Limpieza y Zonas Verdes
 0;1;61;Políticas de Vivienda
 0;1;80;"Políticas Sociales, Familia e Igualdad"
 0;1;90;Obras y Equipamientos
@@ -73,13 +74,12 @@
 0;0;99;Área de Licencias de Actividades
 0;1;3A;Defensor del Contribuyente
 #
-# XXX: Cambios julio 2023, pendiente revisión #1277
+# Secciones abandonadas en julio 2023 #1277
 #
-0;1;51;Área Delegada de Limpieza y Zonas Verdes
-#
-# XXX: Obsoletos
 0;1;10;Vicealcaldía
 0;1;11;"Área Delegada de Coordinación Territorial, Transparencia y Participación Ciudadana"
 0;1;12;Área Delegada de Internacionalización y Cooperación
+0;1;20;"Portavoz, Seguridad y Emergencias"
+0;1;40;"Economía, Innovación y Empleo"
 0;1;60;Desarrollo Urbano
 0;1;70;Hacienda y Personal

@@ -24,19 +24,15 @@
 0;1;01;Mayor's Office
 0;1;02;Mayor's Office for General Coordination
 0;1;03;Municipal Office against Fraud and Corruption
-0;1;11;"Delegated Area of Territorial Coordination, Transparency and Citizen Participation"
-0;1;10;Deputy Mayor's Office
-0;1;12;Delegated Area of Internacionalization and Cooperation
-0;1;20;"Spokesperson, Public Safety and Emergencies"
+0;1;2A;"Deputy Mayor's Office, Spokesperson, Public Safety and Emergencies"
 0;1;30;"Culture, Tourism and Sports"
 0;1;31;Delegated Area of Sports
 0;1;32;Delegated Area of Tourism
-0;1;40;"Economy, Innovation and Employment"
+0;1;4A;"Economy, Innovation and Treasury"
 0;1;41;"Delegated Area of Entrepreneurship, Employment and Innovation"
 0;1;50;Environment and Mobility
-0;1;60;Urban Development
+0;1;51;Delegate Area for Cleaning and Green Zones
 0;1;61;Área Delegada de Vivienda
-0;1;70;Treasury and Personnel
 0;1;80;"Families, Equality and Social Welfare"
 0;1;90;Infrastructure and Public Facilities
 0;2;01;District of Centro
@@ -78,6 +74,12 @@
 0;0;99;Department of Activity Licenses
 0;1;3A;Taxpayer Advocate
 #
-# XXX: Nuevos programas julio 2023, pendiente revisión #1277
+# Secciones abandonadas en julio 2023 #1277
 #
-0;1;51;Delegate Area for Cleaning and Green Zones
+0;1;10;Deputy Mayor's Office
+0;1;11;"Delegated Area of Territorial Coordination, Transparency and Citizen Participation"
+0;1;12;Delegated Area of Internacionalization and Cooperation
+0;1;20;"Spokesperson, Public Safety and Emergencies"
+0;1;40;"Economy, Innovation and Employment"
+0;1;60;Urban Development
+0;1;70;Treasury and Personnel
