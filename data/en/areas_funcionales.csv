@@ -48,15 +48,20 @@
 1;3;4;60;NGEU. ZBE Digital and sustainable transformation
 1;3;5;10;SAMUR-Civil Protection
 1;3;6;10;Firefighting
+1;3;6;72;NGEU. Emergency 5G communications and services
 1;5;0;00;Urban Development administration and management
 1;5;1;01;Urban planning
 1;5;1;02;Urban management
 1;5;1;03;Building control and execution
 1;5;1;04;Urban strategy
 1;5;1;05;Municipal land management
+1;5;1;10;Office of the new PGOUM
+1;5;1;11;Urban planning legal regime
 1;5;1;70;NGEU. Restoration of river ecosystems
+1;5;2;00;Direction and administrative management of Housing Policies
 1;5;2;10;Housing promotion and management
 1;5;2;20;Housing conservation and rehabilitation
+1;5;2;30;Urban regeneration
 1;5;2;79;NGEU. Social Services agreement
 1;5;3;20;Infraestructure and Public Facilities management and administration
 1;5;3;21;Public roads
@@ -164,6 +169,7 @@
 9;1;2;18;"Department of Spokesperson, Public Safety and Emergencies"
 9;1;2;19;Delegated Area of Internacionalization and Cooperation
 9;1;2;22;Delegated Area of Tourism
+9;1;2;23;Delegate Area for Cleaning and Green Zones
 9;1;2;30;General Secretariat of the Assembly
 9;1;2;40;Municipal political groups
 9;2;0;02;Organization and legal status
@@ -197,6 +203,7 @@
 9;3;1;00;Treasury and Personnel administration and management
 9;3;1;01;Budgeting and planning
 9;3;1;02;Internal control and accounting
+9;3;1;03;European Funds
 9;3;1;04;Public-private collaborations
 9;3;1;05;Public sector
 9;3;1;06;Public policy analysis
@@ -206,6 +213,7 @@
 9;3;3;03;Wealth management
 9;3;3;04;Asset management
 9;3;3;62;NGEU. Support sustainable markets
+9;3;3;71;NGEU. Program to Promote the Rehabilitation of Public Buildings
 9;3;3;79;NGEU. Social Services agreement
 9;3;4;01;Financial policy
 9;3;4;05;Treasury
@@ -277,17 +285,6 @@
 9;3;1;03;Accounting
 9;3;2;00;Tax management
 9;3;2;02;Taxpayer management and protection
-#
-# XXX: Nuevos programas julio 2023, pendiente revisión #1277
-#
-1;3;6;72;NGEU. SERVICIOS Y COMUNICACIONES 5G EMERGENCIAS
-1;5;1;10;OFICINA DEL NUEVO PGOUM
-1;5;1;11;RÉGIMEN JURÍDICO URBANÍSTICO
-1;5;2;00;DIR.Y GEST.ADMV. POLÍTICAS DE VIVIENDA
-1;5;2;30;REGENERACIÓN URBANA
-9;1;2;23;A.D. LIMPIEZA Y ZONAS VERDES
-9;3;1;03;FONDOS EUROPEOS
-9;3;3;71;NGEU. PROGRAMA IMPULSO REHABILITACIÓN EDIFICIOS PÚBLICOS
 #
 # Líneas de inversión de Madrid
 #
