@@ -156,6 +156,7 @@ class MadridUtils:
         institutional_mapping_2023 = {
             '0120': '012A',     # Vicealcaldía, Portavoz, Seguridad y Emergencias
             '0140': '014A',     # Economía, Innovación y Hacienda
+            '0150': '015A',     # Urbanismo, Medio Ambiente y Movilidad
         }
 
         # Get institutional code. We ignore sections in autonomous bodies, since they
