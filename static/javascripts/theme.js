@@ -117,11 +117,12 @@ $(document).ready(function(){
 
     var descriptions = {
       '/es': descriptionText['main_es'],
-      '/es/secciones/015A': descriptionText['150_es'],
+      '/es/secciones/012A': descriptionText['120_es'],
+      '/es/secciones/0120': descriptionText['120_es'],
+      '/es/secciones/014A': descriptionText['140_es'],
+      '/es/secciones/0140': descriptionText['140_es'],
       '/es/secciones/015A': descriptionText['150_es'],
       '/es/secciones/0150': descriptionText['150_es'],
-      '/en/politicas/01': descriptionText['150_en'],
-      '/en/programas/01111': descriptionText['150_en']
     };
 
     var description = descriptions[ window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) ];
