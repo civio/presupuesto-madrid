@@ -81,24 +81,53 @@ $(document).ready(function(){
     }
 
     var descriptions = {
-      '/es/politicas/01': {
-        'text': descriptionText.es
-      },
-      '/es/programas/01111': {
-        'text': descriptionText.es
-      },
-      '/en/politicas/01': {
-        'text': descriptionText.en
-      },
-      '/en/programas/01111': {
-        'text': descriptionText.en
-      }
+      '/es/politicas/01': descriptionText.es,
+      '/es/programas/01111': descriptionText.es,
+      '/en/politicas/01': descriptionText.en,
+      '/en/programas/01111': descriptionText.en
     };
 
     var description = descriptions[ window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) ];
 
     if (description) {
-      $('.policies .policies-content .policies-chart').append( '<div class="policy-description">'+description.text+'</div>' );
+      $('.policies .policies-content .policies-chart').append( '<div class="policy-description">'+description+'</div>' );
+    }
+  };
+
+  // Notes about name changes in certain sections
+  var addSectionDescriptions = function() {
+    var descriptionText = {
+      'main_es':  '<p>El apartado ¿Quién lo gasta? muestra la información de los órganos gestores del gasto atendiendo ' +
+                  'a la estructura vigente en el momento de la consulta, si nos encontramos en un ejercicio en curso, o la vigente ' +
+                  'al final de año, si se trata de ejercicios finalizados. En los años que se produzcan cambios en la organización ' +
+                  'administrativa del Ayuntamiento que supongan la supresión de órganos gestores del gasto, se muestran los importes ' +
+                  'presupuestados y gastados por dichos órganos hasta su desaparición.',
+      '120_es':   '<p>En agosto de 2023, se unieron las secciones de "Portavoz, Seguridad y Emergencias", "Coordinación Territorial, ' +
+                  'Transparencia y Participación Ciudadana", "Internacionalización y Cooperación" y "Vicealcaldía", ' +
+                  'pasando a denominarse la nueva sección "Vicealcaldía, Portavoz, Seguridad y Emergencias". Es por ello que la serie ' +
+                  'temporal de datos se rompe en 2023: comparar secciones con competencias distintas sería engañoso.',
+      '140_es':   '<p>En agosto de 2023, se unieron las secciones de "Economía, Innovación y Empleo" y "Hacienda y Personal", ' +
+                  'pasando a denominarse la nueva sección "Economía, Innovación y Hacienda". Es por ello que la serie ' +
+                  'temporal de datos se rompe en 2023: comparar secciones con competencias distintas sería engañoso.',
+      '150_es':   '<p>En agosto de 2023, se unieron las secciones de "Desarrollo Urbano" y "Medio Ambiente y Mobilidad", ' +
+                  'pasando a denominarse la nueva sección "Urbanismo, Medio Ambiente y Mobilidad". Es por ello que la serie ' +
+                  'temporal de datos se rompe en 2023: comparar secciones con competencias distintas sería engañoso.',
+      '150_en':   '<p>x</p>'
+    }
+
+    var descriptions = {
+      '/es': descriptionText['main_es'],
+      '/es/secciones/015A': descriptionText['150_es'],
+      '/es/secciones/015A': descriptionText['150_es'],
+      '/es/secciones/0150': descriptionText['150_es'],
+      '/en/politicas/01': descriptionText['150_en'],
+      '/en/programas/01111': descriptionText['150_en']
+    };
+
+    var description = descriptions[ window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) ];
+
+    if (description) {
+      $('.policies .policies-content .policies-chart').append( '<div class="policy-description">'+description+'</div>' );
     }
   };
 
@@ -177,7 +206,7 @@ $(document).ready(function(){
   swapTotalsInOverview();
 
   addCustomDescriptions();
-
+  addSectionDescriptions();
   addInvestmentsDescriptions();
 
   addIEAdvice();
