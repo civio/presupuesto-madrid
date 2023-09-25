@@ -112,8 +112,24 @@ $(document).ready(function(){
       '150_es':   '<p>En agosto de 2023, se unieron las secciones de "Desarrollo Urbano" y "Medio Ambiente y Mobilidad", ' +
                   'pasando a denominarse la nueva sección "Urbanismo, Medio Ambiente y Mobilidad". Es por ello que la serie ' +
                   'temporal de datos se rompe en 2023: comparar secciones con competencias distintas sería engañoso.',
-      '150_en':   '<p>x</p>'
-    }
+
+      'main_en':  '<p>The section "Who spent it?" displays information about the spending managing bodies according to the ' +
+                  'current structure at the time of the query, if it is in an ongoing fiscal year, or the structure in place ' +
+                  'at the end of the year if it pertains to completed fiscal years. In years when there are changes in the ' +
+                  'administrative organization of the City Council resulting in the elimination of spending bodies, ' +
+                  'the amounts budgeted and spent  by those bodies until their disappearance are shown.',
+      '120_en':   '<p>In August 2023, the sections "Spokesperson, Public Safety, and Emergencies," "Territorial Coordination, Transparency ' +
+                  'and Citizen Participation," "Internationalization and Cooperation," and "Deputy Mayor\'s Office" were merged, and ' +
+                  'they are now referred to as the new section "Deputy Mayor\'s Office, Spokesperson, Public Safety, and Emergencies." ' +
+                  'This is why the data time series is interrupted in 2023: comparing sections with different competences would be ' +
+                  'misleading.',
+      '140_en':   '<p>In August 2023, the sections "Economy, Innovation, and Employment" and "Treasury and Personnel" were merged, ' +
+                  'and they are now referred to as the new section "Economy, Innovation, and Treasury." This is why the data time ' +
+                  'series is interrupted in 2023: comparing sections with different competences would be misleading.',
+      '150_en':   '<p>In August 2023, the sections "Urban Development" and "Environment and Mobility" were merged, and they are now ' +
+                  'referred to as the new section "Urban Planning, Environment, and Mobility." This is why the data time series is ' +
+                  'interrupted in 2023: comparing sections with different competences would be misleading.',
+        }
 
     var descriptions = {
       '/es': descriptionText['main_es'],
@@ -123,6 +139,14 @@ $(document).ready(function(){
       '/es/secciones/0140': descriptionText['140_es'],
       '/es/secciones/015A': descriptionText['150_es'],
       '/es/secciones/0150': descriptionText['150_es'],
+
+      '/en': descriptionText['main_en'],
+      '/en/secciones/012A': descriptionText['120_en'],
+      '/en/secciones/0120': descriptionText['120_en'],
+      '/en/secciones/014A': descriptionText['140_en'],
+      '/en/secciones/0140': descriptionText['140_en'],
+      '/en/secciones/015A': descriptionText['150_en'],
+      '/en/secciones/0150': descriptionText['150_en'],
     };
 
     var description = descriptions[ window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) ];
