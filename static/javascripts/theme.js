@@ -95,7 +95,7 @@ $(document).ready(function(){
   };
 
   // Notes about name changes in certain sections
-  var addSectionDescriptions = function() {
+  var addInstitutionalDescriptions = function() {
     var descriptionText = {
       'main_es':  '<p>El apartado ¿Quién lo gasta? muestra la información de los órganos gestores del gasto atendiendo ' +
                   'a la estructura vigente en el momento de la consulta, si nos encontramos en un ejercicio en curso, o la vigente ' +
@@ -129,7 +129,7 @@ $(document).ready(function(){
       '150_en':   '<p>In August 2023, the sections "Urban Development" and "Environment and Mobility" were merged, and they are now ' +
                   'referred to as the new section "Urban Planning, Environment, and Mobility." This is why the data time series is ' +
                   'interrupted in 2023: comparing sections with different competences would be misleading.',
-        }
+    };
 
     var descriptions = {
       '/es': descriptionText['main_es'],
@@ -152,7 +152,7 @@ $(document).ready(function(){
     var description = descriptions[ window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) ];
 
     if (description) {
-      $('.policies .policies-content .policies-chart').append( '<div class="policy-description">'+description+'</div>' );
+      $('.policies .policies-content .policies-chart').append( '<div class="custom-note institutional-note policy-description">'+description+'</div>' );
     }
   };
 
@@ -231,7 +231,7 @@ $(document).ready(function(){
   swapTotalsInOverview();
 
   addCustomDescriptions();
-  addSectionDescriptions();
+  addInstitutionalDescriptions();
   addInvestmentsDescriptions();
 
   addIEAdvice();
