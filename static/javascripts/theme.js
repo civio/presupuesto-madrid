@@ -95,13 +95,34 @@ $(document).ready(function(){
   };
 
   // Notes about name changes in certain sections
-  var addInstitutionalDescriptions = function() {
+  var addInstitutionalTabNote = function() {
     var descriptionText = {
       'main_es':  '<p>El apartado ¿Quién lo gasta? muestra la información de los órganos gestores del gasto atendiendo ' +
                   'a la estructura vigente en el momento de la consulta, si nos encontramos en un ejercicio en curso, o la vigente ' +
                   'al final de año, si se trata de ejercicios finalizados. En los años que se produzcan cambios en la organización ' +
                   'administrativa del Ayuntamiento que supongan la supresión de órganos gestores del gasto, se muestran los importes ' +
                   'presupuestados y gastados por dichos órganos hasta su desaparición.',
+      'main_en':  '<p>The section "Who spent it?" displays information about the spending managing bodies according to the ' +
+                  'current structure at the time of the query, if it is in an ongoing fiscal year, or the structure in place ' +
+                  'at the end of the year if it pertains to completed fiscal years. In years when there are changes in the ' +
+                  'administrative organization of the City Council resulting in the elimination of spending bodies, ' +
+                  'the amounts budgeted and spent  by those bodies until their disappearance are shown.'
+    };
+
+    var descriptions = {
+      '/es/politicas': descriptionText['main_es'],
+      '/en/politicas': descriptionText['main_en'],
+    };
+
+    var description = descriptions[ window.location.pathname ];
+
+    if (description) {
+      $('.policies .policies-content .policies-chart').append( '<div class="hidden custom-note institutional-note policy-description">'+description+'</div>' );
+    }
+  };
+
+  var addInstitutionalDescriptions = function() {
+    var descriptionText = {
       '120_es':   '<p>En agosto de 2023, se unieron las secciones de "Portavoz, Seguridad y Emergencias", "Coordinación Territorial, ' +
                   'Transparencia y Participación Ciudadana", "Internacionalización y Cooperación" y "Vicealcaldía", ' +
                   'pasando a denominarse la nueva sección "Vicealcaldía, Portavoz, Seguridad y Emergencias". Es por ello que la serie ' +
@@ -113,11 +134,6 @@ $(document).ready(function(){
                   'pasando a denominarse la nueva sección "Urbanismo, Medio Ambiente y Mobilidad". Es por ello que la serie ' +
                   'temporal de datos se rompe en 2023: comparar secciones con competencias distintas sería engañoso.',
 
-      'main_en':  '<p>The section "Who spent it?" displays information about the spending managing bodies according to the ' +
-                  'current structure at the time of the query, if it is in an ongoing fiscal year, or the structure in place ' +
-                  'at the end of the year if it pertains to completed fiscal years. In years when there are changes in the ' +
-                  'administrative organization of the City Council resulting in the elimination of spending bodies, ' +
-                  'the amounts budgeted and spent  by those bodies until their disappearance are shown.',
       '120_en':   '<p>In August 2023, the sections "Spokesperson, Public Safety, and Emergencies," "Territorial Coordination, Transparency ' +
                   'and Citizen Participation," "Internationalization and Cooperation," and "Deputy Mayor\'s Office" were merged, and ' +
                   'they are now referred to as the new section "Deputy Mayor\'s Office, Spokesperson, Public Safety, and Emergencies." ' +
@@ -132,7 +148,6 @@ $(document).ready(function(){
     };
 
     var descriptions = {
-      '/es': descriptionText['main_es'],
       '/es/secciones/012A': descriptionText['120_es'],
       '/es/secciones/0120': descriptionText['120_es'],
       '/es/secciones/014A': descriptionText['140_es'],
@@ -140,7 +155,6 @@ $(document).ready(function(){
       '/es/secciones/015A': descriptionText['150_es'],
       '/es/secciones/0150': descriptionText['150_es'],
 
-      '/en': descriptionText['main_en'],
       '/en/secciones/012A': descriptionText['120_en'],
       '/en/secciones/0120': descriptionText['120_en'],
       '/en/secciones/014A': descriptionText['140_en'],
@@ -231,6 +245,7 @@ $(document).ready(function(){
   swapTotalsInOverview();
 
   addCustomDescriptions();
+  addInstitutionalTabNote();
   addInstitutionalDescriptions();
   addInvestmentsDescriptions();
 
