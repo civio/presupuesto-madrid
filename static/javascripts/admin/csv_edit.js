@@ -90,7 +90,6 @@ function renderTable(resource, config) {
       data: {
         content: content,
       },
-      contentType: 'application/json; charset=utf-8',
       success: onSaveSuccess,
       error: onSaveError,
       complete: enableButtons
