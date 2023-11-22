@@ -336,8 +336,8 @@ def _load_general():
     )
 
     management_commands = (
-        "load_budget %s --language=es,en" % year,
-        "load_investments %s --language=es,en" % year,
+        "load_budget %s --language=es" % year,
+        "load_investments %s --language=es" % year,
     )
 
     return _execute_loading_task(cue, *management_commands)
@@ -374,9 +374,9 @@ def _load_execution():
         cue = cue.replace(" para ", "para %s de " % month)
 
     management_commands = (
-        "load_budget %s --language=es,en" % year,
-        "load_investments %s --language=es,en" % year,
-        "load_main_investments %s --language=es,en" % year,
+        "load_budget %s --language=es" % year,
+        "load_investments %s --language=es" % year,
+        "load_main_investments %s --language=es" % year,
     )
     return _execute_loading_task(cue, *management_commands)
 
@@ -404,7 +404,7 @@ def _load_monitoring():
     )
 
     management_commands = (
-        "load_monitoring %s --language=es,en" % year,
+        "load_monitoring %s --language=es" % year,
     )
 
     return _execute_loading_task(cue, *management_commands)
@@ -433,7 +433,7 @@ def _load_main_investments():
     )
 
     management_commands = (
-        "load_main_investments %s --language=es,en" % year,
+        "load_main_investments %s --language=es" % year,
     )
 
     return _execute_loading_task(cue, *management_commands)
@@ -468,7 +468,7 @@ def _load_payments():
     )
 
     management_commands = (
-        "load_payments %s --language=es,en" % year,
+        "load_payments %s --language=es" % year,
     )
 
     return _execute_loading_task(cue, *management_commands)
