@@ -113,9 +113,12 @@ class MadridBudgetLoader(SimpleBudgetLoader):
     # We have to manually modify the 2022 (prorroged to 2023) budget data due to some weird amendments. Ouch.
     # This is further explained in civio/presupuesto-management#1157
     def load_budget(self, path, entity, year, status, items):
-        if year in ['2022', '2023']:
+        if year in ['2022']:
             items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
             items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
+        if year in ['2023']:
+            items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
+            items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-593,57".split(';')))
 
         super(MadridBudgetLoader, self).load_budget(path, entity, year, status, items)
 
