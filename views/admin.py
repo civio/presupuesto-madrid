@@ -377,6 +377,7 @@ def _load_execution():
         "load_budget %s --language=es,en" % year,
         "load_investments %s --language=es,en" % year,
         "load_main_investments %s --language=es,en" % year,
+        "load_monitoring %s --language=es,en" % year,
     )
     return _execute_loading_task(cue, *management_commands)
 
