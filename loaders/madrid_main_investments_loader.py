@@ -43,7 +43,7 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
             'image_URL': self.get_image_URL(line[32]),
             'status': line[28].strip(),
             'entity_name': line[1].strip(),
-            'section_name': line[3].strip(),
+            'section_name': line[3].strip() if line[3]!='' else line[1],
             'area_name': line[10].strip(),
             'address': line[11].strip().replace('\r', ' ').replace('\n', ' '),     # New lines mess up the JSON in the template
             'latitude': line[17].strip().replace('\'', ''),     # Got an odd extra quote in dirty data at least once
