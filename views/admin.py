@@ -1293,7 +1293,7 @@ def _commit(path, commit_message):
     cmd = (
         "cd %s"
         "&& scripts/git add -A %s "
-        "&& git diff-index --quiet HEAD "
+        "&& scripts/git diff-index --quiet HEAD "
         "|| scripts/git commit -m \"%s\n\nChange performed on the admin console.\" "
         "&& scripts/git push"
     ) % (THEME_PATH, path, commit_message)
