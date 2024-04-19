@@ -35,6 +35,7 @@ GENERAL_URL = {
 }
 
 EXECUTION_URL = {
+    2024: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
     2023: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
     2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=09ad39ec02e3f710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=a1940380e0228710VgnVCM1000001d4a900aRCRD",
