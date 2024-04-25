@@ -56,7 +56,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
             # We have to manually modify the 2022 (and 2023) budget data due to some weird amendments. Ouch.
             # This is further explained in civio/presupuesto-management#1157
-            if year in ['2022', '2023']:
+            if year in ['2022', '2023', '2024']:
                 if ic_code == '300' and ec_code == '22502': # AGENCIA PARA EL EMPLEO (503)
                     print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
                     return
@@ -122,6 +122,10 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             items.append(self.parse_item("municipio/2023/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;;;-1000;-59".split(';')))
             items.append(self.parse_item("municipio/2023/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;;;-593,57;-593,57".split(';')))
             items.append(self.parse_item("municipio/2023/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;38900;PAGOS DE  EJERCICIOS ANTERIORES;;;-1610737,18;-1610737,18".split(';')))
+        if year in ['2024']:
+            items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
+            items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
+            items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;32100;LICENCIAS URBANÍSTICAS;-10000".split(';')))
 
         super(MadridBudgetLoader, self).load_budget(path, entity, year, status, items)
 
