@@ -130,7 +130,7 @@ LANGUAGES = (
 )
 
 # Setup Data Source Budget link
-DATA_SOURCE_BUDGET      = 'https://datos.madrid.es/portal/site/egob/menuitem.754985278d15ab64b2c3b244a8a409a0/?vgnextoid=20d612b9ace9f310VgnVCM100000171f5a0aRCRD&text=presupuestos+municipales&buscarEnTitulo=true&btn1=buscar'
+DATA_SOURCE_BUDGET      = 'https://datos.madrid.es/portal/site/egob/menuitem.754985278d15ab64b2c3b244a8a409a0/?vgnextoid=20d612b9ace9f310VgnVCM100000171f5a0aRCRD&text=presupuestos&buscarEnTitulo=true&btn1=buscar'
 
 # Setup Data Source Population link
 DATA_SOURCE_POPULATION  = 'https://www.ine.es/jaxiT3/Tabla.htm?t=2881&L=0'
