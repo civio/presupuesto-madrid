@@ -937,5 +937,5 @@ input::-ms-input-placeholder { /* Microsoft Edge */
 
 // a11y: Make all input borders with more contrast
 .form-control{
-  border-color: $brand-primary;
+  border-color: $brand-primary !important;
 }
