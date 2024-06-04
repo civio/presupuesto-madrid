@@ -32,7 +32,7 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
             return
 
         project_id = line[4].strip()
-        investment_line = line[19]
+        investment_line = line[17]
         gc_code = self.map_geo_code(line[9])
 
         # Note we implement the investment lines as an extension of functional policies.
@@ -40,20 +40,20 @@ class MadridMainInvestmentsLoader(MainInvestmentsLoader):
         return {
             'project_id': project_id,
             'description': line[5].strip(),
-            'image_URL': self.get_image_URL(line[32]),
-            'status': line[28].strip(),
+            'image_URL': self.get_image_URL(line[28]),
+            'status': line[26].strip(),
             'entity_name': line[1].strip(),
-            'section_name': line[3].strip(),
+            'section_name': line[3].strip() if line[3]!='' else line[1],
             'area_name': line[10].strip(),
             'address': line[11].strip().replace('\r', ' ').replace('\n', ' '),     # New lines mess up the JSON in the template
-            'latitude': line[17].strip().replace('\'', ''),     # Got an odd extra quote in dirty data at least once
-            'longitude': line[18].strip().replace('\'', ''),    # Just in case
+            'latitude': line[15].strip().replace('\'', ''),     # Got an odd extra quote in dirty data at least once
+            'longitude': line[16].strip().replace('\'', ''),    # Just in case
             'start_year': self.read_nullable_integer(line[6]),
             'expected_end_year': self.read_nullable_integer(line[7].strip()),
             'actual_end_year': self.read_nullable_integer(line[8].strip()),
-            'total_expected_amount': self._read_spanish_number(line[27].strip()),
-            'already_spent_amount': self._read_spanish_number(line[21].strip()),
-            'current_year_amount': self._read_spanish_number(line[22].strip()),
+            'total_expected_amount': self._read_spanish_number(line[25].strip()),
+            'already_spent_amount': self._read_spanish_number(line[19].strip()),
+            'current_year_amount': self._read_spanish_number(line[20].strip()),
             'gc_code': gc_code,
             'fc_code': 'X'+investment_line.zfill(2),
             'fc_area': 'X',

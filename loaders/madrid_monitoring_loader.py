@@ -25,7 +25,7 @@ class MadridMonitoringLoader(MonitoringLoader):
             'fc_code': fc_code,
             'goal_number': goal_number,
             'description': line[3].decode("utf8"),
-            'report': line[4]
+            'report': re.sub(r'<U>|</>', '', line[4])
         }
 
 
@@ -91,7 +91,7 @@ class MadridMonitoringLoader(MonitoringLoader):
 
         return {
             'goal_uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
-            'indicator_number': line[3],
+            'indicator_number': line[3][0:2],   # Some weird extra characters in the data sometimes
             'description': description,
             'unit': unit,
             'target': target,

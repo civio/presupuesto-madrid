@@ -35,6 +35,7 @@ GENERAL_URL = {
 }
 
 EXECUTION_URL = {
+    2024: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
     2023: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
     2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=09ad39ec02e3f710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=a1940380e0228710VgnVCM1000001d4a900aRCRD",
@@ -377,6 +378,7 @@ def _load_execution():
         "load_budget %s --language=es,en" % year,
         "load_investments %s --language=es,en" % year,
         "load_main_investments %s --language=es,en" % year,
+        "load_monitoring %s --language=es,en" % year,
     )
     return _execute_loading_task(cue, *management_commands)
 
@@ -1292,7 +1294,7 @@ def _commit(path, commit_message):
     cmd = (
         "cd %s"
         "&& scripts/git add -A %s "
-        "&& git diff-index --quiet HEAD "
+        "&& scripts/git diff-index --quiet HEAD "
         "|| scripts/git commit -m \"%s\n\nChange performed on the admin console.\" "
         "&& scripts/git push"
     ) % (THEME_PATH, path, commit_message)
