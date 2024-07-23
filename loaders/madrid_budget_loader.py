@@ -126,6 +126,7 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
             items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
             items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;32100;LICENCIAS URBANÍSTICAS;-10000".split(';')))
+            items.append(self.parse_item("municipio/2024/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;;;-3000;-565,31".split(';')))
 
         super(MadridBudgetLoader, self).load_budget(path, entity, year, status, items)
 
