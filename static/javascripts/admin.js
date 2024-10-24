@@ -66,7 +66,7 @@ function showError(command_name, command_response) {
   var message = (command_response.responseJSON && command_response.responseJSON.message);
 
   if (!message) {
-    message = "Se ha producido un error inesperado."
+    message = "Se ha producido un error inesperado. <pre>" + command_response.responseText + "</pre>";
   }
 
   showResult(command_name, message);
