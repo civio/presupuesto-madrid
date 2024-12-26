@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 17:16+0100\n"
-"PO-Revision-Date: 2024-12-26 22:44+0100\n"
+"PO-Revision-Date: 2024-12-26 23:00+0100\n"
 "Last-Translator: David Cabo <david@civio.es>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -256,6 +256,12 @@ msgstr "This tab displays the most significant investments of the Madrid City Co
 
 msgid "intro2.main_investments"
 msgstr "* In the City Council and Autonomous Organisms, other relevant projects are carried out that are not shown in this section because they cannot be territorialized. These projects can be consulted in the Investments by Districts section (Non-districtizable and various districts). As for the Municipal Companies, they also carry out projects of great importance that cannot be territorialized (eg, acquisition of electric buses), which can be consulted on the Municipal Companies' websites."
+
+msgid "intro.monitoring"
+msgstr "In this tab you can see the degree of compliance with each of the objectives included in the budgetary spending programs of the General Budget of the Madrid City Council, as well as the breakdown of the activities and indicators corresponding to each of them."
+
+msgid "intro.payments"
+msgstr "This tab includes information on the recognized obligations recorded as of December 31 of each year, from the budget of the Madrid City Council (Government Areas and Districts) and Autonomous Bodies."
 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-18 12:14+0100\n"
-"PO-Revision-Date: 2024-12-26 22:44+0100\n"
+"PO-Revision-Date: 2024-12-26 23:00+0100\n"
 "Last-Translator: David Cabo <david@civio.es>\n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -212,6 +212,12 @@ msgstr "En esta pestaña se representan las inversiones más significativas del 
 
 msgid "intro2.main_investments"
 msgstr "* En el Ayuntamiento y Organismos Autónomos se llevan a cabo otros proyectos muy relevantes que no se muestran en este apartado porque no se pueden territorializar. Estos proyectos se pueden consultar en el apartado Inversiones por Distritos (No distritalizable y varios distritos). En cuanto a las Empresas Municipales, también ejecutan proyectos de gran importancia que no son territorializables (ej.: adquisición autobuses eléctricos), que pueden consultarse en las web de las Empresas Municipales."
+
+msgid "intro.monitoring"
+msgstr "En esta pestaña se puede ver el grado de cumplimiento de cada uno de los objetivos incluidos en los programas presupuestarios de gasto del Presupuesto General del Ayuntamiento de Madrid, así como el desglose de las actividades e indicadores correspondientes a cada uno de ellos."
+
+msgid "intro.payments"
+msgstr "Esta pestaña incluye información de las obligaciones reconocidas contabilizadas a 31 de diciembre de cada ejercicio, del presupuesto del Ayuntamiento de Madrid (Áreas de Gobierno y Distritos) y Organismos Autónomos."
 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"
