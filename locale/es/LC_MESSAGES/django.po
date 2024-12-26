@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-18 12:14+0100\n"
-"PO-Revision-Date: 2022-02-28 16:32+0100\n"
+"PO-Revision-Date: 2024-12-26 22:22+0100\n"
+"Last-Translator: David Cabo <david@civio.es>\n"
+"Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: David Cabo <david@civio.es>\n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 3.5\n"
 
 #: templates/shared/header.html:35
 msgid "Presupuestos"
@@ -211,7 +211,7 @@ msgid "intro.main_investments"
 msgstr "En esta pestaña se representan las inversiones más significativas del Ayuntamiento de Madrid, Organismos Autónomos y Empresas Municipales que se pueden territorializar en los Distritos*. Filtra y explora el siguiente mapa interactivo para ver la información en detalle de cada una de ellas."
 
 msgid "intro2.main_investments"
-msgstr "* En el Ayuntamiento y Organismos Autónomos se llevan a cabo otros proyectos muy relevantes que no muestran en este apartado porque no se pueden territorializar. Estos proyectos se pueden consultar en el apartado Inversiones por Distritos (No distritalizable y varios distritos). En cuanto a las Empresas Municipales, también ejecutan proyectos de gran importancia que no son territorializables (ej.: adquisición autobuses eléctricos), que pueden consultarse en las web de las Empresas Municipales."
+msgstr "* En el Ayuntamiento y Organismos Autónomos se llevan a cabo otros proyectos muy relevantes que no se muestran en este apartado porque no se pueden territorializar. Estos proyectos se pueden consultar en el apartado Inversiones por Distritos (No distritalizable y varios distritos). En cuanto a las Empresas Municipales, también ejecutan proyectos de gran importancia que no son territorializables (ej.: adquisición autobuses eléctricos), que pueden consultarse en las web de las Empresas Municipales."
 
 #: templates/admin/header.html:15
 msgid "Administración de Presupuestos"
