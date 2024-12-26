@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-18 12:14+0100\n"
-"PO-Revision-Date: 2024-12-26 22:22+0100\n"
+"PO-Revision-Date: 2024-12-26 22:44+0100\n"
 "Last-Translator: David Cabo <david@civio.es>\n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -31,7 +31,7 @@ msgstr "Información presupuestaria del Ayuntamiento de Madrid"
 
 #: templates/budgets/budgets_intro.html:16
 msgid "El dinero recaudado localmente se complementa con las transferencias de la Administración General del Estado y del Gobierno de Aragón, que son los encargados de recaudar otros ingresos como el IVA y el IRPF"
-msgstr "El dinero recaudado localmente se complementa con las transferencias de la Administración General del Estado y de la Comunidad de Madrid, que son los encargados de recaudar otros ingresos como el IVA y el IRPF"
+msgstr "El dinero recaudado localmente se complementa con las transferencias de la Administración General del Estado y de la Comunidad de Madrid"
 
 #: templates/budgets/index.html:17
 msgid "Ingresos y gastos en el Gobierno de Aragón"
