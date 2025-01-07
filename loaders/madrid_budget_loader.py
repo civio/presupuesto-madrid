@@ -1,14 +1,25 @@
 # -*- coding: UTF-8 -*-
-import csv
-import os
 import re
 
-from budget_app.models import *
 from budget_app.loaders import SimpleBudgetLoader
-from decimal import *
 from madrid_utils import MadridUtils
 
 class MadridBudgetLoader(SimpleBudgetLoader):
+
+    # Add elimination files to the loading process. See #1348.
+    # We need them in Madrid because the eliminatins have stopped following
+    # a consistente pattern.
+    def _get_input_filenames(self):
+        return [
+            'ingresos.csv',
+            'ingresos_eliminaciones.csv',
+            'gastos.csv',
+            'gastos_eliminaciones.csv',
+            'ejecucion_ingresos.csv',
+            'ejecucion_ingresos_eliminaciones.csv',
+            'ejecucion_gastos.csv',
+            'ejecucion_gastos_eliminaciones.csv',
+        ]
 
     def parse_item(self, filename, line):
         # Skip first line
@@ -24,8 +35,9 @@ class MadridBudgetLoader(SimpleBudgetLoader):
         else:
             parse_amount = self.parse_spanish_amount
 
-        is_expense = (filename.find('gastos.csv') != -1)
+        is_expense = (filename.find('gastos') != -1)
         is_actual = (filename.find('/ejecucion_') != -1)
+        is_elimination = (filename.find('eliminaciones') != -1)
         if is_expense:
             # Note: in the most recent 2016 data the leading zeros were missing,
             # so add them back using zfill.
@@ -44,25 +56,21 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # so add them back using zfill.
             ic_code = MadridUtils.map_institutional_code(line[0].zfill(3)+line[2].zfill(3), int(year))
 
-            # We've been asked to ignore data for a special department, not really an organism (#756)
-            if ic_code == '200':
-                print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
-                return
-
-            # Ignore transfers to dependent organisations
-            if ec_code[:-2] in ['410', '710', '400', '700']:
-                print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
-                return
-
-            # We have to manually modify the 2022 (and 2023) budget data due to some weird amendments. Ouch.
-            # This is further explained in civio/presupuesto-management#1157
-            if year in ['2022', '2023', '2024']:
-                if ic_code == '300' and ec_code == '22502': # AGENCIA PARA EL EMPLEO (503)
-                    print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
+            # Eliminations before 2023 followed a consistent pattern
+            if int(year) < 2023:
+                # We've been asked to ignore data for a special department, not really an organism (#756)
+                if ic_code == '200':
+                    print("Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100))
                     return
-                if ic_code == '800' and ec_code == '22502': # MADRID SALUD (508)
-                    print "Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
+
+                # Ignore transfers to dependent organisations
+                if ec_code[:-2] in ['410', '710', '400', '700']:
+                    print("Eliminando gasto (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100))
                     return
+
+            # From 2023, eliminations come in separate files, but amounts need to be reversed.
+            if is_elimination:
+                amount = -amount
 
             # The input files are encoded in ISO-8859-1, since we want to work with the files
             # as they're published in the original open data portal. All the text fields are
@@ -88,14 +96,20 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             budget_position = 8 if len(line) > 7 else 6
             amount = parse_amount(line[9 if is_actual else budget_position])
 
-            # We've been asked to ignore data for a special department, not really an organism (#756)
-            if ic_code == '200':
-                return
+            # Eliminations before 2023 followed a consistent pattern
+            if int(year) < 2023:
+                # We've been asked to ignore data for a special department, not really an organism (#756)
+                if ic_code == '200':
+                    return
 
-            # Ignore transfers from parent organisation.
-            if ec_code[:-2] in ['410', '710', '400', '700']:
-                print "Eliminando ingreso (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100)
-                amount = 0
+                # Ignore transfers from parent organisation.
+                if ec_code[:-2] in ['410', '710', '400', '700']:
+                    print("Eliminando ingreso (organismo %s, artículo %s): %12.2f €" % (line[0], ec_code, amount/100))
+                    amount = 0
+
+            # From 2023, eliminations come in separate files, but amounts need to be reversed.
+            if is_elimination:
+                amount = -amount
 
             # See note above
             description = self._spanish_titlecase(line[5].decode("iso-8859-1").encode("utf-8"))
@@ -109,27 +123,6 @@ class MadridBudgetLoader(SimpleBudgetLoader):
                 'description': description,
                 'amount': amount
             }
-
-    # We have to manually modify the 2022 (prorroged to 2023) budget data due to some weird amendments. Ouch.
-    # This is further explained in civio/presupuesto-management#1157
-    def load_budget(self, path, entity, year, status, items):
-        if year in ['2022']:
-            items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
-            items.append(self.parse_item("municipio/2022/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
-        if year in ['2023']:
-            items.append(self.parse_item("municipio/2023/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
-            items.append(self.parse_item("municipio/2023/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-593,57".split(';')))
-            items.append(self.parse_item("municipio/2023/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;;;-1000;-59".split(';')))
-            items.append(self.parse_item("municipio/2023/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;;;-593,57;-593,57".split(';')))
-            items.append(self.parse_item("municipio/2023/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;38900;PAGOS DE  EJERCICIOS ANTERIORES;;;-1610737,18;-1610737,18".split(';')))
-        if year in ['2024']:
-            items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;-1000".split(';')))
-            items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;-3000".split(';')))
-            items.append(self.parse_item("municipio/2024/ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;32100;LICENCIAS URBANÍSTICAS;-10000".split(';')))
-            items.append(self.parse_item("municipio/2024/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;1;IMPUESTOS DIRECTOS;11500;IMPUESTO SOBRE VEHÍCULOS DE TRACCIÓN MECÁNICA;;;-10000;-59".split(';')))
-            items.append(self.parse_item("municipio/2024/ejecucion_ingresos.csv", "001;AYUNTAMIENTO DE MADRID;3;TASAS, PRECIOS PÚBLICOS Y OTROS INGRESOS;33100;ENTRADA DE VEHÍCULOS;;;-3000;-565,31".split(';')))
-
-        super(MadridBudgetLoader, self).load_budget(path, entity, year, status, items)
 
     def parse_spanish_amount(self, amount):
         amount = amount.replace('.', '')    # Remove thousands delimiters, if any
