@@ -638,10 +638,16 @@ def _scrape_execution(url, month, year):
         _download(files[0], temp_folder_path, "ingresos.csv")
         _download(files[1], temp_folder_path, "gastos.csv")
         _download(files[2], temp_folder_path, "inversiones.csv")
+        _download(files[3], temp_folder_path, "ingresos_eliminaciones_bruto.csv")
+        _download(files[4], temp_folder_path, "gastos_eliminaciones_bruto.csv")
 
         _write_temp(temp_folder_path, ".budget_month", month)
         _write_temp(temp_folder_path, ".budget_year", year)
         _write_temp(temp_folder_path, ".budget_type", "execution")
+
+        # Based on the original 'eliminaciones' files, keep only the columns we need
+        _csv_cut_columns(temp_folder_path, "ingresos_eliminaciones_bruto.csv", "ingresos_eliminaciones.csv", [0, 1, 6, 6, 7, 8, 9, 10, 11, 13, 14])
+        _csv_cut_columns(temp_folder_path, "gastos_eliminaciones_bruto.csv", "gastos_eliminaciones.csv", [0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 13, 14, 15])
 
         # Keep track of the month of the data
         status = (
@@ -1052,9 +1058,13 @@ def _arrange_execution(data_files_path):
 
             _copy(source, destination, ".budget_status")
             _copy(source, destination, "gastos.csv")
+            _copy(source, destination, "gastos_eliminaciones.csv")
             _copy(source, destination, "gastos.csv", "ejecucion_gastos.csv")
+            _copy(source, destination, "gastos_eliminaciones.csv", "ejecucion_gastos_eliminaciones.csv")
             _copy(source, destination, "ingresos.csv")
+            _copy(source, destination, "ingresos_eliminaciones.csv")
             _copy(source, destination, "ingresos.csv", "ejecucion_ingresos.csv")
+            _copy(source, destination, "ingresos_eliminaciones.csv", "ejecucion_ingresos_eliminaciones.csv")
             _copy(source, destination, "inversiones.csv")
             _copy(source, destination, "inversiones.csv", "ejecucion_inversiones.csv")
 
