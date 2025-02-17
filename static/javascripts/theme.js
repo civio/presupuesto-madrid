@@ -198,23 +198,31 @@ $(document).ready(function(){
     }
 
     var ifsNote = {
-      'es': '<p>Del total de dinero presupuestado en inversiones, un porcentaje elevado son inversiones financieramente ' +
+      'es': '<p style="font-weight: 400 !important;">' +
+            'Del total de dinero presupuestado en inversiones, un porcentaje elevado son inversiones financieramente ' +
             'sostenibles (IFS) que, tal como establece la normativa vigente, se pueden ejecutar en dos ejercicios presupuestarios. En ' +
             'consecuencia para evaluar la ejecución de estos proyectos habrá que esperar a que transcurra el ejercicio posterior. ' +
             'Dichas inversiones se distinguen mediante un identificador que aparece al principio del texto descriptivo de los mismos: IFS.</p>' +
-            '<p>Las IFS se habilitan en el presupuesto mediante créditos extraordinarios y suplementos de crédito que exigen los mismos ' +
+            '<p style="font-weight: 400 !important;">' +
+            'Las IFS se habilitan en el presupuesto mediante créditos extraordinarios y suplementos de crédito que exigen los mismos ' +
             'trámites que la aprobación del presupuesto general, por lo que el período de tramitación es largo y, como consecuencia, la ' +
             'ejecución del gasto en el primer ejercicio es menor.</p>',
-      'en': '<p>Of the total money budgeted in investments, a high percentage are financially sustainable investments (IFS) that, as ' +
+      'en': '<p style="font-weight: 400 !important;">' +
+            'Of the total money budgeted in investments, a high percentage are financially sustainable investments (IFS) that, as ' +
             'established by current regulations, can be executed in two budgetary years. Consequently, in order to evaluate the execution ' +
             'of these projects, it will be necessary to wait until the following year. These investments are distinguished by an identifier ' +
-            'that appears at the beginning of the descriptive text of the same: IFS.</p><p>IFSs are enabled in the budget through extraordinary ' +
+            'that appears at the beginning of the descriptive text of the same: IFS.</p>' +
+            '<p style="font-weight: 400 !important;">' +
+            'IFSs are enabled in the budget through extraordinary ' +
             'loans and credit supplements that require the same procedures as the approval of the general budget, so the processing period is ' +
             'long and, as a consequence, the execution of the expenditure in the first year is lower.</p>'
     }
 
+    // We want to show the message only when IFS are applicable. Since we don't have the year handy at this point,
+    // we use the `total-special` class to show/hide the message. But this forces us to counteract the styling from
+    // the class. Not the most elegant solution, but it works.
     if ($('.investments-content #main-total').length) {
-      $('.investments-content #main-total').after('<div class="policy-description">'+ifsNote[lang]+'</div>');
+      $('.investments-content #main-total').after('<div class="policy-description total-special" style="border-top: none">'+ifsNote[lang]+'</div>');
     }
   };
 
