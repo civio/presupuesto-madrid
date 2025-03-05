@@ -27,6 +27,7 @@ DATA_BASE_URL = "https://datos.madrid.es"
 
 # XXX: All the "general" stuff should be renamed just "budget"
 GENERAL_URL = {
+    2025: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=09506692c611d810VgnVCM1000001d4a900aRCRD",
     2023: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa75acf8d2f1e710VgnVCM2000001f4a900aRCRD",
     2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa75acf8d2f1e710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ca760ce04fcc6710VgnVCM2000001f4a900aRCRD",
@@ -35,8 +36,7 @@ GENERAL_URL = {
 }
 
 EXECUTION_URL = {
-    2024: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
-    2023: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
+    'current': "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=c58a15fef2bb6810VgnVCM2000001f4a900aRCRD",
     2022: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=09ad39ec02e3f710VgnVCM2000001f4a900aRCRD",
     2021: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=a1940380e0228710VgnVCM1000001d4a900aRCRD",
     2020: "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=ce40806727670710VgnVCM1000001d4a900aRCRD",
@@ -1344,7 +1344,10 @@ def _get_general_url(year):
     return GENERAL_URL.get(year, GENERAL_URL['historical'])
 
 def _get_execution_url(year):
-    return EXECUTION_URL.get(year, EXECUTION_URL['historical'])
+    if year<2020:
+        return EXECUTION_URL['historical']
+    else:
+        return EXECUTION_URL.get(year, EXECUTION_URL['current'])
 
 def _get_monitoring_url(year):
     return MONITORING_URL
