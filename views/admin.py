@@ -13,6 +13,7 @@ from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
 from budget_app.views.helpers import _set_meta_fields
 
 import base64
+import cgi
 import csv
 import collections
 import glob
@@ -606,7 +607,7 @@ def _scrape_general(url, year):
     except AdminException as error:
         message = (
             "<p>Se ha producido un error descargando los datos."
-            "<pre>%s</pre></p>" % str(error)
+            "<pre>%s</pre></p>" % cgi.escape(str(error))
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -667,7 +668,7 @@ def _scrape_execution(url, month, year):
     except AdminException as error:
         message = (
             "<p>Se ha producido un error descargando los datos."
-            "<pre>%s</pre></p>" % str(error)
+            "<pre>%s</pre></p>" % cgi.escape(str(error))
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -719,7 +720,7 @@ def _scrape_monitoring(url, year, is_year_completed):
     except AdminException as error:
         message = (
             "<p>Se ha producido un error descargando los datos."
-            "<pre>%s</pre></p>" % str(error)
+            "<pre>%s</pre></p>" % cgi.escape(str(error))
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -761,7 +762,7 @@ def _scrape_main_investments(url, year):
     except AdminException as error:
         message = (
             "<p>Se ha producido un error descargando los datos."
-            "<pre>%s</pre></p>" % str(error)
+            "<pre>%s</pre></p>" % cgi.escape(str(error))
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -804,7 +805,7 @@ def _scrape_payments(url, year):
     except AdminException as error:
         message = (
             "<p>Se ha producido un error descargando los datos."
-            "<pre>%s</pre></p>" % str(error)
+            "<pre>%s</pre></p>" % cgi.escape(str(error))
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -830,7 +831,7 @@ def _review(data_files_path):
     if error:
         message = (
             u"<p>Se ha producido un error revisando los ficheros descargados: "
-            "<pre>%s</pre></p>" % output
+            "<pre>%s</pre></p>" % cgi.escape(output)
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -838,7 +839,7 @@ def _review(data_files_path):
 
     message = (
         u"<p>Los ficheros descargados se han revisado correctamente: "
-        "<pre>%s</pre></p>" % (output)
+        "<pre>%s</pre></p>" % cgi.escape(output)
     )
     body = {"result": "success", "message": message}
     status = 200
@@ -924,7 +925,7 @@ def _review_payments_data(data_files_path):
     if error:
         message = (
             u"<p>Se ha producido un error revisando los ficheros descargados: "
-            "<pre>%s</pre></p>" % error
+            "<pre>%s</pre></p>" % cgi.escape(error)
         )
         body = {"result": "error", "message": message}
         status = 500
@@ -932,7 +933,7 @@ def _review_payments_data(data_files_path):
 
     message = (
         u"<p>Los ficheros descargados se han revisado correctamente: "
-        "<pre>%s</pre></p>" % (output)
+        "<pre>%s</pre></p>" % cgi.escape(output)
     )
     body = {"result": "success", "message": message}
     status = 200
@@ -968,7 +969,7 @@ def _save(file_path, content, commit_message):
     except AdminException as error:
         body = {
             "result": "error",
-            "message": "<p>Se ha producido un error guardando los datos: <pre>%s</pre>.</p>" % str(error),
+            "message": "<p>Se ha producido un error guardando los datos: <pre>%s</pre>.</p>" % cgi.escape(str(error)),
         }
         status = 500
 
@@ -992,7 +993,7 @@ def _execute_loading_task(cue, *management_commands):
         message = (
             "<p>No se han podido ejecutar los comandos <code>%s</code>:"
             "<pre>%s</pre></p>"
-        ) % (" && ".join(management_commands), output)
+        ) % (" && ".join(management_commands), cgi.escape(output))
         body = {"result": "error", "message": message}
         status = 500
         return (body, status)
@@ -1003,7 +1004,7 @@ def _execute_loading_task(cue, *management_commands):
     message = (
         u"<p>%s.</p>"
         "<p>Ejecutado: <pre>%s</pre></p>"
-        "<p>Resultado: <pre>%s</pre></p>" % (cue, cmd, output)
+        "<p>Resultado: <pre>%s</pre></p>" % (cue, cmd, cgi.escape(output))
     )
     body = {"result": "success", "message": message}
     status = 200
@@ -1167,7 +1168,7 @@ def _fetch(url):
         request = urllib2.Request(url, headers={'User-Agent': 'Mozilla'})
         page = urllib2.urlopen(request).read()
     except IOError as error:
-        raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, str(error)))
+        raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, cgi.escape(str(error))))
 
     return page
 
