@@ -62,7 +62,7 @@ function showSuccess(command_name, command_response) {
   // El firewall del entorno de Madrid intercepta las peticiones a nuestro servidor de forma ocasional,
   // devolviendo una página HTML con código 200, como si todo fuera correcto. Tenemos que comprobar
   // el contenido devuelto para asegurarnos que de verdad la llamada ha tenido éxito.
-  if (command_response.includes('<html>')) {
+  if (typeof command_response !== 'object') {
     showError(command_name, {
       responseJSON: {
         message: '<span style="font-weight: bold">No se ha podido conectar con el servidor:</span><br><br><br>'+command_response
