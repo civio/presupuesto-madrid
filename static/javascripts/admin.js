@@ -59,7 +59,18 @@ function clearResult(command_name) {
 }
 
 function showSuccess(command_name, command_response) {
-  showResult(command_name, command_response.message);
+  // El firewall del entorno de Madrid intercepta las peticiones a nuestro servidor de forma ocasional,
+  // devolviendo una página HTML con código 200, como si todo fuera correcto. Tenemos que comprobar
+  // el contenido devuelto para asegurarnos que de verdad la llamada ha tenido éxito.
+  if (command_response.includes('<!DOCTYPE html>')) {
+    showError(command_name, {
+      responseJSON: {
+        message: 'No se ha podido conectar con el servidor: <br>'+command_response
+      }
+    })
+  } else {
+    showResult(command_name, command_response.message);
+  }
 }
 
 function showError(command_name, command_response) {
