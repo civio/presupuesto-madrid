@@ -22,7 +22,13 @@ import os
 import re
 import subprocess
 import urllib
-import urllib2
+
+# urllib2 has changed significantly in Python 3
+try:
+    from urllib.request import Request, urlopen
+except ImportError: # Python 2
+    from urllib2 import Request, urlopen
+
 
 DATA_BASE_URL = "https://datos.madrid.es"
 
@@ -1165,8 +1171,8 @@ def _arrange_payments(data_files_path):
 # Network helpers
 def _fetch(url):
     try:
-        request = urllib2.Request(url, headers={'User-Agent': 'Mozilla'})
-        page = urllib2.urlopen(request).read()
+        request = Request(url, headers={'User-Agent': 'Mozilla'})
+        page = urlopen(request).read()
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, cgi.escape(str(error))))
 
@@ -1175,7 +1181,7 @@ def _fetch(url):
 
 def _download(url, temp_folder_path, filename):
     try:
-        file = urllib2.urlopen(urllib2.Request(url, headers={'User-Agent': 'Mozilla'})).read()
+        file = urlopen(Request(url, headers={'User-Agent': 'Mozilla'})).read()
         _write_temp(temp_folder_path, filename, file)
     except IOError as error:
         raise AdminException(
