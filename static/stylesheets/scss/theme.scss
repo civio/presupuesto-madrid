@@ -17,6 +17,14 @@
   font-size: 2em;
   color: $text-color;
   font-weight: $font-weight-700;
+
+}
+.section-header .page-title {
+  margin: $grid-gutter-width 0;
+}
+.policies-header .page-title {
+  padding: $grid-gutter-width 0;
+  margin: 0;
 }
 
 // New Lang selector
@@ -512,7 +520,7 @@ header{
 }
 
 .body-entities .alert-data-update{
-  margin-bottom: 1.5*$grid-gutter-width;
+  margin-bottom: $grid-gutter-width;
 }
 
 @media (min-width: $screen-sm-min) {
@@ -595,9 +603,17 @@ header{
     }
   }
 
+  .payments-search-panel.data-panel {
+    margin-top: 0;
+  }
+
   .payments-search-panel .page-title {
     font-size: 1.25em;
     margin-bottom: $grid-gutter-width;
+  }
+
+  .lead {
+      margin: 25px 30px 10px;
   }
 }
 
