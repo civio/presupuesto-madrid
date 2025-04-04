@@ -21,7 +21,7 @@
 
 // New Lang selector
 #menu-lang{
-  margin: 20px 0 20px 20px;
+  margin: 15px 0 15px 20px;
 
   ul {
     li{
@@ -34,6 +34,9 @@
   }
 }
 
+.form-search {
+  padding: 10px 0;
+}
 
 @media (min-width: $grid-float-breakpoint) {
 
@@ -59,8 +62,8 @@ header{
 }
 
 .main-entity-logo{
-  margin-top: $grid-gutter-width/2;
-  margin-bottom: $grid-gutter-width/2;
+  margin-top: $grid-gutter-width/3;
+  margin-bottom: $grid-gutter-width/3;
 }
 
 @media (min-width: $screen-sm-min) {
@@ -96,7 +99,7 @@ header{
 @media (min-width: $screen-sm-min) {
   .navbar-brand{
     position: static;
-    margin: $grid-gutter-width/2 0;
+    margin: $grid-gutter-width/3 0;
     text-align: left;
   }
 }
@@ -265,9 +268,15 @@ header{
 
 // Home
 .home-content{
+  .home-intro {
+    padding: 15px 15px;
+  }
 
   .home-intro h2{
     color: $text-color;
+  }
+  .expense-examples {
+    padding: 20px 0 15px 25px;
   }
 
   .expense-examples li{
