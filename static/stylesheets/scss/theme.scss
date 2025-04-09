@@ -17,11 +17,19 @@
   font-size: 2em;
   color: $text-color;
   font-weight: $font-weight-700;
+
+}
+.section-header .page-title {
+  margin: $grid-gutter-width 0;
+}
+.policies-header .page-title {
+  padding: $grid-gutter-width 0;
+  margin: 0;
 }
 
 // New Lang selector
 #menu-lang{
-  margin: 20px 0 20px 20px;
+  margin: 15px 0 15px 20px;
 
   ul {
     li{
@@ -34,6 +42,9 @@
   }
 }
 
+.form-search {
+  padding: 10px 0;
+}
 
 @media (min-width: $grid-float-breakpoint) {
 
@@ -59,8 +70,8 @@ header{
 }
 
 .main-entity-logo{
-  margin-top: $grid-gutter-width/2;
-  margin-bottom: $grid-gutter-width/2;
+  margin-top: $grid-gutter-width/3;
+  margin-bottom: $grid-gutter-width/3;
 }
 
 @media (min-width: $screen-sm-min) {
@@ -96,7 +107,7 @@ header{
 @media (min-width: $screen-sm-min) {
   .navbar-brand{
     position: static;
-    margin: $grid-gutter-width/2 0;
+    margin: $grid-gutter-width/3 0;
     text-align: left;
   }
 }
@@ -265,9 +276,15 @@ header{
 
 // Home
 .home-content{
+  .home-intro {
+    padding: 15px 15px;
+  }
 
   .home-intro h2{
     color: $text-color;
+  }
+  .expense-examples {
+    padding: 20px 0 15px 25px;
   }
 
   .expense-examples li{
@@ -503,7 +520,7 @@ header{
 }
 
 .body-entities .alert-data-update{
-  margin-bottom: 1.5*$grid-gutter-width;
+  margin-bottom: $grid-gutter-width;
 }
 
 @media (min-width: $screen-sm-min) {
@@ -586,9 +603,17 @@ header{
     }
   }
 
+  .payments-search-panel.data-panel {
+    margin-top: 0;
+  }
+
   .payments-search-panel .page-title {
     font-size: 1.25em;
     margin-bottom: $grid-gutter-width;
+  }
+
+  .lead {
+      margin: 25px 30px 10px;
   }
 }
 
