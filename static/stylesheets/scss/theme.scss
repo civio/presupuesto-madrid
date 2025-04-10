@@ -420,6 +420,7 @@ header{
 // Policies
 .policies-chart{
   background: white;
+  margin: 0; // squish the space more
 }
 
 .policies-graph{
@@ -520,7 +521,7 @@ header{
 }
 
 .body-entities .alert-data-update{
-  margin-bottom: $grid-gutter-width;
+  margin-bottom: 0;
 }
 
 @media (min-width: $screen-sm-min) {
