@@ -450,7 +450,7 @@ header{
   font-weight: $font-weight-700;
 
   &:before{
-    color: darken( $brand-secondary, 20% );
+    color: color.adjust($brand-secondary, $lightness: -20%);
   }
 }
 
