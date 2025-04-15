@@ -25,6 +25,7 @@ function InvestmentsMap (_mapSelector, _legendSelector, data, _token) {
     const legendNode = document.querySelector(`#${_legendSelector}`)
     map.on("load", () => {
       map.addControl(new mapboxgl.NavigationControl());
+      map.addControl(new mapboxgl.FullscreenControl());
       setupLayers(mapNode)
       setupLegend(legendNode)
       setupStateButtons(mapNode)
