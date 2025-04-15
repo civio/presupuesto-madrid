@@ -965,3 +965,8 @@ input::-ms-input-placeholder { /* Microsoft Edge */
 .form-control{
   border-color: $brand-primary !important;
 }
+
+// Squeeze margins on investment page, as the layout is different
+.payments-content .lead, .main-investments-content .lead {
+  margin: 0 30px 10px;
+}
