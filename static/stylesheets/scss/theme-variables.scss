@@ -1,4 +1,6 @@
 
+@use "sass:color";
+
 // Colors
 // -------------
 
@@ -199,4 +201,4 @@ $sankey-execution-color: color.adjust($brand-primary-accent, $lightness: 10%);
 
 // New Sankey
 $sankey-income-color: $brand-primary;
-$sankey-expense-color: complement($sankey-income-color);
+$sankey-expense-color: color.complement($sankey-income-color);

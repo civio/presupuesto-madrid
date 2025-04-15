@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Btns
 .btn-default:hover{
   border-color: mix( $brand-primary, white, 75% );
@@ -70,8 +72,8 @@ header{
 }
 
 .main-entity-logo{
-  margin-top: $grid-gutter-width/3;
-  margin-bottom: $grid-gutter-width/3;
+  margin-top: calc($grid-gutter-width/3);
+  margin-bottom: calc($grid-gutter-width/3);
 }
 
 @media (min-width: $screen-sm-min) {
@@ -107,7 +109,7 @@ header{
 @media (min-width: $screen-sm-min) {
   .navbar-brand{
     position: static;
-    margin: $grid-gutter-width/3 0;
+    margin: calc($grid-gutter-width/3) 0;
     text-align: left;
   }
 }
@@ -116,7 +118,7 @@ header{
   text-align: center;
 
   .navbar-nav{
-    padding: $grid-gutter-width/3 0;
+    padding: calc($grid-gutter-width/3) 0;
     display: inline-block;
 
     [class*="icon-"]:before{
@@ -130,7 +132,7 @@ header{
         float: none;
         width: 100%;
         margin: 0;
-        padding: $grid-gutter-width/2 0;
+        padding: calc($grid-gutter-width/2) 0;
         border: none;
         border-radius: 0;
         line-height: 20px;
@@ -538,7 +540,7 @@ header{
 // Define policy description styles
 .policy-description{
   font-size: 1em;
-  padding: $grid-gutter-width/2 2*$grid-gutter-width/3 $grid-gutter-width/3;
+  padding: calc($grid-gutter-width/2) calc(2*$grid-gutter-width/3) calc($grid-gutter-width/3);
   margin-top: $grid-gutter-width;
   margin-bottom: 0;
   background: $brand-secondary;
@@ -619,12 +621,12 @@ header{
 }
 
 #payments-search .form-group {
-  margin-bottom: 2*$grid-gutter-width/3;
+  margin-bottom: calc(2*$grid-gutter-width/3);
 }
 
 #payments-search .data-controllers {
-  margin-top: $grid-gutter-width/3;
-  margin-bottom: $grid-gutter-width/3;
+  margin-top: calc($grid-gutter-width/3);
+  margin-bottom: calc($grid-gutter-width/3);
 }
 
 .visually-hidden {
@@ -652,12 +654,12 @@ header{
   }
 
   h3{
-    margin: $grid-gutter-width 0 2*$grid-gutter-width/3;
+    margin: $grid-gutter-width 0 calc(2*$grid-gutter-width/3);
   }
 
   p{
     font-size: 1.125em;
-    margin-bottom: $grid-gutter-width/2;
+    margin-bottom: calc($grid-gutter-width/2);
   }
 
   a{
@@ -720,7 +722,7 @@ header{
 
 .credits-footer{
   background: mix($gray-darker, $gray-dark, 50%);
-  padding: 2*$grid-gutter-width/3 0;
+  padding: calc(2*$grid-gutter-width/3) 0;
 }
 
 .sitemap-footer{
@@ -752,7 +754,7 @@ header{
   }
 
   .sitemap-title{
-    margin-top: 2*$grid-gutter-width/3;
+    margin-top: calc(2*$grid-gutter-width/3);
     padding-right: $grid-gutter-width;
     line-height: 1.875em;
   }
@@ -774,16 +776,16 @@ header{
   }
 
   .internal-links{
-    padding-top: 2*$grid-gutter-width/3;
+    padding-top: calc(2*$grid-gutter-width/3);
     margin-top: $grid-gutter-width;
   }
 
   .external-links{
-    margin-top: 2*$grid-gutter-width/3;
+    margin-top: calc(2*$grid-gutter-width/3);
     padding-top: $grid-gutter-width;
 
     ul{
-      margin-top: $grid-gutter-width/2;
+      margin-top: calc($grid-gutter-width/2);
     }
   }
 }
@@ -885,17 +887,17 @@ table.table-grid tr td{
     border: none;
 
     h3{
-      margin: $grid-gutter-width/2 auto 2*$grid-gutter-width/3;
+      margin: calc($grid-gutter-width/2) auto calc(2*$grid-gutter-width/3);
     }
   }
 
   .panel-content{
     text-transform: none;
-    padding-left: 2*$grid-gutter-width/3;
-    padding-right: 2*$grid-gutter-width/3;
+    padding-left: calc(2*$grid-gutter-width/3);
+    padding-right: calc(2*$grid-gutter-width/3);
 
     > p{
-      margin-bottom: $grid-gutter-width/2;
+      margin-bottom: calc($grid-gutter-width/2);
     }
   }
 
@@ -906,19 +908,19 @@ table.table-grid tr td{
   .data-output{
     display: none;
     font-size: 1.5rem;
-    padding: $grid-gutter-width/2;
+    padding: calc($grid-gutter-width/2);
     background: white;
     overflow-x: scroll;
-    margin: $grid-gutter-width/3 0;
+    margin: calc($grid-gutter-width/3) 0;
 
     .loading img{
-      margin-right: $grid-gutter-width/3;
+      margin-right: calc($grid-gutter-width/3);
     }
   }
 
   .btn-primary{
     font-size: 1.5rem;
-    margin: $grid-gutter-width/3 0;
+    margin: calc($grid-gutter-width/3) 0;
   }
 }
 
@@ -930,8 +932,8 @@ table.table-grid tr td{
   font-size: 1.125em;
   font-weight: 600;
   text-align: center;
-  padding: 0 $grid-gutter-width/2;
-  margin-bottom: 2*$grid-gutter-width/3;
+  padding: 0 calc($grid-gutter-width/2);
+  margin-bottom: calc(2*$grid-gutter-width/3);
 
   a{
     font-weight: 400;
