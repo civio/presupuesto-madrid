@@ -110,10 +110,17 @@
     display: block;
     float: left;
     padding: 3px;
+    box-shadow: 2px 2px white
   }
-  #investments-viz-filter-state li.active a {
+  #investments-viz-filter-state:has(.active) li:not(.active) a {
     background: #cce3f9;
     color: black;
+    box-shadow: 2px 2px #666
+  }
+  #investments-viz-filter-state li.active a {
+    background: #003DF6;
+    color: white;
+    box-shadow: 2px 2px white
   }
   // Tooltip
   #tooltip {
