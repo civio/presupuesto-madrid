@@ -317,10 +317,6 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 					'.investments-viz-legend-filter-item.inactive'
 				).length;
 
-				// // console.log('denominationItems all', denominationItems);
-				// console.log('dataValue target', dataValue);
-				// console.log('labelsInactives', labelsInactives);
-
 				// 3 possible states
 				// 1. Default: all active. Desactivate all labels except clicked if there's no labels inactives
 				if (labelsInactives === 0) {
@@ -360,7 +356,6 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
           }
 
 				}
-        // console.log('selectedFunctionalCategory', selectedFunctionalCategory);
 				filterMap();
 
 				unstickTooltip(); // Hide if open, as the clicked item may disappear
