@@ -45,9 +45,12 @@
     margin-bottom: 30px;
     padding: 0;
   }
-  #investments-viz-legend-filter li.active {
-    font-weight: bold;
-  }
+	#investments-viz-legend-filter li {
+		font-weight: bold;
+	}
+	#investments-viz-legend-filter li.inactive {
+		font-weight: 300;
+	}
   #investments-viz-legend-filter.active li.inactive span{
     background-color: white !important;
   }
