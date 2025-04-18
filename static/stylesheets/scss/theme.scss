@@ -501,7 +501,10 @@ header{
   padding-top: 0;
   text-align: center;
 }
-.monitoring .alert-data-update {
+.monitoring .alert-data-update,
+.payments-content .alert-data-update,
+.investments-content .alert-data-update,
+.main-investments-content .alert-data-update {
   margin-top: 20px;
 }
 
