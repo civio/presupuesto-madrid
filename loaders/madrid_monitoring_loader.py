@@ -1,10 +1,15 @@
 # -*- coding: UTF-8 -*-
 import csv
 import re
+import six
 
 from budget_app.models import *
 from budget_app.loaders import MonitoringLoader
-from madrid_utils import MadridUtils
+
+if six.PY2:
+    from madrid_utils import MadridUtils
+else:
+    from .madrid_utils import MadridUtils
 
 class MadridMonitoringLoader(MonitoringLoader):
 

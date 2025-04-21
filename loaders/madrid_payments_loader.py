@@ -1,9 +1,14 @@
 # -*- coding: UTF-8 -*-
 import re
+import six
 
 from budget_app.loaders import PaymentsLoader
 from budget_app.models import Budget
-from madrid_utils import MadridUtils
+
+if six.PY2:
+    from madrid_utils import MadridUtils
+else:
+    from .madrid_utils import MadridUtils
 
 class MadridPaymentsLoader(PaymentsLoader):
     # Parse an input line into fields
