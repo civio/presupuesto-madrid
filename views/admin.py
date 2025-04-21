@@ -661,9 +661,18 @@ def _scrape_execution(url, month, year):
         _write_temp(temp_folder_path, ".budget_year", year)
         _write_temp(temp_folder_path, ".budget_type", "execution")
 
-        # Based on the original 'eliminaciones' files, keep only the columns we need
-        _csv_cut_columns(temp_folder_path, "ingresos_eliminaciones_bruto.csv", "ingresos_eliminaciones.csv", [0, 1, 6, 6, 7, 8, 9, 10, 11, 13, 14])
-        _csv_cut_columns(temp_folder_path, "gastos_eliminaciones_bruto.csv", "gastos_eliminaciones.csv", [0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 13, 14, 15])
+        # Based on the original 'eliminaciones' files, keep only the columns we need.
+        # The output files are ISO-8859-1 encoded for historical reasons.
+        _csv_cut_columns(temp_folder_path,
+            "ingresos_eliminaciones_bruto.csv",
+            "ingresos_eliminaciones.csv",
+            [0, 1, 6, 6, 7, 8, 9, 10, 11, 13, 14],
+            'iso-8859-1')
+        _csv_cut_columns(temp_folder_path,
+            "gastos_eliminaciones_bruto.csv",
+            "gastos_eliminaciones.csv",
+            [0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 13, 14, 15],
+            'iso-8859-1')
 
         # Keep track of the month of the data
         status = (
@@ -714,13 +723,25 @@ def _scrape_monitoring(url, year, is_year_completed):
         _download(files[1], temp_folder_path, "objetivos_y_actividades.csv")
 
         # Based on the two denormalized source files, create three nicer normalized final ones
-        _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "objetivos.csv", [4, 5, 6, 14, 15])
-        _csv_cut_columns(temp_folder_path, "objetivos_y_actividades.csv", "actividades.csv", [4, 9, 11, 14, 15])
+        _csv_cut_columns(temp_folder_path,
+            "objetivos_e_indicadores.csv",
+            "objetivos.csv",
+            [4, 5, 6, 14, 15])
+        _csv_cut_columns(temp_folder_path,
+            "objetivos_y_actividades.csv",
+            "actividades.csv",
+            [4, 9, 11, 14, 15])
 
         if is_year_completed:
-            _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12, 13])
+            _csv_cut_columns(temp_folder_path,
+                "objetivos_e_indicadores.csv",
+                "indicadores.csv",
+                [4, 5, 6, 8, 10, 11, 12, 13])
         else:
-            _csv_cut_columns(temp_folder_path, "objetivos_e_indicadores.csv", "indicadores.csv", [4, 5, 6, 8, 10, 11, 12])
+            _csv_cut_columns(temp_folder_path,
+                "objetivos_e_indicadores.csv",
+                "indicadores.csv",
+                [4, 5, 6, 8, 10, 11, 12])
 
         _write_temp(temp_folder_path, ".budget_year", year)
 
@@ -1484,18 +1505,22 @@ def _csv_response(data, status=200):
 # a subset of columns from the given source file.
 # Note that it also removes duplicates! It was useful for goals data,
 # it could be made optional or removed if we use this somewhere else.
-def _csv_cut_columns(path, source_filename, target_filename, columns):
+def _csv_cut_columns(path, source_filename, target_filename, columns, output_encoding='utf-8'):
     # Determine file mode based on Python version
     read_mode = "rb" if six.PY2 else "r"
     write_mode = "wb" if six.PY2 else "w"
 
     # For Python 3, we need to specify newline='' to avoid extra blank lines
-    newline_param = {} if six.PY2 else {'newline': '', 'encoding': 'iso-8859-1'}
+    if six.PY2:
+        read_params = write_params = {}
+    else:
+        read_params = {'newline': '', 'encoding': 'iso-8859-1'}
+        write_params = {'newline': '', 'encoding': output_encoding}
 
     last_line = []
-    with open(os.path.join(path, target_filename), write_mode, **newline_param) as target:
+    with open(os.path.join(path, target_filename), write_mode, **write_params) as target:
         writer = csv.writer(target, delimiter=';')
-        with open(os.path.join(path, source_filename), read_mode, **newline_param) as source:
+        with open(os.path.join(path, source_filename), read_mode, **read_params) as source:
             reader = csv.reader(source, delimiter=';')
             for index, line in enumerate(reader):
                 columns_to_write = [line[c] for c in columns]
