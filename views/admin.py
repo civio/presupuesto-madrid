@@ -20,6 +20,7 @@ import glob
 import json
 import os
 import re
+import sys
 import subprocess
 import urllib
 
@@ -58,7 +59,7 @@ PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd5
 TEMP_BASE_PATH = "/tmp/budget_app"
 
 # Add global variable to control whether we should dry run git commands, useful for development
-IS_DRY_RUN = False
+IS_GIT_DRY_RUN = True
 
 class AdminException(Exception):
     pass
@@ -380,7 +381,8 @@ def _load_execution():
         year,
     )
     if month:
-        cue = cue.replace(" para ", "para %s de " % month)
+        # Append the month to the end of cue
+        cue += " (mes %s)" % month
 
     management_commands = (
         "load_budget %s --language=es,en" % year,
@@ -1173,7 +1175,14 @@ def _arrange_payments(data_files_path):
 def _fetch(url):
     try:
         request = Request(url, headers={'User-Agent': 'Mozilla'})
-        page = urlopen(request).read()
+        response = urlopen(request)
+
+        # Convert to string based on Python version
+        if sys.version_info[0] >= 3:    # Python 3
+            page = response.read().decode('utf-8', errors='replace')
+        else:
+            page = response.read()
+
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, cgi.escape(str(error))))
 
@@ -1182,8 +1191,15 @@ def _fetch(url):
 
 def _download(url, temp_folder_path, filename):
     try:
-        file = urlopen(Request(url, headers={'User-Agent': 'Mozilla'})).read()
-        _write_temp(temp_folder_path, filename, file)
+        response = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
+
+        # Convert to string based on Python version
+        if sys.version_info[0] >= 3:    # Python 3
+            file = response.read().decode('iso-8859-1', errors='replace')
+        else:
+            file = response.read()
+
+        _write_temp(temp_folder_path, filename, file, 'iso-8859-1')
     except IOError as error:
         raise AdminException(
             "File at '%s' couldn't be downloaded: %s" % (url, str(error))
@@ -1210,15 +1226,23 @@ def _exists_temp(temp_folder_path, filename):
 def _read_temp(temp_folder_path, filename):
     file_path = os.path.join(temp_folder_path, filename)
 
-    with open(file_path, "rb") as file:
-        return file.read()
+    if sys.version_info[0] >= 3:    # Python 3
+        with open(file_path, "r") as file:
+            return file.read()
+    else:
+        with open(file_path, "rb") as file:
+            return file.read()
 
 
-def _write_temp(temp_folder_path, filename, content):
+def _write_temp(temp_folder_path, filename, content, encoding='utf-8'):
     file_path = os.path.join(temp_folder_path, filename)
 
-    with open(file_path, "w") as file:
-        file.write(content)
+    if sys.version_info[0] >= 3:    # Python 3
+        with open(file_path, "w", encoding=encoding) as file:
+            file.write(content)
+    else:
+        with open(file_path, "w") as file:
+            file.write(content)
 
 
 def _touch(file_path):
@@ -1281,7 +1305,7 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
 # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
 def _reset_git_status():
     # Do nothing if dry run is enabled
-    if IS_DRY_RUN:
+    if IS_GIT_DRY_RUN:
         return "Dry run enabled: skipping git reset..."
 
     cmd = (
@@ -1313,7 +1337,7 @@ def _read(file_path):
 
 def _commit(path, commit_message):
     # Do nothing if dry run is enabled
-    if IS_DRY_RUN:
+    if IS_GIT_DRY_RUN:
         return "Dry run enabled: skipping git commit..."
 
     # Why `diff-index`? See https://stackoverflow.com/a/8123841
@@ -1428,9 +1452,10 @@ def _execute_cmd(cmd):
     )
 
     output, _ = process.communicate()
-    return_code = process.poll()
+    if sys.version_info[0] < 3:
+        output = output.decode("utf8", "backslashreplace")
 
-    output = output.decode("utf8", "backslashreplace")
+    return_code = process.poll()
     error = return_code != 0
 
     return (output, error)
@@ -1454,15 +1479,21 @@ def _csv_response(data, status=200):
 # Note that it also removes duplicates! It was useful for goals data,
 # it could be made optional or removed if we use this somewhere else.
 def _csv_cut_columns(path, source_filename, target_filename, columns):
+    # Determine file mode based on Python version
+    read_mode = "rb" if sys.version_info[0] < 3 else "r"
+    write_mode = "wb" if sys.version_info[0] < 3 else "w"
+
+    # For Python 3, we need to specify newline='' to avoid extra blank lines
+    newline_param = {} if sys.version_info[0] < 3 else {'newline': '', 'encoding': 'iso-8859-1'}
+
     last_line = []
-    with open(os.path.join(path, target_filename), "ab") as target:
-        target.truncate(0)
+    with open(os.path.join(path, target_filename), write_mode, **newline_param) as target:
         writer = csv.writer(target, delimiter=';')
-        with open(os.path.join(path, source_filename), "rb") as source:
+        with open(os.path.join(path, source_filename), read_mode, **newline_param) as source:
             reader = csv.reader(source, delimiter=';')
             for index, line in enumerate(reader):
                 columns_to_write = [line[c] for c in columns]
-                if ( columns_to_write==last_line ):
+                if columns_to_write == last_line:
                     continue
                 writer.writerow(columns_to_write)
                 last_line = columns_to_write
