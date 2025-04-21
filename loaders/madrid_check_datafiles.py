@@ -2,6 +2,7 @@
 
 import os
 import csv
+import six
 import sys
 import re
 
@@ -40,7 +41,11 @@ def get_stats(path, is_expense, is_actual):
 
     filename = os.path.join(path, 'gastos.csv' if is_expense else 'ingresos.csv')
 
-    reader = csv.reader(open(filename, 'rb'), delimiter=';')
+    if six.PY2:
+        reader = csv.reader(open(filename, 'rb'), delimiter=';')
+    else:
+        reader = csv.reader(open(filename, 'r', encoding='iso-8859-1'), delimiter=';')
+
     for index, line in enumerate(reader):
         if re.match("^#", line[0]):  # Ignore comments
             continue
@@ -91,7 +96,7 @@ def get_stats(path, is_expense, is_actual):
 
 # Get path to data files
 if len(sys.argv) < 2:
-    print "Por favor, indica la ruta de los ficheros a comprobar."
+    print("Por favor, indica la ruta de los ficheros a comprobar.")
     sys.exit()
 
 path = sys.argv[1]
@@ -103,10 +108,10 @@ is_actual = (open(os.path.join(path, '.budget_type'), 'r').read() == "execution"
 incoming_revenues, internal_revenues = get_stats(path, False, is_actual)  # stats for revenues
 outgoing_expenses, internal_expenses = get_stats(path, True, is_actual)  # stats for expenses
 
-print "Datos de %s (tras descontar eliminaciones)" % ("ejecución" if is_actual else "presupuesto")
-print "  Ingresos: %s euros" % format_number_as_spanish(incoming_revenues / 100.0)
-print "  Gastos  : %s euros" % format_number_as_spanish(outgoing_expenses / 100.0)
-print " "
-print "Eliminaciones"
-print "  Ingresos: %s euros" % format_number_as_spanish(internal_revenues / 100.0)
-print "  Gastos  : %s euros" % format_number_as_spanish(internal_expenses / 100.0)
+print("Datos de %s (tras descontar eliminaciones)" % ("ejecución" if is_actual else "presupuesto"))
+print("  Ingresos: %s euros" % format_number_as_spanish(incoming_revenues / 100.0))
+print("  Gastos  : %s euros" % format_number_as_spanish(outgoing_expenses / 100.0))
+print(" ")
+print("Eliminaciones")
+print("  Ingresos: %s euros" % format_number_as_spanish(internal_revenues / 100.0))
+print("  Gastos  : %s euros" % format_number_as_spanish(internal_expenses / 100.0))
