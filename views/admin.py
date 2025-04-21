@@ -29,7 +29,6 @@ try:
 except ImportError: # Python 2
     from urllib2 import Request, urlopen
 
-
 DATA_BASE_URL = "https://datos.madrid.es"
 
 # XXX: All the "general" stuff should be renamed just "budget"
@@ -58,6 +57,8 @@ PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd5
 
 TEMP_BASE_PATH = "/tmp/budget_app"
 
+# Add global variable to control whether we should dry run git commands, useful for development
+IS_DRY_RUN = False
 
 class AdminException(Exception):
     pass
@@ -1279,6 +1280,10 @@ def _copy(source_path, destination_path, source_filename, destination_filename=N
 # Git helpers
 # The scripts/git and scripts/git-* executables must be manually deployed and setuid'ed
 def _reset_git_status():
+    # Do nothing if dry run is enabled
+    if IS_DRY_RUN:
+        return "Dry run enabled: skipping git reset..."
+
     cmd = (
         "cd %s "
         "&& scripts/git fetch "
@@ -1307,6 +1312,10 @@ def _read(file_path):
 
 
 def _commit(path, commit_message):
+    # Do nothing if dry run is enabled
+    if IS_DRY_RUN:
+        return "Dry run enabled: skipping git commit..."
+
     # Why `diff-index`? See https://stackoverflow.com/a/8123841
     cmd = (
         "cd %s"
