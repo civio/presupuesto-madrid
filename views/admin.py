@@ -20,15 +20,15 @@ import glob
 import json
 import os
 import re
-import sys
+import six
 import subprocess
 import urllib
 
 # urllib2 has changed significantly in Python 3
-try:
-    from urllib.request import Request, urlopen
-except ImportError: # Python 2
+if six.PY2:
     from urllib2 import Request, urlopen
+else:
+    from urllib.request import Request, urlopen
 
 DATA_BASE_URL = "https://datos.madrid.es"
 
@@ -1178,10 +1178,10 @@ def _fetch(url):
         response = urlopen(request)
 
         # Convert to string based on Python version
-        if sys.version_info[0] >= 3:    # Python 3
-            page = response.read().decode('utf-8', errors='replace')
-        else:
+        if six.PY2:
             page = response.read()
+        else:
+            page = response.read().decode('utf-8', errors='replace')
 
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, cgi.escape(str(error))))
@@ -1194,10 +1194,10 @@ def _download(url, temp_folder_path, filename):
         response = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
 
         # Convert to string based on Python version
-        if sys.version_info[0] >= 3:    # Python 3
-            file = response.read().decode('iso-8859-1', errors='replace')
-        else:
+        if six.PY2:
             file = response.read()
+        else:
+            file = response.read().decode('iso-8859-1', errors='replace')
 
         _write_temp(temp_folder_path, filename, file, 'iso-8859-1')
     except IOError as error:
@@ -1226,22 +1226,22 @@ def _exists_temp(temp_folder_path, filename):
 def _read_temp(temp_folder_path, filename):
     file_path = os.path.join(temp_folder_path, filename)
 
-    if sys.version_info[0] >= 3:    # Python 3
-        with open(file_path, "r") as file:
+    if six.PY2:
+        with open(file_path, "rb") as file:
             return file.read()
     else:
-        with open(file_path, "rb") as file:
+        with open(file_path, "r") as file:
             return file.read()
 
 
 def _write_temp(temp_folder_path, filename, content, encoding='utf-8'):
     file_path = os.path.join(temp_folder_path, filename)
 
-    if sys.version_info[0] >= 3:    # Python 3
-        with open(file_path, "w", encoding=encoding) as file:
+    if six.PY2:
+        with open(file_path, "w") as file:
             file.write(content)
     else:
-        with open(file_path, "w") as file:
+        with open(file_path, "w", encoding=encoding) as file:
             file.write(content)
 
 
@@ -1452,7 +1452,7 @@ def _execute_cmd(cmd):
     )
 
     output, _ = process.communicate()
-    if sys.version_info[0] < 3:
+    if six.PY2:
         output = output.decode("utf8", "backslashreplace")
 
     return_code = process.poll()
@@ -1480,11 +1480,11 @@ def _csv_response(data, status=200):
 # it could be made optional or removed if we use this somewhere else.
 def _csv_cut_columns(path, source_filename, target_filename, columns):
     # Determine file mode based on Python version
-    read_mode = "rb" if sys.version_info[0] < 3 else "r"
-    write_mode = "wb" if sys.version_info[0] < 3 else "w"
+    read_mode = "rb" if six.PY2 else "r"
+    write_mode = "wb" if six.PY2 else "w"
 
     # For Python 3, we need to specify newline='' to avoid extra blank lines
-    newline_param = {} if sys.version_info[0] < 3 else {'newline': '', 'encoding': 'iso-8859-1'}
+    newline_param = {} if six.PY2 else {'newline': '', 'encoding': 'iso-8859-1'}
 
     last_line = []
     with open(os.path.join(path, target_filename), write_mode, **newline_param) as target:
