@@ -58,8 +58,14 @@ PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd5
 
 TEMP_BASE_PATH = "/tmp/budget_app"
 
+# Select the Python interpreter for external commands based on the version we're running
+if six.PY2:
+    PYTHON = "python2"
+else:
+    PYTHON = "python3"
+
 # Add global variable to control whether we should dry run git commands, useful for development
-IS_GIT_DRY_RUN = True
+IS_GIT_DRY_RUN = False
 
 class AdminException(Exception):
     pass
@@ -833,7 +839,7 @@ def _review(data_files_path):
 
     cmd = "export PYTHONIOENCODING=utf-8 && "
     cmd += "cd %s && " % script_path
-    cmd += "python2 madrid_check_datafiles.py %s" % data_files_path
+    cmd += "%s madrid_check_datafiles.py %s" % (PYTHON, data_files_path)
 
     output, error = _execute_cmd(cmd)
 
@@ -994,7 +1000,7 @@ def _execute_loading_task(cue, *management_commands):
     )% (ROOT_PATH, )
 
     for management_command in management_commands:
-        cmd += "&& python2 manage.py %s " % management_command
+        cmd += "&& %s manage.py %s " % (PYTHON, management_command)
 
     output, error = _execute_cmd(cmd)
 
