@@ -893,6 +893,16 @@ def _review_payments_data(data_files_path):
         "organismos.csv": [1, 3, 4, 7, 9, 10, 11]
     }
 
+    # Determine file mode based on Python version
+    read_mode = "rb" if six.PY2 else "r"
+    write_mode = "wb" if six.PY2 else "w"
+
+    # For Python 3, we need to specify newline='' to avoid extra blank lines
+    if six.PY2:
+        read_params = write_params = {}
+    else:
+        read_params = write_params = {'newline': '', 'encoding': 'utf-8'}
+
     error = None
 
     try:
@@ -908,7 +918,7 @@ def _review_payments_data(data_files_path):
 
         for data_file in ["areas_y_distritos.csv", "organismos.csv"]:
             data_filename = os.path.join(data_files_path, data_file)
-            with open(data_filename, "rb") as source:
+            with open(data_filename, read_mode, **read_params) as source:
                 reader = csv.reader(source, delimiter=';')
 
                 for index, line in enumerate(reader):
@@ -933,8 +943,7 @@ def _review_payments_data(data_files_path):
 
                     payments[key] = payments.get(key, 0.0) + amount
 
-        with open(target_filename, "ab") as target:
-            target.truncate(0)
+        with open(target_filename, write_mode, **write_params) as target:
             writer = csv.writer(target, delimiter=',')
 
             for key, amount in payments.items():
@@ -942,7 +951,7 @@ def _review_payments_data(data_files_path):
                 row_data.append(amount)
                 writer.writerow(row_data)
 
-        with open(target_filename, "rb") as target:
+        with open(target_filename, read_mode, **read_params) as target:
             reader = csv.reader(target, delimiter=',')
 
             for index, line in enumerate(reader):
@@ -1220,13 +1229,14 @@ def _download(url, temp_folder_path, filename):
     try:
         response = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
 
-        # Convert to string based on Python version
+        # In the old Python 2 code we used the same method to create a temporary file
+        # with some minor content (text) and to save a downloaded file. Not anymore.
         if six.PY2:
-            file = response.read()
+            _write_temp(temp_folder_path, filename, response.read(), 'iso-8859-1')
         else:
-            file = response.read().decode('iso-8859-1', errors='replace')
+            with open(os.path.join(temp_folder_path, filename), "wb") as f:
+                f.write(response.read())
 
-        _write_temp(temp_folder_path, filename, file, 'iso-8859-1')
     except IOError as error:
         raise AdminException(
             "File at '%s' couldn't be downloaded: %s" % (url, str(error))
