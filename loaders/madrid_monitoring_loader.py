@@ -29,7 +29,7 @@ class MadridMonitoringLoader(MonitoringLoader):
             'ic_code': ic_code,
             'fc_code': fc_code,
             'goal_number': goal_number,
-            'description': line[3].decode("utf8"),
+            'description': self._decode_utf8(line[3]),
             'report': re.sub(r'<U>|</>', '', line[4])
         }
 
@@ -48,7 +48,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         return {
             'goal_uid': self._get_goal_uid(year, ic_code, fc_code, goal_number),
             'activity_number': line[3],
-            'description': line[4].decode("utf8"),
+            'description': self._decode_utf8(line[4]),
         }
 
 
@@ -64,7 +64,7 @@ class MadridMonitoringLoader(MonitoringLoader):
         goal_number = line[2]
 
         # Some other basic fields
-        description = line[4].decode("utf8")
+        description = self._decode_utf8(line[4])
         unit = line[5]
         target = int(line[6])
         _is_inverse_indicator = self._is_inverse_indicator(description, unit)
@@ -119,3 +119,9 @@ class MadridMonitoringLoader(MonitoringLoader):
 
     def _get_delimiter(self):
         return ';'
+
+    def _decode_utf8(self, s):
+        if six.PY2:
+            return s.decode('utf-8')
+        else:
+            return s

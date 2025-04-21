@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
-from budget_app.models import *
-from budget_app.loaders import InvestmentsLoader
+import six
 import csv
 import re
+
+from budget_app.models import *
+from budget_app.loaders import InvestmentsLoader
 
 class MadridInvestmentsLoader(InvestmentsLoader):
 
@@ -23,7 +25,7 @@ class MadridInvestmentsLoader(InvestmentsLoader):
     def parse_item(self, filename, line):
         # Skip empty/header/subtotal lines.
         # Careful with 2017 data, first two columns are usually empty
-        if unicode(line[0], encoding='iso-8859-1').encode('utf8') in ['*', 'Fondo', 'Fondos', 'Programa de financiación']:
+        if self._safe_to_utf8(line[0]) in ['*', 'Fondo', 'Fondos', 'Programa de financiación']:
             return
         if line[0]=='' and line[2]=='':
             return
@@ -44,14 +46,14 @@ class MadridInvestmentsLoader(InvestmentsLoader):
             # approved and when provided as part of an execution update.
             if len(line) > 13:
                 project_id = line[7]
-                description = unicode(line[8], encoding='iso-8859-1').encode('utf8')
+                description = self._safe_to_utf8(line[8])
                 investment_line = line[11]
                 gc_code = self.map_geo_code(line[9])
                 amount = self._read_spanish_number(line[28 if is_actual else 23])
 
             else:
                 project_id = line[0]
-                description = unicode(line[1], encoding='iso-8859-1').encode('utf8')
+                description = self._safe_to_utf8(line[1])
                 investment_line = line[7]
                 gc_code = self.map_geo_code(line[11])
                 amount = self._read_spanish_number(line[6])
@@ -72,3 +74,13 @@ class MadridInvestmentsLoader(InvestmentsLoader):
     # Override default input delimiter
     def _get_delimiter(self):
         return ';'
+
+    def _get_data_files_encoding(self):
+        return 'iso-8859-1'
+
+    # Hacky function for messy Python 2 Unicode handling.
+    def _safe_to_utf8(self, text):
+        if six.PY2:
+            return unicode(text, encoding='iso-8859-1').encode('utf8')
+        else:
+            return text

@@ -80,7 +80,11 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # The input files are encoded in ISO-8859-1, since we want to work with the files
             # as they're published in the original open data portal. All the text fields are
             # ignored, as we use the codes instead, but the description one.
-            description = self._spanish_titlecase(line[9].decode("iso-8859-1").encode("utf-8"))
+            if six.PY2:
+                description = self._spanish_titlecase(line[9].decode("iso-8859-1").encode("utf-8"))
+            else:
+                # In Python 3 we're handling the encoding at the file level, so we don't need to decode/encode here.
+                description = self._spanish_titlecase(line[9])
 
             return {
                 'is_expense': True,
@@ -117,7 +121,11 @@ class MadridBudgetLoader(SimpleBudgetLoader):
                 amount = -amount
 
             # See note above
-            description = self._spanish_titlecase(line[5].decode("iso-8859-1").encode("utf-8"))
+            if six.PY2:
+                description = self._spanish_titlecase(line[5].decode("iso-8859-1").encode("utf-8"))
+            else:
+                # In Python 3 we're handling the encoding at the file level, so we don't need to decode/encode here.
+                description = self._spanish_titlecase(line[5])
 
             return {
                 'is_expense': False,
@@ -135,3 +143,6 @@ class MadridBudgetLoader(SimpleBudgetLoader):
 
     def _get_delimiter(self):
         return ';'
+
+    def _get_data_files_encoding(self):
+        return 'iso-8859-1'
