@@ -64,7 +64,9 @@ if six.PY2:
 else:
     PYTHON = "python3"
 
-# Add global variable to control whether we should dry run git commands, useful for development
+# Add global variable to control whether we should dry run git commands, useful for development.
+# In my localhost I also have `scripts/git` defined as `echo 'hello world'`. But editing inflation,
+# population and the glossary won't work if we don't have a real `git` command.
 IS_GIT_DRY_RUN = False
 
 class AdminException(Exception):
@@ -1404,8 +1406,11 @@ def _parse_spanish_number(number):
 
 
 def _get_content(params):
-    content = params.get("content", "")
-    return base64.b64decode(content)
+    b64_content = params.get("content", "")
+    content = base64.b64decode(b64_content)
+    if six.PY3:
+        content = content.decode('utf-8')
+    return content
 
 
 def _get_month(params):
