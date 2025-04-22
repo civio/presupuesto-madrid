@@ -3,26 +3,33 @@
   * {
     font-family: 'Lato', sans-serif;
   }
+
   // Filter common settings
   .investments-viz-filter h3 {
     font-size: 16px;
     font-weight: bold;
     color: #212529;
   }
-  .investments-viz-filter div, .investments-viz-filter ul {
-    font-size:14px;
+
+  .investments-viz-filter div,
+  .investments-viz-filter ul {
+    font-size: 14px;
     padding: 0;
   }
+
   .investments-viz-filter ul {
     list-style-type: none;
   }
+
   // Map
   .map-wrapper {
     position: relative;
   }
+
   #investments-viz-map {
     height: 670px;
   }
+
   .map-overlay-inner {
     position: absolute;
     width: 320px;
@@ -31,11 +38,13 @@
     padding: 10px;
     pointer-events: none;
   }
+
   // Filter with denomination values
   #investments-viz-legend-title {
     text-align: center;
     color: #212529;
   }
+
   #investments-viz-legend-filter {
     display: flex;
     flex-wrap: wrap;
@@ -45,23 +54,29 @@
     margin-bottom: 30px;
     padding: 0;
   }
-	#investments-viz-legend-filter li {
-		font-weight: bold;
-	}
-	#investments-viz-legend-filter li.inactive {
-		font-weight: 300;
-	}
-  #investments-viz-legend-filter.active li.inactive span{
+
+  #investments-viz-legend-filter li {
+    font-weight: bold;
+  }
+
+  #investments-viz-legend-filter li.inactive {
+    font-weight: 300;
+  }
+
+  #investments-viz-legend-filter.active li.inactive span {
     background-color: white !important;
   }
-  #investments-viz-legend-filter  {
+
+  #investments-viz-legend-filter {
     overflow: auto;
   }
+
   #investments-viz-legend-filter li {
     cursor: pointer;
     float: left;
     margin: 0 8px 6px 0;
   }
+
   #investments-viz-legend-filter li span {
     pointer-events: none;
     border-style: solid;
@@ -72,6 +87,7 @@
     margin: 0 0.5em 0 0;
     display: inline-block;
   }
+
   // Filter of input text
   .investments-viz-filter-searcher {
     position: absolute;
@@ -79,6 +95,7 @@
     left: 10px;
     z-index: 1;
   }
+
   .investments-viz-filter-searcher input[type='text'] {
     border: 0;
     background-color: #fff;
@@ -89,52 +106,58 @@
     width: 210px;
     font-size: 15px;
   }
+
   // Filter with state values 
   #investments-viz-filter-state-wrapper {
     position: absolute;
     top: 60px;
     left: 10px;
   }
-  #investments-viz-filter-state li { 
-    float: left; 
+
+  #investments-viz-filter-state li {
+    float: left;
     position: relative;
     cursor: pointer;
     margin-right: 3px;
     user-select: none;
   }
+
   #investments-viz-filter-state li a {
     pointer-events: none;
     color: white;
-    text-decoration: none; 
+    text-decoration: none;
     background: #003DF6;
     display: block;
     float: left;
     padding: 3px;
-    box-shadow: 2px 2px white
   }
+
   #investments-viz-filter-state:has(.active) li:not(.active) a {
     background: #cce3f9;
-    color: black;
-    box-shadow: 2px 2px #666
+    color: #979797;
+    opacity: .7;
   }
+
   #investments-viz-filter-state li.active a {
     background: #003DF6;
     color: white;
-    box-shadow: 2px 2px white
   }
+
   // Tooltip
   #tooltip {
     display: none;
     border: 1px solid #003DF6;
     background-color: white;
     padding: 20px;
-    font-family: 'Lato',Verdana,sans-serif;
+    font-family: 'Lato', Verdana, sans-serif;
     z-index: 2;
     cursor: default;
   }
+
   #tooltip-wrapper {
     position: relative;
   }
+
   #tooltip-close-button {
     position: absolute;
     top: -16px;
@@ -144,54 +167,72 @@
     pointer-events: auto;
     cursor: pointer;
   }
-  #tooltip.hover, #tooltip.click {
+
+  #tooltip.hover,
+  #tooltip.click {
     display: block;
   }
-  #tooltip, #tooltip h3 {
+
+  #tooltip,
+  #tooltip h3 {
     font-size: 14px;
   }
+
   #tooltip h3 {
     font-weight: bold;
     margin-top: 0px;
   }
+
   #tooltip table {
     width: 100%;
   }
+
   #tooltip table td:nth-child(2) {
     font-weight: bold;
   }
+
   .tooltip-award td:nth-child(2) {
     width: 35%;
   }
+
   #tooltip tr {
     border: 0px;
   }
+
   .tooltip-section {
     margin: 10px 0;
   }
-  .tooltip-location div:nth-child(2), .tooltip-denomination {
+
+  .tooltip-location div:nth-child(2),
+  .tooltip-denomination {
     font-weight: bold;
   }
+
   .tooltip-denomination-marker {
     display: inline-block;
     width: 10px;
     height: 10px;
     border-radius: 10px;
   }
+
   .tooltip-times {
     border-top: 1px solid #E7F2FC;
     border-bottom: 1px solid #E7F2FC;
   }
+
   #tooltip img {
     width: 100%;
   }
+
   // Mapbox credits
-  .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right{
+  .mapboxgl-ctrl-bottom-left,
+  .mapboxgl-ctrl-bottom-right {
     display: none;
   }
+
   @media only screen and (max-width: 600px) {
     .map-overlay-inner {
-      right: 0; 
+      right: 0;
     }
   }
 }
