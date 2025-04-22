@@ -39,9 +39,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 
 	this.selectYear = function (year) {
 
-		// selectedYear = year
-		// selectedYear = "2021"
-		selectedYear = [2023, 2024]
+		selectedYear = year
 
 		if (mapLoaded) {
 			// If still loaded, filtering will happen once that's done
@@ -53,7 +51,6 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 
 			const pinProject = function () {
 				if (Array.isArray(selectedYear)) {
-					// console.log(data.filter(d => d.project_id === hoveredFeature.properties.project_id))
 					return data.find(
 						(d) =>
 							d.year === selectedYear[1] &&
@@ -69,9 +66,6 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 			}
 
 			const obj = pinProject()
-
-			// console.log(data.filter(d => d.project_id === hoveredFeature.properties.project_id))
-			// console.log(data.filter(d => d.project_id === hoveredFeature.properties.project_id).at(-1)[0])
 
 			if (obj) {
 				const tooltip = document.querySelector('#tooltip');
@@ -284,7 +278,6 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 		setFeatureHover(hoveredFeature, true);
 
 		const tooltip = document.querySelector('#tooltip');
-		console.log(data.filter(d => d.project_id === hoveredFeature.properties.project_id))
 		populateTooltip(tooltip, tooltipInfo());
 		tooltip.classList.add('hover');
 	}
