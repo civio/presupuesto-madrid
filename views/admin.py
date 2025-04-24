@@ -61,8 +61,10 @@ TEMP_BASE_PATH = "/tmp/budget_app"
 # Select the Python interpreter for external commands based on the version we're running
 if six.PY2:
     PYTHON = "python2"
+    PYTHON_VENV = "env"
 else:
     PYTHON = "python3"
+    PYTHON_VENV = "env3"
 
 # Add global variable to control whether we should dry run git commands, useful for development.
 # In my localhost I also have `scripts/git` defined as `echo 'hello world'`. But editing inflation,
@@ -1028,8 +1030,8 @@ def _execute_loading_task(cue, *management_commands):
     cmd = (
         "export PYTHONIOENCODING=utf-8 "
         "&& cd %s "
-        "&& source env/bin/activate "
-    )% (ROOT_PATH, )
+        "&& source %s/bin/activate "
+    )% (ROOT_PATH, PYTHON_VENV)
 
     for management_command in management_commands:
         cmd += "&& %s manage.py %s " % (PYTHON, management_command)
