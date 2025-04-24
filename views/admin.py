@@ -1491,6 +1491,7 @@ def _execute_cmd(cmd):
         shell=True,
         env=env,
         universal_newlines=True,
+        encoding="utf-8"
     )
 
     output, _ = process.communicate()
