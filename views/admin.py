@@ -1479,6 +1479,8 @@ def _get_most_recent_temp_folder():
 def _execute_cmd(cmd):
     # IO encoding is a nightmare. See https://stackoverflow.com/a/4027726
     env = os.environ.copy()
+    env['LANG'] = 'en_US.UTF-8'
+    env['LC_ALL'] = 'en_US.UTF-8'
 
     if HTTP_PROXY:
         env["http_proxy"] = HTTP_PROXY
