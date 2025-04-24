@@ -525,7 +525,7 @@ def _retrieve_population():
 
 
 def _save_inflation(content):
-    return _save("data/inflacion.csv", content, "Update inflation data")
+    return _save("data", "inflacion.csv", content, "Update inflation data")
 
 
 def _save_population(content):
@@ -542,7 +542,7 @@ def _save_population(content):
 
     data = "\n".join(data)
 
-    return _save("data/poblacion.csv", data, "Update population data")
+    return _save("data", "poblacion.csv", data, "Update population data")
 
 
 def _load_stats():
@@ -561,11 +561,11 @@ def _retrieve_glossary_en():
 
 
 def _save_glossary_es(content):
-    return _save("data/glosario_es.csv", content, "Update spanish glossary data")
+    return _save("data", "glosario_es.csv", content, "Update spanish glossary data")
 
 
 def _save_glossary_en(content):
-    return _save("data/glosario_en.csv", content, "Update english glossary data")
+    return _save("data", "glosario_en.csv", content, "Update english glossary data")
 
 
 def _load_glossary_es():
@@ -999,7 +999,7 @@ def _retrieve(file_path):
         raise Exception(error)
 
 
-def _save(file_path, content, commit_message):
+def _save(target_path, filename, content, commit_message):
     if not content:
         body = {"result": "error", "message": "<p>Nada que guardar.</p>"}
         status = 400
@@ -1007,8 +1007,8 @@ def _save(file_path, content, commit_message):
 
     try:
         _reset_git_status()
-        _write(file_path, content)
-        _commit(file_path, commit_message)
+        _write(target_path, filename, content)
+        _commit(os.path.join(target_path, filename), commit_message)
 
         body = {
             "result": "success",
@@ -1296,19 +1296,15 @@ def _touch(file_path):
         raise AdminException("File '%s' couldn't be touched: %s\n\n%s" % (file_path, error, output))
 
 
-def _write(file_path, content):
-    # The scripts/cat executable must be manually deployed and setuid'ed
-    cmd = (
-        "cd %s "
-        "&& cat <<EOF | scripts/tee %s\n"
-        "%s"
-        "EOF"
-    ) % (THEME_PATH, file_path, content)
+def _write(target_path, filename, content):
+    # Originally we tried to create the file piping the content to the target via `cat` and `tee`.
+    # But we had encoding issues in the server when migrating to Python 3. So we create a temporary file
+    # instead first...
+    temp_folder_path = _create_temp_folder()
+    _write_temp(temp_folder_path, filename, content)
 
-    output, error = _execute_cmd(cmd)
-
-    if error:
-        raise AdminException("File %s couldn't be written: %s\n\n%s" % (file_path, error, output))
+    # ...and then we copy it to the target path, without worrying about encoding issues.
+    _copy(temp_folder_path, target_path, filename)
 
 
 def _remove(folder_path, filename):
