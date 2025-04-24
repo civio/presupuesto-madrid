@@ -26,7 +26,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 		const legendNode = document.querySelector(`#${_legendSelector}`);
 		map.on('load', () => {
 			map.addControl(new mapboxgl.NavigationControl());
-      map.addControl(new mapboxgl.FullscreenControl());
+			map.addControl(new mapboxgl.FullscreenControl());
 			setupLayers(mapNode);
 			setupLegend(legendNode);
 			setupStateButtons(mapNode);
@@ -38,7 +38,9 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 	};
 
 	this.selectYear = function (year) {
-		selectedYear = year;
+
+		selectedYear = year
+
 		if (mapLoaded) {
 			// If still loaded, filtering will happen once that's done
 			filterMap();
@@ -46,11 +48,25 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 
 		// Try to update the tooltip, if stuck, if the selected investment exists across the years
 		if (hoveredFeature !== null) {
-			const obj = data.find(
-				(d) =>
-					d.year === selectedYear &&
-					d.project_id === hoveredFeature.properties.project_id
-			);
+
+			const pinProject = function () {
+				if (Array.isArray(selectedYear)) {
+					return data.find(
+						(d) =>
+							d.year === selectedYear[1] &&
+							d.project_id === hoveredFeature.properties.project_id
+					);
+				} else {
+					return data.find(
+						(d) =>
+							d.year === selectedYear &&
+							d.project_id === hoveredFeature.properties.project_id
+					);
+				}
+			}
+
+			const obj = pinProject()
+
 			if (obj) {
 				const tooltip = document.querySelector('#tooltip');
 				populateTooltip(tooltip, obj); // The investment exists across the years
@@ -195,11 +211,10 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
             <td>${obj.start_year}</td>
           </tr>
           <tr>
-            ${
-							obj.actual_end_year !== ''
-								? `<td>Año de finalización</td><td>${obj.actual_end_year}</td>`
-								: `<td>Año finalización previsto</td><td>${obj.expected_end_year}</td>`
-						}
+            ${obj.actual_end_year !== ''
+				? `<td>Año de finalización</td><td>${obj.actual_end_year}</td>`
+				: `<td>Año finalización previsto</td><td>${obj.expected_end_year}</td>`
+			}
           </tr>
         </table>
         <table class="tooltip-section tooltip-award">
@@ -215,12 +230,12 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
           <tr>
             <td>Anualidades futuras</td>
             <td>${formatAmount(
-							Math.abs(
-								Number(obj.total_expected_amount) -
-									Number(obj.already_spent_amount) -
-									Number(obj.current_year_amount)
-							)
-						)}</td>
+				Math.abs(
+					Number(obj.total_expected_amount) -
+					Number(obj.already_spent_amount) -
+					Number(obj.current_year_amount)
+				)
+			)}</td>
           </tr>
           <tr>
             <td>Presupuesto total previsto</td>
@@ -245,6 +260,16 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 		);
 	}
 
+	// custom method to find the last update of a project
+	function tooltipInfo() {
+		if (Array.isArray(selectedYear)) {
+			const projects = data.filter(d => d.project_id === hoveredFeature.properties.project_id)
+			return projects.at(-1)
+		} else {
+			return hoveredFeature.properties
+		}
+	}
+
 	function showTooltip(e) {
 		if (hoveredFeature !== null) {
 			setFeatureHover(hoveredFeature.id, false);
@@ -253,7 +278,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 		setFeatureHover(hoveredFeature, true);
 
 		const tooltip = document.querySelector('#tooltip');
-		populateTooltip(tooltip, hoveredFeature.properties);
+		populateTooltip(tooltip, tooltipInfo());
 		tooltip.classList.add('hover');
 	}
 
@@ -311,7 +336,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 				const denominationItems = document.querySelectorAll(
 					'.investments-viz-legend-filter-item'
 				);
-        const dataValue = [e.target.getAttribute('data-value')];
+				const dataValue = [e.target.getAttribute('data-value')];
 
 				const labelsInactives = document.querySelectorAll(
 					'.investments-viz-legend-filter-item.inactive'
@@ -348,12 +373,12 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 					const thisEl_isActive = !d3.select(e.target).classed('inactive');
 					d3.select(e.target).classed('inactive', thisEl_isActive);
 
-          thisCategory = d3.select(e.target).attr('data-value');
-          if(!e.target.classList.contains('inactive')) {
-            selectedFunctionalCategory.push(thisCategory);
-          } else {
-            selectedFunctionalCategory = selectedFunctionalCategory.filter((item) => item !== thisCategory);
-          }
+					thisCategory = d3.select(e.target).attr('data-value');
+					if (!e.target.classList.contains('inactive')) {
+						selectedFunctionalCategory.push(thisCategory);
+					} else {
+						selectedFunctionalCategory = selectedFunctionalCategory.filter((item) => item !== thisCategory);
+					}
 
 				}
 				filterMap();
@@ -435,15 +460,18 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 	}
 
 	function filterMap() {
-    function getFilter(field, values) {
-        if (values === 'all') {
-            return ['all'];
-        }
-        if (Array.isArray(values)) {
-            return ['in', field, ...values]; // Use the field name directly
-        }
-        return ['==', field, values]; // Use the field name directly
-    }
+		function getFilter(field, values) {
+			if (values === 'all') {
+				return ['all'];
+			}
+			if (Array.isArray(values)) {
+				if (field === 'year') {
+					const rango = d3.range(values[0], values[1]).map(d => d.toString()).concat(values[1].toString())
+					return ['in', field, ...rango]
+				} else return ['in', field, ...values]; // Use the field name directly
+			}
+			return ['==', field, values]; // Use the field name directly
+		}
 
 		map.setFilter('investmentsLayer', [
 			'all',
