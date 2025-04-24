@@ -1304,7 +1304,7 @@ def _write(target_path, filename, content):
     _write_temp(temp_folder_path, filename, content)
 
     # ...and then we copy it to the target path, without worrying about encoding issues.
-    _copy(temp_folder_path, target_path, filename)
+    _copy(temp_folder_path, os.path.join(THEME_PATH, target_path), filename)
 
 
 def _remove(folder_path, filename):
