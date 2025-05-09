@@ -5188,6 +5188,7 @@
   exports.mouse = mouse;
   exports.nest = nest;
   exports.precisionFixed = precisionFixed;
+  exports.range = sequence;
   exports.scaleBand = band;
   exports.scaleLinear = linear;
   exports.scaleOrdinal = ordinal;
