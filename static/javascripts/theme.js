@@ -246,7 +246,7 @@ $(document).ready(function(){
   // Setup lang dropdown
   $('.dropdown-toggle').dropdown();
 
-  addChartsAlert('.policies-chart');
+  addChartsAlert('.policies-content .policies-chart');
   addChartsAlert('.sankey-container');
   addChartsAlert('.payments-content');
   addChartsAlert('.investments-content');
