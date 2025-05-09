@@ -38,8 +38,12 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 	};
 
 	this.selectYear = function (year) {
-
-		selectedYear = year
+		// Handle both single years and a year range ("yearFrom,yearTo")
+		if (year.includes(',')) {
+			selectedYear = year.split(',');
+		} else {
+			selectedYear = year;
+		}
 
 		if (mapLoaded) {
 			// If still loaded, filtering will happen once that's done
