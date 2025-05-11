@@ -27,11 +27,17 @@
             <li><a href="#en-que-se-gasta">{{ _('¿Cómo se gasta?') }}</a></li>
             <li><a href="#pagos-a-terceros">{{ _('Pagos a terceros') }}</a></li>
             <li><a href="#inversiones-por-distritos">{{ _('Inversiones por distritos') }}</a></li>
+            <li><a href="#inversiones-principales">{{ _('Inversiones principales') }}</a></li>
+            <li><a href="#objetivos">{{ _('Objetivos e indicadores') }}</a></li>
             <li><a href="#si-tienes-dudas-consulta-el-glosario">{{ _('Si tienes dudas, consulta el glosario') }}</a></li>
           </ul>
         </div>
         <div class="col-md-9">
           <p class="lead">{{ _('El objetivo de la página de presupuestos del Ayuntamiento de Madrid es que cualquier persona sea capaz de encontrar, a unos pocos clics, de forma visual y sin tener que revisar páginas y páginas de tablas, cualquier línea de las cuentas de los últimos años. Si es tu primera vez y no sabes por dónde empezar, te acompañamos en un primer paseo.') }}</p>
+
+          <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/IlPwLAMJdnI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
 
           <h3 id="que-informacion-puedes-encontrar">{{ _('¿Qué información puedes encontrar?') }}</h3>
 
@@ -91,7 +97,7 @@
 
           <img src="{{ static('assets/guidedvisit-6.png') }}" class="img-responsive" alt="Vista general del panel de Detalle del presupuesto, al entrar en detalle en cada partida económica"  />
 
-          <p>{{ _('Otro ejemplo: en el programa de <a href="/es/programas/44110/promocion-control-y-desarrollo-del-transporte#item=2016/0087/453/01&amp;view=economic">Promoción, control y desarrollo del transporte</a> la franja más grande, siempre en azul, está destinada al pago de transferencias. En este caso, se trata del dinero que transfiere el Ayuntamiento al Consorcio Regional de Transportes de Madrid.') | safe }}</p>
+          <p>{{ _('Otro ejemplo: en el programa de <a href="/es/programas/44110/promocion-control-y-desarrollo-del-transporte">Promoción, control y desarrollo del transporte</a> la franja más grande, siempre en azul, está destinada al pago de transferencias. En este caso, se trata del dinero que transfiere el Ayuntamiento al Consorcio Regional de Transportes de Madrid.') | safe }}</p>
 
           <img src="{{ static('assets/guidedvisit-7.png') }}" class="img-responsive" alt="Vista en detalle de las tablas del panel de Detalle del presupuesto, al entrar en detalle en cada partida económica"  />
 
@@ -105,9 +111,21 @@
 
           <h3 id="inversiones-por-distritos">{{ _('Inversiones por distritos') }}</h3>
 
-          <p>{{ _('No solo puedes conocer en qué invierte el Ayuntamiento, sino también dónde. En el apartado de <a href="https://presupuestosabiertos.madrid.es/es/inversiones#year=2019">Inversiones por distrito</a> tienes información de las inversiones distribuidas en los 21 distritos de la ciudad desde 2011 hasta la fecha actual. Así, en cada distrito puedes consultar las inversiones realizadas y en ejecución, tales como: construcción o reforma de escuelas infantiles, polideportivos, centros culturales, equipamientos para los edificios municipales, actuaciones urbanísticas y en vías públicas, zonas verdes, etc., por poner algunos ejemplos.') | safe }}</p>
+          <p>{{ _('No solo puedes conocer en qué invierte el Ayuntamiento, sino también dónde. En el apartado de <a href="https://presupuestosabiertos.madrid.es/es/inversiones">Inversiones por distrito</a> tienes información de las inversiones distribuidas en los 21 distritos de la ciudad desde 2011 hasta la fecha actual. Así, en cada distrito puedes consultar las inversiones realizadas y en ejecución, tales como: construcción o reforma de escuelas infantiles, polideportivos, centros culturales, equipamientos para los edificios municipales, actuaciones urbanísticas y en vías públicas, zonas verdes, etc., por poner algunos ejemplos.') | safe }}</p>
 
-          <img src="{{ static('assets/guidedvisit-9.png') }}" class="img-responsive" alt="Vista general del panel de Inversión por distritos"  />
+          <img src="{{ static('assets/guidedvisit-9.png') }}" class="img-responsive" alt="Vista general del mapa de Inversión por distritos"  />
+
+          <h3 id="inversiones-principales">{{ _('Inversiones principales') }}</h3>
+
+          <p>{{ _('La sección <a href="https://presupuestosabiertos.madrid.es/es/inversiones-principales">Inversiones principales</a> te muestra de forma geolocalizada los proyectos más significativos que está llevando a cabo el Ayuntamiento de Madrid, sus Organismos Autónomos y las Empresas Municipales. El mapa interactivo te muestra, de un vistazo, dónde se están ejecutando las principales inversiones de la ciudad. Utiliza los filtros disponibles para localizar los proyectos de tu barrio o de cultura, por ejemplo, y descubre todos los detalles de cada actuación.') | safe }}</p>
+
+          <img src="{{ static('assets/guidedvisit-11.png') }}" class="img-responsive" alt="Vista general del panel de Inversiones principales"  />
+
+          <h3 id="objetivos">{{ _('Objetivos e indicadores') }}</h3>
+
+          <p>{{ _('¿Te has preguntado si el Ayuntamiento cumple con los objetivos que se marca en sus presupuestos? En la sección <a href="https://presupuestosabiertos.madrid.es/es/objetivos">Objetivos</a> puedes comprobar de forma transparente el grado de cumplimiento de los programas presupuestarios del Ayuntamiento de Madrid a través de cientos de indicadores concretos. Puedes ver no solo los objetivos iniciales, sino también el desglose detallado de las actividades realizadas y los indicadores que se utilizan para medir su nivel de consecución. Así, podrás evaluar si el dinero invertido cumple con las metas establecidas.') | safe }}</p>
+
+          <img src="{{ static('assets/guidedvisit-12.png') }}" class="img-responsive" alt="Vista general del panel de Objetivos e indicadores"  />
 
           <h3 id="si-tienes-dudas-consulta-el-glosario">{{ _('Si tienes dudas, consulta el glosario') }}</h3>
 
@@ -118,5 +136,24 @@
   </div>
 
 </section>
+
+<style>
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
 
 {% endblock %}
