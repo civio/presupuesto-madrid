@@ -32,7 +32,7 @@
         "longitude": '{{ main_investment.longitude }}',
         "functional_category": '{{ main_investment.functional_category.description }}',
         "already_spent_amount": '{{ main_investment.already_spent_amount/100 }}',
-        "current_year_amount": '{{ main_investment.current_year_amount/100 }}',
+        "current_year_expected_amount": '{{ main_investment.current_year_expected_amount/100 }}',
         "total_expected_amount": '{{ main_investment.total_expected_amount/100 }}',
         "status": '{{ main_investment.status }}',
         "image_URL": '{{ main_investment.image_URL }}',
@@ -50,6 +50,80 @@
 
     function onYearChange(e, year) {
       investmentsMap.selectYear(year);
+
+      // We can get the currently displayed investments
+      // console.log(investmentsMap.visibleInvestments());
+
+      // TODO: Create a breakdown based on the visible investments
+      var myData = {
+        "years": {
+          "2020": 2020,
+          "2021": 2021,
+          "2022": 2022,
+          "2023": 2023,
+          "2024": 2024,
+          "actual_2020": 2020,
+          "actual_2021": 2021,
+          "actual_2022": 2022,
+          "actual_2023": 2023,
+          "actual_2024": 2024
+        },
+        "sub": {
+          "Carabanchel": {
+            "expense": {
+              "2020": 2020,
+              "2021": 2020,
+              "2022": 2020,
+              "2023": 2020,
+              "2024": 2020,
+              "2025": 2020,
+              "actual_2020": 2020,
+              "actual_2021": 2020,
+              "actual_2022": 2020,
+              "actual_2023": 2020,
+              "actual_2024": 2020,
+              "actual_2025": 2020,
+            },
+            "sub": {
+              "ANTIGUO MERCADO DE LEGAZPI. SUBSANACIÓN DE PATOLOGÍAS": {
+                "expense": {
+                  "2020": 100,
+                  "2021": 100,
+                  "2022": 100,
+                  "2023": 100,
+                  "2024": 100,
+                  "2025": 100,
+                  "actual_100": 100,
+                  "actual_2021": 100,
+                  "actual_2022": 100,
+                  "actual_2023": 100,
+                  "actual_2024": 100,
+                  "actual_2025": 100,
+                },
+              },
+              "Obra 2": {
+                "expense": {
+                  "2020": 23,
+                  "2021": 23,
+                  "2022": 23,
+                  "2023": 23,
+                  "2024": 23,
+                  "2025": 23,
+                  "actual_2020": 2342,
+                  "actual_2021": 2342,
+                  "actual_2022": 2342,
+                  "actual_2023": 2342,
+                  "actual_2024": 2342,
+                  "actual_2025": 2342,
+                },
+              }
+            }
+          }
+        }
+      };
+
+      // TODO: Here we'd replace the original breakdowns. Need to move them to `window` in the core.
+      //window.breakdowns['area'] = myData;
     }
     $('#investments-viz').bind('year-change', onYearChange);
   });

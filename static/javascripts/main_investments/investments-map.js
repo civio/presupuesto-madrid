@@ -80,6 +80,17 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 		}
 	};
 
+	// Return an array with the investments currently being displayed
+	this.getDisplayedInvestments = function() {
+		let displayedInvestments = null
+		if (mapLoaded) {
+			displayedInvestments = map.queryRenderedFeatures(null, {
+				layers: ['investmentsLayer']
+			});
+		}
+		return displayedInvestments;
+	};
+
 	function setupLayers(mapNode) {
 		// Note that we generate separate features (i.e. points) for each year an investment
 		// is active. We could reuse the same point for multiple years, reducing the number
