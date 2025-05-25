@@ -1,215 +1,216 @@
 function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
-	mapboxgl.accessToken = _token;
-	const map = new mapboxgl.Map({
-		container: _mapSelector,
-		center: [-3.7, 40.42], // starting position [lng, lat]
-		zoom: 11,
-		style: 'mapbox://styles/civio/ckrakezmj2gfp18p9j8z2bg3j',
-		scrollZoom: false,
-	});
-	let mapLoaded = false;
+  mapboxgl.accessToken = _token;
+  const map = new mapboxgl.Map({
+    container: _mapSelector,
+    center: [-3.7, 40.42], // starting position [lng, lat]
+    zoom: 11,
+    style: 'mapbox://styles/civio/ckrakezmj2gfp18p9j8z2bg3j',
+    scrollZoom: false,
+  });
+  let mapLoaded = false;
 
-	const denominations = [
-		...new Set([...data.map((d) => d.functional_category)]),
-	];
-	const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations);
+  const denominations = [
+    ...new Set([...data.map((d) => d.functional_category)]),
+  ];
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations);
 
-	let hoveredFeature = null;
+  let hoveredFeature = null;
 
-	let selectedFunctionalCategory = 'all';
-	let selectedStatus = 'all';
-	let selectedYear = 'all';
+  let selectedFunctionalCategory = 'all';
+  let selectedStatus = 'all';
+  let selectedYear = 'all';
 
-	// Create map object
-	this.setup = function () {
-		const mapNode = document.querySelector(`#${_mapSelector}`);
-		const legendNode = document.querySelector(`#${_legendSelector}`);
-		map.on('load', () => {
-			map.addControl(new mapboxgl.NavigationControl());
-			map.addControl(new mapboxgl.FullscreenControl());
-			setupLayers(mapNode);
-			setupLegend(legendNode);
-			setupStateButtons(mapNode);
-			setupInputText(mapNode);
+  // Create map object
+  this.setup = function () {
+    const mapNode = document.querySelector(`#${_mapSelector}`);
+    const legendNode = document.querySelector(`#${_legendSelector}`);
+    map.on('load', () => {
+      map.addControl(new mapboxgl.NavigationControl());
+      map.addControl(new mapboxgl.FullscreenControl());
+      setupLayers(mapNode);
+      setupLegend(legendNode);
+      setupStateButtons(mapNode);
+      setupInputText(mapNode);
 
-			mapLoaded = true;
-			filterMap();
-		});
-	};
+      mapLoaded = true;
+      filterMap();
+    });
+  };
 
-	this.selectYear = function (year) {
-		// Handle both single years and a year range ("yearFrom,yearTo")
-		if (year.includes(',')) {
-			selectedYear = year.split(',');
-		} else {
-			selectedYear = year;
-		}
+  this.selectYear = function (year) {
+    // Handle both single years and a year range ("yearFrom,yearTo")
+    if (year.includes(',')) {
+      selectedYear = year.split(',');
+    } else {
+      selectedYear = year;
+    }
 
-		if (mapLoaded) {
-			// If still loaded, filtering will happen once that's done
-			filterMap();
-		}
+    if (mapLoaded) {
+      // If still loaded, filtering will happen once that's done
+      filterMap();
+    }
 
-		// Try to update the tooltip, if stuck, if the selected investment exists across the years
-		if (hoveredFeature !== null) {
+    // Try to update the tooltip, if stuck, if the selected investment exists across the years
+    if (hoveredFeature !== null) {
 
-			const pinProject = function () {
-				if (Array.isArray(selectedYear)) {
-					return data.find(
-						(d) =>
-							d.year === selectedYear[1] &&
-							d.project_id === hoveredFeature.properties.project_id
-					);
-				} else {
-					return data.find(
-						(d) =>
-							d.year === selectedYear &&
-							d.project_id === hoveredFeature.properties.project_id
-					);
-				}
-			}
+      const pinProject = function () {
+        if (Array.isArray(selectedYear)) {
+          return data.find(
+            (d) =>
+              d.year === selectedYear[1] &&
+              d.project_id === hoveredFeature.properties.project_id
+          );
+        } else {
+          return data.find(
+            (d) =>
+              d.year === selectedYear &&
+              d.project_id === hoveredFeature.properties.project_id
+          );
+        }
+      }
 
-			const obj = pinProject()
+      const obj = pinProject()
 
-			if (obj) {
-				const tooltip = document.querySelector('#tooltip');
-				populateTooltip(tooltip, obj); // The investment exists across the years
-			} else {
-				unstickTooltip(); // Nothing to show
-			}
-		}
-	};
+      if (obj) {
+        const tooltip = document.querySelector('#tooltip');
+        populateTooltip(tooltip, obj); // The investment exists across the years
+      } else {
+        unstickTooltip(); // Nothing to show
+      }
+    }
+  };
 
-	// Return an array with the investments currently being displayed
-	this.getDisplayedInvestments = function() {
-		let displayedInvestments = null
-		if (mapLoaded) {
-			displayedInvestments = map.queryRenderedFeatures(null, {
-				layers: ['investmentsLayer']
-			});
-		}
-		return displayedInvestments;
-	};
+  // Return an array with the investments currently being displayed
+  this.getDisplayedInvestments = function() {
+    let displayedInvestments = null
+    if (mapLoaded) {
+      displayedInvestments = map.queryRenderedFeatures(null, {
+        layers: ['investmentsLayer']
+      });
+    }
+    return displayedInvestments;
+  };
 
-	function setupLayers(mapNode) {
-		// Note that we generate separate features (i.e. points) for each year an investment
-		// is active. We could reuse the same point for multiple years, reducing the number
-		// of features, but the implementation is harder and it's just not that critical.
-		const investments = {
-			type: 'FeatureCollection',
-			features: [],
-		};
-		data.forEach((d, i) => {
-			if (d.longitude !== '') {
-				investments.features.push({
-					type: 'Feature',
-					geometry: {
-						type: 'Point',
-						coordinates: [Number(d.longitude), Number(d.latitude)],
-					},
-					properties: d,
-					id: i,
-				});
-			}
-		});
+  function setupLayers(mapNode) {
+    // Note that we generate separate features (i.e. points) for each year an investment
+    // is active. We could reuse the same point for multiple years, reducing the number
+    // of features, but the implementation is harder and it's just not that critical.
+    const investments = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+    data.forEach((d, i) => {
+      if (d.longitude !== '') {
+        investments.features.push({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [Number(d.longitude), Number(d.latitude)],
+          },
+          properties: d,
+          id: i,
+        });
+      }
+    });
 
-		// Create map SOURCES
-		// Districts polygons
-		map.addSource('areas', {
-			type: 'geojson',
-			data: CARTOGRAPHY,
-		});
-		// Investments circles
-		map.addSource('investments', {
-			type: 'geojson',
-			data: investments,
-		});
+    // Create map SOURCES
+    // Districts polygons
+    map.addSource('areas', {
+      type: 'geojson',
+      data: CARTOGRAPHY,
+    });
+    // Investments circles
+    map.addSource('investments', {
+      type: 'geojson',
+      data: investments,
+    });
 
-		// Create LAYERS
-		// Polygons borders (areas)
-		map.addLayer({
-			id: 'areasLayer',
-			type: 'line',
-			source: 'areas',
-			paint: {
-				'line-color': '#a4cdf4',
-				'line-width': 3,
-				'line-opacity': 0.8,
-			},
-		});
+    // Create LAYERS
+    // Polygons borders (areas)
+    map.addLayer({
+      id: 'areasLayer',
+      type: 'line',
+      source: 'areas',
+      paint: {
+        'line-color': '#a4cdf4',
+        'line-width': 3,
+        'line-opacity': 0.8,
+      },
+    });
 
-		// Polygons names (areas)
-		// https://docs.mapbox.com/mapbox-gl-js/example/geojson-markers/
-		map.addLayer({
-			id: 'areaNamesLayer',
-			type: 'symbol',
-			source: 'areas',
-			layout: {
-				'text-field': ['get', 'NOMBRE'],
-				'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-				'text-size': 14, // Defaults to 16
-			},
-			paint: {
-				'text-opacity': 0.9,
-				'text-color': '#4d4d4d',
-			},
-		});
+    // Polygons names (areas)
+    // https://docs.mapbox.com/mapbox-gl-js/example/geojson-markers/
+    map.addLayer({
+      id: 'areaNamesLayer',
+      type: 'symbol',
+      source: 'areas',
+      layout: {
+        'text-field': ['get', 'NOMBRE'],
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-size': 14, // Defaults to 16
+      },
+      paint: {
+        'text-opacity': 0.9,
+        'text-color': '#4d4d4d',
+      },
+    });
 
-		// Paint the circle layer for each denomination
-		var circleColor = ['match', ['get', 'functional_category']];
-		denominations.forEach((d) => {
-			circleColor.push(d);
-			circleColor.push(colorScale(d));
-		});
-		circleColor.push('#003DF6'); // Fallback
-		map.addLayer({
-			id: 'investmentsLayer',
-			type: 'circle',
-			source: 'investments',
-			paint: {
-				'circle-radius': [
-					'case',
-					['boolean', ['feature-state', 'search'], true],
-					6,
-					0,
-				],
-				'circle-stroke-width': [
-					'case',
-					['boolean', ['feature-state', 'hover'], false],
-					2,
-					0,
-				],
-				'circle-stroke-color': '#000',
-				'circle-color': circleColor,
-			},
-		});
+    // Paint the circle layer for each denomination
+    var circleColor = ['match', ['get', 'functional_category']];
+    denominations.forEach((d) => {
+      circleColor.push(d);
+      circleColor.push(colorScale(d));
+    });
+    circleColor.push('#003DF6'); // Fallback
+    map.addLayer({
+      id: 'investmentsLayer',
+      type: 'circle',
+      source: 'investments',
+      paint: {
+        'circle-radius': [
+          'case',
+          ['boolean', ['feature-state', 'search'], true],
+          6,
+          0,
+        ],
+        'circle-stroke-width': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          2,
+          0,
+        ],
+        'circle-stroke-color': '#000',
+        'circle-color': circleColor,
+      },
+    });
 
-		// Create tooltip
-		const tooltipNode = document.createElement('div');
-		tooltipNode.setAttribute('id', 'tooltip');
-		tooltipNode.classList.add('map-overlay-inner');
-		mapNode.append(tooltipNode);
+    // Create tooltip
+    const tooltipNode = document.createElement('div');
+    tooltipNode.setAttribute('id', 'tooltip');
+    tooltipNode.classList.add('map-overlay-inner');
+    mapNode.append(tooltipNode);
 
-		// Bind events for the layer
-		map.on('mousemove', 'investmentsLayer', (e) => {
-			showTooltip(e);
-			map.getCanvas().style.cursor = 'pointer';
-		});
-		map.on('mouseleave', 'investmentsLayer', (e) => {
-			map.getCanvas().style.cursor = '';
-			hideTooltip();
-		});
-		map.on('click', 'investmentsLayer', (e) => {
-			stickTooltip(e);
-		});
-	}
+    // Bind events for the layer
+    map.on('mousemove', 'investmentsLayer', (e) => {
+      showTooltip(e);
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'investmentsLayer', (e) => {
+      map.getCanvas().style.cursor = '';
+      hideTooltip();
+    });
+    map.on('click', 'investmentsLayer', (e) => {
+      stickTooltip(e);
+    });
+  }
 
-	function populateTooltip(tooltip, obj) {
-		function formatAmount(amount) {
-			return Math.round(amount).toLocaleString('es-ES') + ' €';
-		}
+  function populateTooltip(tooltip, obj) {
+    function formatAmount(amount) {
+      return Math.round(amount).toLocaleString('es-ES') + ' €';
+    }
 
-		const html = `<div id="tooltip-wrapper">
+    const topHTML = `
+      <div id="tooltip-wrapper">
         <span id="tooltip-close-button">X</span>
         <h3>${obj.description}</h3>
         <div class="tooltip-section tooltip-location">
@@ -227,330 +228,351 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
           </tr>
           <tr>
             ${obj.actual_end_year !== ''
-				? `<td>Año de finalización</td><td>${obj.actual_end_year}</td>`
-				: `<td>Año finalización previsto</td><td>${obj.expected_end_year}</td>`
-			}
+              ? `<td>Año de finalización</td><td>${obj.actual_end_year}</td>`
+              : `<td>Año finalización previsto</td><td>${obj.expected_end_year}</td>`
+            }
           </tr>
-        </table>
-        <table class="tooltip-section tooltip-award">
-          <tr><th>Importes en ${obj.year}</th><th></th></tr>
-          <tr>
-            <td>Gasto ya ejecutado</td>
-            <td>${formatAmount(Number(obj.already_spent_amount))}</td>
-          </tr>
-          <tr>
-            <td>Presupuesto año en curso</td>
-            <td>${formatAmount(Number(obj.current_year_amount))}</td>
-          </tr>
-          <tr>
-            <td>Anualidades futuras</td>
-            <td>${formatAmount(
-				Math.abs(
-					Number(obj.total_expected_amount) -
-					Number(obj.already_spent_amount) -
-					Number(obj.current_year_amount)
-				)
-			)}</td>
-          </tr>
-          <tr>
-            <td>Presupuesto total previsto</td>
-            <td>${formatAmount(Number(obj.total_expected_amount))}</td>
-          </tr>
-        </table>
-        ${obj.image_URL ? `<img src="${obj.image_URL}"` : ''}
-      </div>`;
-		tooltip.innerHTML = html;
+        </table>`;
 
-		document
-			.querySelector('#tooltip-close-button')
-			.addEventListener('click', (e) => {
-				unstickTooltip();
-			});
-	}
+    if (obj.status === 'FINALIZADO') {
+      const finishedInvestmentHTML = `
+          <table class="tooltip-section tooltip-award">
+            <tr>
+              <td>Gasto ejecutado</td>
+              <td>${formatAmount(
+                Number(obj.already_spent_amount) +
+                Number(obj.current_year_spent_amount)
+              )}</td>
+            </tr>
+          </table>
+          ${obj.image_URL ? `<img src="${obj.image_URL}"` : ''}
+        </div>`;
+      tooltip.innerHTML = topHTML + finishedInvestmentHTML;
+    } else {
+      const inProgressInvestmentHTML = `
+          <table class="tooltip-section tooltip-award">
+            <tr><th>Importes en ${obj.year}</th><th></th></tr>
+            <tr>
+              <td>Gasto ya ejecutado</td>
+              <td>${formatAmount(Number(obj.already_spent_amount))}</td>
+            </tr>
+            <tr>
+              <td>Presupuesto año en curso</td>
+              <td>${formatAmount(Number(obj.current_year_expected_amount))}</td>
+            </tr>
+            <tr>
+              <td>Gasto ejecutado año en curso</td>
+              <td>${formatAmount(Number(obj.current_year_spent_amount))}</td>
+            </tr>
+            <tr>
+              <td>Anualidades futuras</td>
+              <td>${formatAmount(
+                Math.abs(
+                  Number(obj.total_expected_amount) -
+                  Number(obj.already_spent_amount) -
+                  Number(obj.current_year_expected_amount)
+                )
+              )}</td>
+            </tr>
+            <tr>
+              <td>Presupuesto total previsto</td>
+              <td>${formatAmount(Number(obj.total_expected_amount))}</td>
+            </tr>
+          </table>
+        </div>`;
+      tooltip.innerHTML = topHTML + inProgressInvestmentHTML;
+    }
 
-	function setFeatureHover(feature_id, hover) {
-		map.setFeatureState(
-			{ source: 'investments', id: feature_id },
-			{ hover: hover }
-		);
-	}
+    document
+      .querySelector('#tooltip-close-button')
+      .addEventListener('click', (e) => {
+        unstickTooltip();
+      });
+  }
 
-	// custom method to find the last update of a project
-	function tooltipInfo() {
-		if (Array.isArray(selectedYear)) {
-			const projects = data.filter(d => d.project_id === hoveredFeature.properties.project_id)
-			return projects.at(-1)
-		} else {
-			return hoveredFeature.properties
-		}
-	}
+  function setFeatureHover(feature_id, hover) {
+    map.setFeatureState(
+      { source: 'investments', id: feature_id },
+      { hover: hover }
+    );
+  }
 
-	function showTooltip(e) {
-		if (hoveredFeature !== null) {
-			setFeatureHover(hoveredFeature.id, false);
-		}
-		hoveredFeature = e.features[0];
-		setFeatureHover(hoveredFeature, true);
+  // custom method to find the last update of a project
+  function tooltipInfo() {
+    if (Array.isArray(selectedYear)) {
+      const projects = data.filter(d => d.project_id === hoveredFeature.properties.project_id)
+      return projects.at(-1)
+    } else {
+      return hoveredFeature.properties
+    }
+  }
 
-		const tooltip = document.querySelector('#tooltip');
-		populateTooltip(tooltip, tooltipInfo());
-		tooltip.classList.add('hover');
-	}
+  function showTooltip(e) {
+    if (hoveredFeature !== null) {
+      setFeatureHover(hoveredFeature.id, false);
+    }
+    hoveredFeature = e.features[0];
+    setFeatureHover(hoveredFeature, true);
 
-	function hideTooltip() {
-		document.querySelector('#tooltip').classList.remove('hover');
-		if (hoveredFeature !== null) {
-			setFeatureHover(hoveredFeature, false);
-		}
+    const tooltip = document.querySelector('#tooltip');
+    populateTooltip(tooltip, tooltipInfo());
+    tooltip.classList.add('hover');
+  }
 
-		// XXX: We used to delete hoveredFeature here, but it's useful to remember what was
-		// the last hovered point when the tooltip is stuck and we change years. We could
-		// store that in a separate state variable, but setting hover to false again and
-		// again is not a big deal.
-	}
+  function hideTooltip() {
+    document.querySelector('#tooltip').classList.remove('hover');
+    if (hoveredFeature !== null) {
+      setFeatureHover(hoveredFeature, false);
+    }
 
-	function stickTooltip() {
-		document.querySelector('#tooltip').classList.add('click');
-	}
+    // XXX: We used to delete hoveredFeature here, but it's useful to remember what was
+    // the last hovered point when the tooltip is stuck and we change years. We could
+    // store that in a separate state variable, but setting hover to false again and
+    // again is not a big deal.
+  }
 
-	function unstickTooltip() {
-		document.querySelector('#tooltip').classList.remove('click');
-	}
+  function stickTooltip() {
+    document.querySelector('#tooltip').classList.add('click');
+  }
 
-	function setupLegend(legendNode) {
-		// Create H3 legend
-		const legendH3 = document.createElement('h3');
-		legendH3.setAttribute('id', 'investments-viz-legend-title');
-		legendH3.append(document.createTextNode('Líneas de inversion'));
-		legendNode.append(legendH3);
+  function unstickTooltip() {
+    document.querySelector('#tooltip').classList.remove('click');
+  }
 
-		// Create UL legend
-		const legendUl = document.createElement('ul');
-		legendUl.setAttribute('id', 'investments-viz-legend-filter');
-		legendNode.append(legendUl);
+  function setupLegend(legendNode) {
+    // Create H3 legend
+    const legendH3 = document.createElement('h3');
+    legendH3.setAttribute('id', 'investments-viz-legend-title');
+    legendH3.append(document.createTextNode('Líneas de inversion'));
+    legendNode.append(legendH3);
 
-		// Create legend with filters
-		denominations.forEach((d) => {
-			// Create HTML elements
-			const node = document.createElement('li');
-			node.classList.add('investments-viz-legend-filter-item');
-			node.setAttribute('data-value', d);
+    // Create UL legend
+    const legendUl = document.createElement('ul');
+    legendUl.setAttribute('id', 'investments-viz-legend-filter');
+    legendNode.append(legendUl);
 
-			const color = document.createElement('span');
-			color.style.borderColor = colorScale(d);
-			color.style.backgroundColor = colorScale(d);
-			node.append(color);
+    // Create legend with filters
+    denominations.forEach((d) => {
+      // Create HTML elements
+      const node = document.createElement('li');
+      node.classList.add('investments-viz-legend-filter-item');
+      node.setAttribute('data-value', d);
 
-			const textNode = document.createTextNode(
-				d.substring(0, 1) + d.slice(1).toLowerCase()
-			);
-			node.appendChild(textNode);
+      const color = document.createElement('span');
+      color.style.borderColor = colorScale(d);
+      color.style.backgroundColor = colorScale(d);
+      node.append(color);
 
-			// Bind event to denomination buttons
-			node.addEventListener('click', (e) => {
-				const denominationItems = document.querySelectorAll(
-					'.investments-viz-legend-filter-item'
-				);
-				const dataValue = [e.target.getAttribute('data-value')];
+      const textNode = document.createTextNode(
+        d.substring(0, 1) + d.slice(1).toLowerCase()
+      );
+      node.appendChild(textNode);
 
-				const labelsInactives = document.querySelectorAll(
-					'.investments-viz-legend-filter-item.inactive'
-				).length;
+      // Bind event to denomination buttons
+      node.addEventListener('click', (e) => {
+        const denominationItems = document.querySelectorAll(
+          '.investments-viz-legend-filter-item'
+        );
+        const dataValue = [e.target.getAttribute('data-value')];
 
-				// 3 possible states
-				// 1. Default: all active. Desactivate all labels except clicked if there's no labels inactives
-				if (labelsInactives === 0) {
-					// Visually
-					denominationItems.forEach((el) => {
-						el.classList.add('inactive');
-						e.target.classList.remove('inactive');
-					});
-					// Filter values
-					document
-						.querySelector('#investments-viz-legend-filter')
-						.classList.add('active');
-					selectedFunctionalCategory = dataValue;
-				}
+        const labelsInactives = document.querySelectorAll(
+          '.investments-viz-legend-filter-item.inactive'
+        ).length;
 
-				// 2. Activate all labels if there's only one label active & we are going to desactivate
-				else if (
-					labelsInactives === denominationItems.length - 1 &&
-					!d3.select(e.target).classed('inactive')
-				) {
-					denominationItems.forEach((el) => {
-						el.classList.remove('inactive');
-					});
-					selectedFunctionalCategory = 'all';
-				}
+        // 3 possible states
+        // 1. Default: all active. Desactivate all labels except clicked if there's no labels inactives
+        if (labelsInactives === 0) {
+          // Visually
+          denominationItems.forEach((el) => {
+            el.classList.add('inactive');
+            e.target.classList.remove('inactive');
+          });
+          // Filter values
+          document
+            .querySelector('#investments-viz-legend-filter')
+            .classList.add('active');
+          selectedFunctionalCategory = dataValue;
+        }
 
-				// 3. Toogle inactive value
-				else {
-					const thisEl_isActive = !d3.select(e.target).classed('inactive');
-					d3.select(e.target).classed('inactive', thisEl_isActive);
+        // 2. Activate all labels if there's only one label active & we are going to desactivate
+        else if (
+          labelsInactives === denominationItems.length - 1 &&
+          !d3.select(e.target).classed('inactive')
+        ) {
+          denominationItems.forEach((el) => {
+            el.classList.remove('inactive');
+          });
+          selectedFunctionalCategory = 'all';
+        }
 
-					thisCategory = d3.select(e.target).attr('data-value');
-					if (!e.target.classList.contains('inactive')) {
-						selectedFunctionalCategory.push(thisCategory);
-					} else {
-						selectedFunctionalCategory = selectedFunctionalCategory.filter((item) => item !== thisCategory);
-					}
+        // 3. Toogle inactive value
+        else {
+          const thisEl_isActive = !d3.select(e.target).classed('inactive');
+          d3.select(e.target).classed('inactive', thisEl_isActive);
 
-				}
-				filterMap();
+          thisCategory = d3.select(e.target).attr('data-value');
+          if (!e.target.classList.contains('inactive')) {
+            selectedFunctionalCategory.push(thisCategory);
+          } else {
+            selectedFunctionalCategory = selectedFunctionalCategory.filter((item) => item !== thisCategory);
+          }
 
-				unstickTooltip(); // Hide if open, as the clicked item may disappear
-			});
-			document
-				.querySelector('#investments-viz-legend-filter')
-				.appendChild(node);
-		});
-	}
+        }
+        filterMap();
 
-	function setupStateButtons(mapNode) {
-		// Create container with filter elements
-		const filterStateNode = document.createElement('div');
-		filterStateNode.setAttribute('id', 'investments-viz-filter-state-wrapper');
-		filterStateNode.classList.add('investments-viz-filter');
+        unstickTooltip(); // Hide if open, as the clicked item may disappear
+      });
+      document
+        .querySelector('#investments-viz-legend-filter')
+        .appendChild(node);
+    });
+  }
 
-		// Create filter h3
-		const filterStateTitle = document.createElement('h3');
-		filterStateTitle.append(
-			document.createTextNode('SITUACIÓN DE LA INVERSION')
-		);
-		filterStateNode.append(filterStateTitle);
+  function setupStateButtons(mapNode) {
+    // Create container with filter elements
+    const filterStateNode = document.createElement('div');
+    filterStateNode.setAttribute('id', 'investments-viz-filter-state-wrapper');
+    filterStateNode.classList.add('investments-viz-filter');
 
-		// Create filter list element
-		const filterStateList = document.createElement('ul');
-		filterStateList.setAttribute('id', 'investments-viz-filter-state');
-		filterStateNode.append(filterStateList);
+    // Create filter h3
+    const filterStateTitle = document.createElement('h3');
+    filterStateTitle.append(
+      document.createTextNode('SITUACIÓN DE LA INVERSION')
+    );
+    filterStateNode.append(filterStateTitle);
 
-		// Append HTML elements
-		mapNode.append(filterStateNode);
+    // Create filter list element
+    const filterStateList = document.createElement('ul');
+    filterStateList.setAttribute('id', 'investments-viz-filter-state');
+    filterStateNode.append(filterStateList);
 
-		// Create buttons with filter of state
-		const states = [...new Set([...data.map((d) => d.status)])];
-		states.forEach((d) => {
-			// Create HTML elements
-			const li = document.createElement('li');
-			li.classList.add('investments-viz-filter-state-item');
-			li.setAttribute('data-value', d);
+    // Append HTML elements
+    mapNode.append(filterStateNode);
 
-			const a = document.createElement('a');
-			a.href = '#';
-			a.appendChild(document.createTextNode(d));
-			li.appendChild(a);
+    // Create buttons with filter of state
+    const states = [...new Set([...data.map((d) => d.status)])];
+    states.forEach((d) => {
+      // Create HTML elements
+      const li = document.createElement('li');
+      li.classList.add('investments-viz-filter-state-item');
+      li.setAttribute('data-value', d);
 
-			const div = document.createElement('div');
-			div.classList.add('tr');
-			li.appendChild(div);
+      const a = document.createElement('a');
+      a.href = '#';
+      a.appendChild(document.createTextNode(d));
+      li.appendChild(a);
 
-			// Bind event to state buttons
-			li.addEventListener('click', (e) => {
-				const stateItems = document.querySelectorAll(
-					'.investments-viz-filter-state-item'
-				);
-				const dataValue = e.target.getAttribute('data-value');
+      const div = document.createElement('div');
+      div.classList.add('tr');
+      li.appendChild(div);
 
-				// Remove active class from all elements except the selected one
-				stateItems.forEach((el) => {
-					if (el.getAttribute('data-value') !== dataValue) {
-						el.classList.remove('active');
-					} else {
-						el.classList.toggle('active');
-					}
-				});
+      // Bind event to state buttons
+      li.addEventListener('click', (e) => {
+        const stateItems = document.querySelectorAll(
+          '.investments-viz-filter-state-item'
+        );
+        const dataValue = e.target.getAttribute('data-value');
 
-				// Set filter value
-				if (selectedStatus !== dataValue) {
-					selectedStatus = dataValue;
-				} else {
-					selectedStatus = 'all';
-				}
-				filterMap();
+        // Remove active class from all elements except the selected one
+        stateItems.forEach((el) => {
+          if (el.getAttribute('data-value') !== dataValue) {
+            el.classList.remove('active');
+          } else {
+            el.classList.toggle('active');
+          }
+        });
 
-				unstickTooltip(); // Hide if open, as the clicked item may disappear
-			});
-			document.querySelector('#investments-viz-filter-state').appendChild(li);
-		});
-	}
+        // Set filter value
+        if (selectedStatus !== dataValue) {
+          selectedStatus = dataValue;
+        } else {
+          selectedStatus = 'all';
+        }
+        filterMap();
 
-	function filterMap() {
-		function getFilter(field, values) {
-			if (values === 'all') {
-				return ['all'];
-			}
-			if (Array.isArray(values)) {
-				if (field === 'year') {
-					const rango = d3.range(values[0], values[1]).map(d => d.toString()).concat(values[1].toString())
-					return ['in', field, ...rango]
-				} else return ['in', field, ...values]; // Use the field name directly
-			}
-			return ['==', field, values]; // Use the field name directly
-		}
+        unstickTooltip(); // Hide if open, as the clicked item may disappear
+      });
+      document.querySelector('#investments-viz-filter-state').appendChild(li);
+    });
+  }
 
-		map.setFilter('investmentsLayer', [
-			'all',
-			getFilter('functional_category', selectedFunctionalCategory),
-			getFilter('status', selectedStatus),
-			getFilter('year', selectedYear),
-		]);
-	}
+  function filterMap() {
+    function getFilter(field, values) {
+      if (values === 'all') {
+        return ['all'];
+      }
+      if (Array.isArray(values)) {
+        if (field === 'year') {
+          const rango = d3.range(values[0], values[1]).map(d => d.toString()).concat(values[1].toString())
+          return ['in', field, ...rango]
+        } else return ['in', field, ...values]; // Use the field name directly
+      }
+      return ['==', field, values]; // Use the field name directly
+    }
 
-	// Go through all the features (not just the visible ones), setting a property indicating
-	// whether they match the search query. Since the property is set and remains there,
-	// we don't need to call this again when changing year or category or other filters.
-	// (The alternative would be to iterate through visible features, but then we have to
-	// keep calling this all the time, and there was some race condition or something
-	// generating some weird behaviour I couldn't fix easily.)
-	function filterSearchResults(searchQuery) {
-		const sourceFeaturs = map.querySourceFeatures('investments');
-		sourceFeaturs.forEach((d) => {
-			let search =
-				normalizeString(d.properties.description).includes(searchQuery) ||
-				normalizeString(d.properties.area_name).includes(searchQuery);
-			map.setFeatureState(
-				{ source: 'investments', id: d.id },
-				{ search: search }
-			);
-		});
-	}
+    map.setFilter('investmentsLayer', [
+      'all',
+      getFilter('functional_category', selectedFunctionalCategory),
+      getFilter('status', selectedStatus),
+      getFilter('year', selectedYear),
+    ]);
+  }
 
-	function setupInputText(mapNode) {
-		// Create input text container
-		const inputTextContainer = document.createElement('div');
-		inputTextContainer.classList.add('investments-viz-filter-searcher');
+  // Go through all the features (not just the visible ones), setting a property indicating
+  // whether they match the search query. Since the property is set and remains there,
+  // we don't need to call this again when changing year or category or other filters.
+  // (The alternative would be to iterate through visible features, but then we have to
+  // keep calling this all the time, and there was some race condition or something
+  // generating some weird behaviour I couldn't fix easily.)
+  function filterSearchResults(searchQuery) {
+    const sourceFeaturs = map.querySourceFeatures('investments');
+    sourceFeaturs.forEach((d) => {
+      let search =
+        normalizeString(d.properties.description).includes(searchQuery) ||
+        normalizeString(d.properties.area_name).includes(searchQuery);
+      map.setFeatureState(
+        { source: 'investments', id: d.id },
+        { search: search }
+      );
+    });
+  }
 
-		// Create input text element
-		const inputTextNode = document.createElement('input');
-		inputTextNode.setAttribute('type', 'text');
-		inputTextNode.setAttribute('id', 'investments-viz-filter-searcher-input');
-		inputTextNode.setAttribute('placeholder', 'Busca por nombre o distrito');
+  function setupInputText(mapNode) {
+    // Create input text container
+    const inputTextContainer = document.createElement('div');
+    inputTextContainer.classList.add('investments-viz-filter-searcher');
 
-		// Every input needs a label
-		const labelNode = document.createElement('label');
-		labelNode.setAttribute('for', 'investments-viz-filter-searcher-input');
-		labelNode.classList.add('visually-hidden');
-		labelNode.innerHTML = 'Busca por nombre o distrito';
+    // Create input text element
+    const inputTextNode = document.createElement('input');
+    inputTextNode.setAttribute('type', 'text');
+    inputTextNode.setAttribute('id', 'investments-viz-filter-searcher-input');
+    inputTextNode.setAttribute('placeholder', 'Busca por nombre o distrito');
 
-		inputTextContainer.append(labelNode);
-		inputTextContainer.append(inputTextNode);
+    // Every input needs a label
+    const labelNode = document.createElement('label');
+    labelNode.setAttribute('for', 'investments-viz-filter-searcher-input');
+    labelNode.classList.add('visually-hidden');
+    labelNode.innerHTML = 'Busca por nombre o distrito';
 
-		mapNode.append(inputTextContainer);
+    inputTextContainer.append(labelNode);
+    inputTextContainer.append(inputTextNode);
 
-		// Bind event to input search
-		document
-			.querySelector('#investments-viz-filter-searcher-input')
-			.addEventListener('keyup', (e) => {
-				filterSearchResults(normalizeString(e.target.value));
-				unstickTooltip(); // Hide if open, as the clicked item may disappear
-			});
-	}
+    mapNode.append(inputTextContainer);
 
-	function normalizeString(str) {
-		return str
-			.trim()
-			.toLowerCase()
-			.normalize('NFD')
-			.replace(/[\u0300-\u036f]/g, '');
-	}
+    // Bind event to input search
+    document
+      .querySelector('#investments-viz-filter-searcher-input')
+      .addEventListener('keyup', (e) => {
+        filterSearchResults(normalizeString(e.target.value));
+        unstickTooltip(); // Hide if open, as the clicked item may disappear
+      });
+  }
+
+  function normalizeString(str) {
+    return str
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  }
 }

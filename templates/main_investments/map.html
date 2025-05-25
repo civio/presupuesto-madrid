@@ -33,6 +33,7 @@
         "functional_category": '{{ main_investment.functional_category.description }}',
         "already_spent_amount": '{{ main_investment.already_spent_amount/100 }}',
         "current_year_expected_amount": '{{ main_investment.current_year_expected_amount/100 }}',
+        "current_year_spent_amount": '{{ 0 if main_investment.current_year_spent_amount==None else main_investment.current_year_spent_amount/100 }}',
         "total_expected_amount": '{{ main_investment.total_expected_amount/100 }}',
         "status": '{{ main_investment.status }}',
         "image_URL": '{{ main_investment.image_URL }}',
