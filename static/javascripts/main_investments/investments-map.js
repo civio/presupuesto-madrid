@@ -524,7 +524,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   // (The alternative would be to iterate through visible features, but then we have to
   // keep calling this all the time, and there was some race condition or something
   // generating some weird behaviour I couldn't fix easily.)
-  function filterSearchResultsXX(searchQuery) {
+  function filterSearchResults(searchQuery) {
     const sourceFeatures = map.querySourceFeatures('investments');
     sourceFeatures.forEach((d) => {
       let search =
