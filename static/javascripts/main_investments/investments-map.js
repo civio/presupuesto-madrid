@@ -1,3 +1,8 @@
+// Note: the list of features MUST be sorted by year ascending for this to work.
+// We're stacking features points for a given project on top of each other, and we need
+// the most recent one to be on top. We could sort the data ourselves here, but
+// for now we ask the caller to ensure that.
+//
 function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   mapboxgl.accessToken = _token;
   const map = new mapboxgl.Map({

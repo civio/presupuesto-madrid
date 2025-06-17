@@ -17,6 +17,9 @@
 
 <script type="text/javascript">
   $(function () {
+    // List of main investments data, SORTED BY YEAR ASCENDING.
+    // The visualization implementation expects the data to be sorted by year ascending,
+    // and our breakdown calculations below also.
     var data = [
     {% for main_investment in all_main_investments %}
       {
