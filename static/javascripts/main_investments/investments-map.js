@@ -518,6 +518,25 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
     ]);
   }
 
+  // Go through all the features (not just the visible ones), setting a property indicating
+  // whether they match the search query. Since the property is set and remains there,
+  // we don't need to call this again when changing year or category or other filters.
+  // (The alternative would be to iterate through visible features, but then we have to
+  // keep calling this all the time, and there was some race condition or something
+  // generating some weird behaviour I couldn't fix easily.)
+  function filterSearchResultsXX(searchQuery) {
+    const sourceFeatures = map.querySourceFeatures('investments');
+    sourceFeatures.forEach((d) => {
+      let search =
+        normalizeString(d.properties.description).includes(searchQuery) ||
+        normalizeString(d.properties.area_name).includes(searchQuery);
+      map.setFeatureState(
+        { source: 'investments', id: d.id },
+        { search: search }
+      );
+    });
+  }
+
   function setupInputText(mapNode) {
     // Create input text container
     const inputTextContainer = document.createElement('div');
