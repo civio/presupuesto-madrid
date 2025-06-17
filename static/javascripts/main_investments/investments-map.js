@@ -57,25 +57,15 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 
     // Try to update the tooltip, if stuck, if the selected investment exists across the years
     if (hoveredFeature !== null) {
-
       const pinProject = function () {
-        if (Array.isArray(selectedYear)) {
-          return data.find(
-            (d) =>
-              d.year === selectedYear[1] &&
-              d.project_id === hoveredFeature.properties.project_id
-          );
-        } else {
-          return data.find(
-            (d) =>
-              d.year === selectedYear &&
-              d.project_id === hoveredFeature.properties.project_id
-          );
-        }
+        return data.find(
+          (d) =>
+            d.year === (Array.isArray(selectedYear) ? selectedYear[1] : selectedYear) &&
+            d.project_id === hoveredFeature.properties.project_id
+        );
       }
 
       const obj = pinProject()
-
       if (obj) {
         const tooltip = document.querySelector('#tooltip');
         populateTooltip(tooltip, obj); // The investment exists across the years
