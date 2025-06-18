@@ -73,14 +73,15 @@
           "years": {},
           "sub": {}
         };
+
+        // Initialize the years columns
+        breakdown["years"][year] = Number(year);
+        breakdown["years"]["actual_" + year] = Number(year);
+
         Object.keys(groupedInvestments).forEach(projectId => {
           const investment = groupedInvestments[projectId];
           const investment_year = investment.year;
           const field_value = investment[field_name];
-
-          // XXX: We only need to initialize the years columns once, but ok for now.
-          breakdown["years"][investment_year] = Number(investment_year);
-          breakdown["years"]["actual_" + investment_year] = Number(investment_year);
 
           // Add node at the top level
           breakdown["sub"][field_value] = breakdown["sub"][field_value] || { "sub": {} };
