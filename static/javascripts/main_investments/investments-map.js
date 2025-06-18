@@ -520,6 +520,13 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
       return ['==', field, values]; // Use the field name directly
     }
 
+    // We want to throw an event when the data in the map has changed, but the setFilter() operation
+    // is asynchronous, so we need to set up a one-off listener to wait for completion.
+    const onIdle = () => {
+      map.off('idle', onIdle);
+      throwVisibleDataChangedEvent();
+    };
+    map.on('idle', onIdle);
     map.setFilter('investmentsLayer', [
       'all',
       getFilter('functional_category', selectedFunctionalCategory),
@@ -545,6 +552,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
         { search: search }
       );
     });
+    throwVisibleDataChangedEvent();
   }
 
   function setupInputText(mapNode) {
@@ -576,6 +584,12 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
         filterSearchResults(normalizeString(e.target.value));
         unstickTooltip(); // Hide if open, as the clicked item may disappear
       });
+  }
+
+  // Let the container know that the visible data has changed.
+  function throwVisibleDataChangedEvent() {
+    const mapNode = document.querySelector("#" + _mapSelector);
+    $(mapNode).trigger('visible-data-change', selectedYear);
   }
 
   function normalizeString(str) {
