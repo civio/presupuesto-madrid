@@ -33,6 +33,7 @@
         "address": '{{ main_investment.address }}',
         "latitude": '{{ main_investment.latitude }}',
         "longitude": '{{ main_investment.longitude }}',
+        "entity_name": '{{ main_investment.section_name if main_investment.entity_name=="AYUNTAMIENTO" else main_investment.entity_name }}',
         "functional_category": '{{ main_investment.functional_category.description }}',
         "already_spent_amount": '{{ main_investment.already_spent_amount/100 }}',
         "current_year_expected_amount": '{{ main_investment.current_year_expected_amount/100 }}',
@@ -51,6 +52,77 @@
         data,
         "pk.eyJ1IjoiY2l2aW8iLCJhIjoiY2t6d3Z2MmluMDBrZTJ3cHZpMHh3NXVpYSJ9.DyjAQjftonNZuiccfL_55w");
     investmentsMap.setup();
+
+    // Calculate breakdowns of all visible investments across three dimensions
+    function refreshBreakdowns(year) {
+      // Add the expenditures of an investment to a breakdown structure, creating nodes as needed.
+      function addExpenditure(summary, investment ) {
+        summary["expense"] = summary["expense"] || {};
+
+        // Add expenditures at the parent level
+        summary["expense"][investment.year] = summary["expense"][investment.year] || 0;
+        summary["expense"][investment.year] += Number(investment.total_expected_amount) * 100;
+
+        // Add expenditures at the investment level
+        summary["expense"]["actual_" + investment.year] = summary["expense"]["actual_" + investment.year] || 0;
+        summary["expense"]["actual_" + investment.year] += (Number(investment.already_spent_amount) + Number(investment.current_year_spent_amount)) * 100;
+      }
+
+      function createBreakdown(investments, field_name) {
+        let breakdown = {
+          "years": {},
+          "sub": {}
+        };
+        Object.keys(groupedInvestments).forEach(projectId => {
+          const investment = groupedInvestments[projectId];
+          const investment_year = investment.year;
+          const field_value = investment[field_name];
+
+          // XXX: We only need to initialize the years columns once, but ok for now.
+          breakdown["years"][investment_year] = Number(investment_year);
+          breakdown["years"]["actual_" + investment_year] = Number(investment_year);
+
+          // Add node at the top level
+          breakdown["sub"][field_value] = breakdown["sub"][field_value] || { "sub": {} };
+          addExpenditure(breakdown["sub"][field_value], investment);
+
+          // And add node at the bottom (investment) level
+          breakdown["sub"][field_value]["sub"][investment.description] = {};
+          addExpenditure(breakdown["sub"][field_value]["sub"][investment.description], investment);
+        });
+        return breakdown;
+      }
+
+      // Get the currently displayed investments from the map
+      let displayedInvestments = investmentsMap.getFilteredInvestments() || [];
+
+      // First, group the items based on their project id, so we retain only one item per project.
+      // We rely on the data being sorted by year ascending, so we overwrite the existing items.
+      let groupedInvestments = {};
+      displayedInvestments.forEach(investment => {
+        if (investment.year === year) { // TODO: Handle year ranges
+          groupedInvestments[investment.project_id] = investment;
+        }
+      });
+
+      // Create a breakdown data structure by iterating over the grouped investments
+      const areaBreakdown = createBreakdown(groupedInvestments, 'area_name');
+      const policyBreakdown = createBreakdown(groupedInvestments, 'functional_category');
+      const departmentBreakdown = createBreakdown(groupedInvestments, 'entity_name');
+
+      // Replace the original breakdowns and redraw the grid
+      window.breakdowns = {
+        'area':       areaBreakdown,
+        'policy':     policyBreakdown,
+        'department': departmentBreakdown,
+      };
+      $('#investments-viz').trigger('trigger-grid-redraw');
+    }
+
+    function onVisibleDataChange(e, year) {
+      refreshBreakdowns(year);
+    }
+    $('#investments-viz-map').bind('visible-data-change', onVisibleDataChange);
 
     function onYearChange(e, year) {
       investmentsMap.selectYear(year);
