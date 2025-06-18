@@ -75,13 +75,28 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
     }
   };
 
-  // Return an array with the investments currently being displayed
+  // Return an array with the investments currently being displayed, as in "not filtered out".
+  //
+  // Note that we don't return the Map Feature objects, but their properties fields.
+  //
+  // Also note that we're not returning only the features in the viewport: we don't want to miss,
+  // for example, the ones in El Pardo when the page is loaded. And it wouldn't be intuitive that
+  // when zooming in a neighborhood everything else disappears. It would be confusing. Although
+  // it's arguably also confusing to make the grid reflect the viz selections in the first place,
+  // but it's what the customer wants.
   this.getDisplayedInvestments = function() {
     let displayedInvestments = null
     if (mapLoaded) {
-      displayedInvestments = map.queryRenderedFeatures(null, {
-        layers: ['investmentsLayer']
-      });
+      displayedInvestments = map.queryRenderedFeatures(
+        [[0, 0], [map.getCanvas().width, map.getCanvas().height]], // full canvas, not just the viewport
+        {
+          layers: ['investmentsLayer']
+        }
+      )
+      // Filter out features that are not currently displayed
+      displayedInvestments = displayedInvestments.filter(feature => feature.layer.paint["circle-radius"] !== 0);
+      // Extract the properties of each feature
+      displayedInvestments = displayedInvestments.map(feature => feature.properties);
     }
     return displayedInvestments;
   };
