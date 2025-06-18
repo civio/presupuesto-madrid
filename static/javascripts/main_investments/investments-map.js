@@ -87,14 +87,19 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   this.getDisplayedInvestments = function() {
     let displayedInvestments = null
     if (mapLoaded) {
+      // Get all the features in the full canvas
       displayedInvestments = map.queryRenderedFeatures(
         [[0, 0], [map.getCanvas().width, map.getCanvas().height]], // full canvas, not just the viewport
         {
           layers: ['investmentsLayer']
         }
       )
-      // Filter out features that are not currently displayed
+
+      // The search implementation is weird. Instead of filtering features out, they're made
+      // invisible by setting their radius to 0. So we need to check for that here.
+      // TODO: Should redo the search using filters.
       displayedInvestments = displayedInvestments.filter(feature => feature.layer.paint["circle-radius"] !== 0);
+
       // Extract the properties of each feature
       displayedInvestments = displayedInvestments.map(feature => feature.properties);
     }
