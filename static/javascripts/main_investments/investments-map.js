@@ -84,26 +84,23 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   // when zooming in a neighborhood everything else disappears. It would be confusing. Although
   // it's arguably also confusing to make the grid reflect the viz selections in the first place,
   // but it's what the customer wants.
-  this.getDisplayedInvestments = function() {
-    let displayedInvestments = null
+  this.getFilteredInvestments = function() {
+    let filteredInvestments = null
     if (mapLoaded) {
-      // Get all the features in the full canvas
-      displayedInvestments = map.queryRenderedFeatures(
-        [[0, 0], [map.getCanvas().width, map.getCanvas().height]], // full canvas, not just the viewport
-        {
-          layers: ['investmentsLayer']
-        }
-      )
+      filteredInvestments = map.querySourceFeatures('investments', {
+          filter: map.getFilter('investmentsLayer') // apply the same filter
+      });
 
       // The search implementation is weird. Instead of filtering features out, they're made
-      // invisible by setting their radius to 0. So we need to check for that here.
-      // TODO: Should redo the search using filters.
-      displayedInvestments = displayedInvestments.filter(feature => feature.layer.paint["circle-radius"] !== 0);
+      // invisible by setting a state in the feature. So we need to check for that here.
+      filteredInvestments = filteredInvestments.filter(feature => {
+        return map.getFeatureState({ source: 'investments', id: feature.id }).search !== false;
+      });
 
       // Extract the properties of each feature
-      displayedInvestments = displayedInvestments.map(feature => feature.properties);
+      filteredInvestments = filteredInvestments.map(feature => feature.properties);
     }
-    return displayedInvestments;
+    return filteredInvestments;
   };
 
   function setupLayers(mapNode) {
