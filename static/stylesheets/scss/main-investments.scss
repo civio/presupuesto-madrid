@@ -152,6 +152,8 @@
     font-family: 'Lato', Verdana, sans-serif;
     z-index: 2;
     cursor: default;
+    width: 400px;
+    max-width: 100%;
   }
 
   #tooltip-wrapper {
@@ -220,8 +222,26 @@
     border-bottom: 1px solid #E7F2FC;
   }
 
+  .tooltip-img-wrapper {
+    position: relative;
+    min-height: 50px;
+    background: #eeeeee
+  }
+
+  .tooltip-img-aux-text {
+    width: 100%;
+    display: block;
+    text-align: center;
+    position: relative;
+    top: 25px
+  }
+
   #tooltip img {
     width: 100%;
+    position: relative;
+    top: -19px;
+    left: 0;
+    margin-bottom: -19px
   }
 
   // Mapbox credits
