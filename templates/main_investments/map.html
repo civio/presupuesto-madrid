@@ -54,18 +54,21 @@
     investmentsMap.setup();
 
     // Calculate breakdowns of all visible investments across three dimensions
-    function refreshBreakdowns(year) {
+    function refreshBreakdowns(breakdownYear) {
+      // `breakdownYear` can be a single year or a range of years separated by a comma
+      const yearRange = (breakdownYear.includes(',') ? breakdownYear.split(',') : [breakdownYear, breakdownYear]);
+
       // Add the expenditures of an investment to a breakdown structure, creating nodes as needed.
-      function addExpenditure(summary, investment ) {
+      function addExpenditure(summary, investment, year) {
         summary["expense"] = summary["expense"] || {};
 
         // Add expenditures at the parent level
-        summary["expense"][investment.year] = summary["expense"][investment.year] || 0;
-        summary["expense"][investment.year] += Number(investment.total_expected_amount) * 100;
+        summary["expense"][year] = summary["expense"][year] || 0;
+        summary["expense"][year] += Number(investment.total_expected_amount) * 100;
 
         // Add expenditures at the investment level
-        summary["expense"]["actual_" + investment.year] = summary["expense"]["actual_" + investment.year] || 0;
-        summary["expense"]["actual_" + investment.year] += (Number(investment.already_spent_amount) + Number(investment.current_year_spent_amount)) * 100;
+        summary["expense"]["actual_" + year] = summary["expense"]["actual_" + year] || 0;
+        summary["expense"]["actual_" + year] += (Number(investment.already_spent_amount) + Number(investment.current_year_spent_amount)) * 100;
       }
 
       function createBreakdown(investments, field_name) {
@@ -75,8 +78,12 @@
         };
 
         // Initialize the years columns
-        breakdown["years"][year] = Number(year);
-        breakdown["years"]["actual_" + year] = Number(year);
+        // This part of the breakdown structure is probably used only by grid formatters, e.g. to adjust
+        // for inflation or to calculate per-capita amounts, which is not applicable in the main
+        // investments page. (It couldn't be done if we want to have a year range, actually.) But we
+        // can't just not set it, we need to put something here. (But my memory of this now is fuzzy!)
+        breakdown["years"][breakdownYear] = yearRange[1];
+        breakdown["years"]["actual_" + breakdownYear] = yearRange[1];
 
         Object.keys(groupedInvestments).forEach(projectId => {
           const investment = groupedInvestments[projectId];
@@ -85,11 +92,11 @@
 
           // Add node at the top level
           breakdown["sub"][field_value] = breakdown["sub"][field_value] || { "sub": {} };
-          addExpenditure(breakdown["sub"][field_value], investment);
+          addExpenditure(breakdown["sub"][field_value], investment, breakdownYear);
 
           // And add node at the bottom (investment) level
           breakdown["sub"][field_value]["sub"][investment.description] = {};
-          addExpenditure(breakdown["sub"][field_value]["sub"][investment.description], investment);
+          addExpenditure(breakdown["sub"][field_value]["sub"][investment.description], investment, breakdownYear);
         });
         return breakdown;
       }
@@ -101,7 +108,7 @@
       // We rely on the data being sorted by year ascending, so we overwrite the existing items.
       let groupedInvestments = {};
       displayedInvestments.forEach(investment => {
-        if (investment.year === year) { // TODO: Handle year ranges
+        if (investment.year >= yearRange[0] && investment.year <= yearRange[1]) {
           groupedInvestments[investment.project_id] = investment;
         }
       });
