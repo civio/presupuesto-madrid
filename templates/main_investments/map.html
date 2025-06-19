@@ -111,11 +111,11 @@
         if (filters.categories !== 'all' && !filters.categories.includes(investment.functional_category)) {
           return;
         }
-        if (filters.status !== 'EN PROCESO' && filters.status!==investment.status) {
+        if (filters.status === 'FINALIZADO' && investment.status !== 'FINALIZADO') {
           return;
         }
         // Note that filtering completed investments is trickier since there's a stack of features on top of each other
-        if (filters.status !== 'FINALIZADO' && completedInvestmentsIds.includes(investment.project_id)) {
+        if (filters.status === 'EN PROCESO' && !completedInvestmentsIds.includes(investment.project_id)) {
           return;
         }
         if (filters.searchQuery !== '' &&
