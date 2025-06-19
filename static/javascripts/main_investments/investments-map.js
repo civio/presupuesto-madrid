@@ -44,11 +44,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
 
   this.selectYear = function (year) {
     // Handle both single years and a year range ("yearFrom,yearTo")
-    if (year.includes(',')) {
-      selectedYear = year.split(',');
-    } else {
-      selectedYear = year;
-    }
+    selectedYear = (year.includes(',') ? year.split(',') : year);
 
     if (mapLoaded) {
       // If still loaded, filtering will happen once that's done
@@ -591,7 +587,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   // Let the container know that the visible data has changed.
   function throwVisibleDataChangedEvent() {
     const mapNode = document.querySelector("#" + _mapSelector);
-    $(mapNode).trigger('visible-data-change', selectedYear);
+    $(mapNode).trigger('visible-data-change', (Array.isArray(selectedYear) ? selectedYear.join(',') : selectedYear));
   }
 
   function normalizeString(str) {
