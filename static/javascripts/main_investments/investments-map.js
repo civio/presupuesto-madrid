@@ -80,11 +80,11 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   // when zooming in a neighborhood everything else disappears. It would be confusing. Although
   // it's arguably also confusing to make the grid reflect the viz selections in the first place,
   // but it's what the customer wants.
-  this.getFilteredInvestments = function() {
+  this.getFilteredInvestments = function () {
     let filteredInvestments = null
     if (mapLoaded) {
       filteredInvestments = map.querySourceFeatures('investments', {
-          filter: map.getFilter('investmentsLayer') // apply the same filter
+        filter: map.getFilter('investmentsLayer') // apply the same filter
       });
 
       // The search implementation is weird. Instead of filtering features out, they're made
@@ -236,9 +236,9 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
           </tr>
           <tr>
             ${obj.actual_end_year !== ''
-              ? `<td>Año de finalización</td><td>${obj.actual_end_year}</td>`
-              : `<td>Año finalización previsto</td><td>${obj.expected_end_year}</td>`
-            }
+        ? `<td>Año de finalización</td><td>${obj.actual_end_year}</td>`
+        : `<td>Año finalización previsto</td><td>${obj.expected_end_year}</td>`
+      }
           </tr>
         </table>`;
 
@@ -248,12 +248,12 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
             <tr>
               <td>Gasto ejecutado</td>
               <td>${formatAmount(
-                Number(obj.already_spent_amount) +
-                Number(obj.current_year_spent_amount)
-              )}</td>
+        Number(obj.already_spent_amount) +
+        Number(obj.current_year_spent_amount)
+      )}</td>
             </tr>
           </table>
-          ${obj.image_URL ? `<img src="${obj.image_URL}"` : ''}
+          ${obj.image_URL ? `<div class="tooltip-img-wrapper"><span class="tooltip-img-aux-text">Cargando imagen...</span><img src="${obj.image_URL}" /></div>` : ''}
         </div>`;
       tooltip.innerHTML = topHTML + finishedInvestmentHTML;
     } else {
@@ -262,29 +262,29 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
             <tr><th>Importes en ${obj.year}</th><th></th></tr>
             <tr>
               <td>Gasto ya ejecutado</td>
-              <td>${formatAmount(Number(obj.already_spent_amount))}</td>
+              <td style="text-align: right;>${formatAmount(Number(obj.already_spent_amount))}</td>
             </tr>
             <tr>
               <td>Presupuesto año en curso</td>
-              <td>${formatAmount(Number(obj.current_year_expected_amount))}</td>
+              <td style="text-align: right;>${formatAmount(Number(obj.current_year_expected_amount))}</td>
             </tr>
             <tr>
               <td>Gasto ejecutado año en curso</td>
-              <td>${formatAmount(Number(obj.current_year_spent_amount))}</td>
+              <td style="text-align: right;>${formatAmount(Number(obj.current_year_spent_amount))}</td>
             </tr>
             <tr>
               <td>Anualidades futuras</td>
-              <td>${formatAmount(
-                Math.abs(
-                  Number(obj.total_expected_amount) -
-                  Number(obj.already_spent_amount) -
-                  Number(obj.current_year_expected_amount)
-                )
-              )}</td>
+              <td style="text-align: right;>${formatAmount(
+        Math.abs(
+          Number(obj.total_expected_amount) -
+          Number(obj.already_spent_amount) -
+          Number(obj.current_year_expected_amount)
+        )
+      )}</td>
             </tr>
             <tr>
               <td>Presupuesto total previsto</td>
-              <td>${formatAmount(Number(obj.total_expected_amount))}</td>
+              <td style="text-align: right;>${formatAmount(Number(obj.total_expected_amount))}</td>
             </tr>
           </table>
         </div>`;
