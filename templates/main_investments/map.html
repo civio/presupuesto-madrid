@@ -55,9 +55,6 @@
 
     // Calculate breakdowns of all visible investments across three dimensions
     function refreshBreakdowns(breakdownYear) {
-      // `breakdownYear` can be a single year or a range of years separated by a comma
-      const yearRange = (breakdownYear.includes(',') ? breakdownYear.split(',') : [breakdownYear, breakdownYear]);
-
       // Add the expenditures of an investment to a breakdown structure, creating nodes as needed.
       function addExpenditure(summary, investment, year) {
         summary["expense"] = summary["expense"] || {};
@@ -82,8 +79,8 @@
         // for inflation or to calculate per-capita amounts, which is not applicable in the main
         // investments page. (It couldn't be done if we want to have a year range, actually.) But we
         // can't just not set it, we need to put something here. (But my memory of this now is fuzzy!)
-        breakdown["years"][breakdownYear] = yearRange[1];
-        breakdown["years"]["actual_" + breakdownYear] = yearRange[1];
+        breakdown["years"][breakdownYear] = breakdownYear;
+        breakdown["years"]["actual_" + breakdownYear] = breakdownYear;
 
         Object.keys(groupedInvestments).forEach(projectId => {
           const investment = groupedInvestments[projectId];
@@ -101,14 +98,29 @@
         return breakdown;
       }
 
-      // Get the currently displayed investments from the map
-      let displayedInvestments = investmentsMap.getFilteredInvestments() || [];
-
-      // First, group the items based on their project id, so we retain only one item per project.
+      // We want to group the items based on their project id, so we retain only one item per project.
       // We rely on the data being sorted by year ascending, so we overwrite the existing items.
+      // But we want to show the same investments as in the map, so we apply the same filters.
+      // (We did try to use Mapbox's `querySourceFeatures` and `queryRenderedFeatures`, but there was no
+      //  way to get all the data from the map, including unloaded tiles, so we're forced to redo the filtering.)
       let groupedInvestments = {};
-      displayedInvestments.forEach(investment => {
-        if (investment.year >= yearRange[0] && investment.year <= yearRange[1]) {
+      let filters = investmentsMap.getFilters();
+      data.forEach(investment => {
+        // Apply filters
+        if (filters.categories !== 'all' && !filters.categories.includes(investment.functional_category)) {
+          return;
+        }
+        if (filters.status !== 'all' && filters.status!==investment.status) {
+          return;
+        }
+        if (filters.searchQuery !== '' &&
+          !investment.description.toLowerCase().includes(filters.searchQuery) &&
+          !investment.area_name.toLowerCase().includes(filters.searchQuery)) {
+          return;
+        }
+
+        // Group the investments in the year range
+        if (investment.year >= filters.year[0] && investment.year <= filters.year[1]) {
           groupedInvestments[investment.project_id] = investment;
         }
       });

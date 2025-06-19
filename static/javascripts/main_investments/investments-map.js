@@ -24,6 +24,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   let selectedFunctionalCategory = 'all';
   let selectedStatus = 'all';
   let selectedYear = 'all';
+  let selectedSearchQuery = '';
 
   // Create map object
   this.setup = function () {
@@ -71,33 +72,15 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
     }
   };
 
-  // Return an array with the investments currently being displayed, as in "not filtered out".
-  //
-  // Note that we don't return the Map Feature objects, but their properties fields.
-  //
-  // Also note that we're not returning only the features in the viewport: we don't want to miss,
-  // for example, the ones in El Pardo when the page is loaded. And it wouldn't be intuitive that
-  // when zooming in a neighborhood everything else disappears. It would be confusing. Although
-  // it's arguably also confusing to make the grid reflect the viz selections in the first place,
-  // but it's what the customer wants.
-  this.getFilteredInvestments = function () {
-    let filteredInvestments = null
-    if (mapLoaded) {
-      filteredInvestments = map.querySourceFeatures('investments', {
-        filter: map.getFilter('investmentsLayer') // apply the same filter
-      });
-
-      // The search implementation is weird. Instead of filtering features out, they're made
-      // invisible by setting a state in the feature. So we need to check for that here.
-      filteredInvestments = filteredInvestments.filter(feature => {
-        return map.getFeatureState({ source: 'investments', id: feature.id }).search !== false;
-      });
-
-      // Extract the properties of each feature
-      filteredInvestments = filteredInvestments.map(feature => feature.properties);
-    }
-    return filteredInvestments;
-  };
+  // Return current applied filters
+  this.getFilters = function () {
+    return {
+      searchQuery: selectedSearchQuery,
+      year: selectedYear,
+      categories: selectedFunctionalCategory,
+      status: selectedStatus
+    };
+  }
 
   function setupLayers(mapNode) {
     // Note that we generate separate features (i.e. points) for each year an investment
@@ -550,6 +533,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
         { search: search }
       );
     });
+    selectedSearchQuery = searchQuery;
     throwVisibleDataChangedEvent();
   }
 
