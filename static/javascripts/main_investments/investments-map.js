@@ -262,19 +262,19 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
             <tr><th>Importes en ${obj.year}</th><th></th></tr>
             <tr>
               <td>Gasto ya ejecutado</td>
-              <td style="text-align: right;>${formatAmount(Number(obj.already_spent_amount))}</td>
+              <td style="text-align: right;">${formatAmount(Number(obj.already_spent_amount))}</td>
             </tr>
             <tr>
               <td>Presupuesto año en curso</td>
-              <td style="text-align: right;>${formatAmount(Number(obj.current_year_expected_amount))}</td>
+              <td style="text-align: right;">${formatAmount(Number(obj.current_year_expected_amount))}</td>
             </tr>
             <tr>
               <td>Gasto ejecutado año en curso</td>
-              <td style="text-align: right;>${formatAmount(Number(obj.current_year_spent_amount))}</td>
+              <td style="text-align: right;">${formatAmount(Number(obj.current_year_spent_amount))}</td>
             </tr>
             <tr>
               <td>Anualidades futuras</td>
-              <td style="text-align: right;>${formatAmount(
+              <td style="text-align: right;">${formatAmount(
         Math.abs(
           Number(obj.total_expected_amount) -
           Number(obj.already_spent_amount) -
@@ -284,7 +284,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
             </tr>
             <tr>
               <td>Presupuesto total previsto</td>
-              <td style="text-align: right;>${formatAmount(Number(obj.total_expected_amount))}</td>
+              <td style="text-align: right;">${formatAmount(Number(obj.total_expected_amount))}</td>
             </tr>
           </table>
         </div>`;
