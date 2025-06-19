@@ -19,6 +19,8 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
   ];
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(denominations);
 
+  let completedInvestments = [];
+
   let hoveredFeature = null;
 
   let selectedFunctionalCategory = 'all';
@@ -91,6 +93,13 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
       features: [],
     };
     data.forEach((d, i) => {
+      // Keep track of completed investments, we'll need this for filtering later on.
+      // Note that the same investment shows up in multiple years, first as 'in progress',
+      // finally as 'completed'.
+      if (d.status === 'FINALIZADO') {
+        completedInvestments.push(d.project_id);
+      }
+
       if (d.longitude !== '') {
         investments.features.push({
           type: 'Feature',
@@ -500,6 +509,18 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
       }
       return ['==', field, values]; // Use the field name directly
     }
+    // The status filter is a bit trickier than the others: since we have multiple features for each investment,
+    // one per year, stacked on top of each other, if we want to see investments in progress it's not enough
+    // to just remove the features that are marked as completed, because that would reveal the feature just below it,
+    // from the year below, when the investment was in progress. We need to keep track of all investments that are
+    // eventually completed, and filter against that.
+    function getStatusFilter(value) {
+      if (value !== 'EN PROCESO') {
+        return getFilter('status', value);
+      } else {
+        return ['!in', 'project_id', ...completedInvestments];
+      }
+    }
 
     // We want to throw an event when the data in the map has changed, but the setFilter() operation
     // is asynchronous, so we need to set up a one-off listener to wait for completion.
@@ -511,7 +532,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
     map.setFilter('investmentsLayer', [
       'all',
       getFilter('functional_category', selectedFunctionalCategory),
-      getFilter('status', selectedStatus),
+      getStatusFilter(selectedStatus),
       getFilter('year', selectedYear),
     ]);
   }
