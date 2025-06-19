@@ -106,7 +106,6 @@
       //  way to get all the data from the map, including unloaded tiles, so we're forced to redo the filtering.)
       let groupedInvestments = {};
       let filters = investmentsMap.getFilters();
-      console.log(completedInvestmentsIds);
       data.forEach(investment => {
         // Apply filters
         if (filters.categories !== 'all' && !filters.categories.includes(investment.functional_category)) {
