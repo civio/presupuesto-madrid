@@ -297,16 +297,6 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
     );
   }
 
-  // custom method to find the last update of a project
-  function tooltipInfo() {
-    if (Array.isArray(selectedYear)) {
-      const projects = data.filter(d => d.project_id === hoveredFeature.properties.project_id)
-      return projects.at(-1)
-    } else {
-      return hoveredFeature.properties
-    }
-  }
-
   function showTooltip(e) {
     if (hoveredFeature !== null) {
       setFeatureHover(hoveredFeature.id, false);
@@ -315,7 +305,7 @@ function InvestmentsMap(_mapSelector, _legendSelector, data, _token) {
     setFeatureHover(hoveredFeature, true);
 
     const tooltip = document.querySelector('#tooltip');
-    populateTooltip(tooltip, tooltipInfo());
+    populateTooltip(tooltip, hoveredFeature.properties);
     tooltip.classList.add('hover');
   }
 
