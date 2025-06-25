@@ -45,6 +45,14 @@ $(document).ready(function(){
     }
   };
 
+  var addYearSelectorCustomTitle = function () {
+    var title = {
+      'es': 'Elige el rango de años',
+      'en': 'Select the year range',
+    };
+    $('section.main-investments .layout-slider p.title').text(title[$('html').attr('lang')]);
+  };
+
   var addYearSelectorCustomLabels = function() {
     var extension = {
       'es': 'Prórroga',
@@ -242,6 +250,7 @@ $(document).ready(function(){
   }
 
   addYearSelectorCustomLabels();
+  addYearSelectorCustomTitle();
 
   // Setup lang dropdown
   $('.dropdown-toggle').dropdown();
