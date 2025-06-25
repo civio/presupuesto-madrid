@@ -25,7 +25,7 @@
       {
         "project_id": '{{ main_investment.project_id }}',
         "year": '{{ main_investment.budget.year }}',
-        "description": '{{ main_investment.description }}',
+        "description": '{{ main_investment.description if main_investment.status=="EN PROCESO" else main_investment.description+" ✔️" }}',
         "start_year": '{{ main_investment.start_year }}',
         "expected_end_year": '{{ main_investment.expected_end_year }}',
         "actual_end_year": '{{ "" if main_investment.actual_end_year==None else main_investment.actual_end_year }}',

@@ -45,14 +45,6 @@ $(document).ready(function(){
     }
   };
 
-  var addYearSelectorCustomTitle = function () {
-    var title = {
-      'es': 'Elige el rango de años',
-      'en': 'Select the year range',
-    };
-    $('section.main-investments .layout-slider p.title').text(title[$('html').attr('lang')]);
-  };
-
   var addYearSelectorCustomLabels = function() {
     var extension = {
       'es': 'Prórroga',
@@ -234,6 +226,22 @@ $(document).ready(function(){
     }
   };
 
+  var addMainInvestmentsYearSelectorCustomTitle = function () {
+    var title = {
+      'es': 'Elige el rango de años',
+      'en': 'Select the year range',
+    };
+    $('.main-investments .layout-slider p.title').text(title[$('html').attr('lang')]);
+  };
+
+  var addMainInvestmentsFootnote = function () {
+    var footnote = {
+      'es': 'Las inversiones completadas aparecen marcadas con el icono ✔️.',
+      'en': 'Completed investments are marked with the ✔️ icon.',
+    };
+    $('.main-investments .panel-downloads').before("<p style='text-align: center; font-weight: 300;'>"+footnote[$('html').attr('lang')]+"</p>");
+  };
+
   // Swap order of budgeted/actual totals in Overview page
   var swapTotalsInOverview = function() {
     $(".total-budgeted").prependTo(".budget-totals .panel-content");
@@ -250,7 +258,6 @@ $(document).ready(function(){
   }
 
   addYearSelectorCustomLabels();
-  addYearSelectorCustomTitle();
 
   // Setup lang dropdown
   $('.dropdown-toggle').dropdown();
@@ -268,6 +275,9 @@ $(document).ready(function(){
   addInstitutionalTabNote();
   addInstitutionalDescriptions();
   addInvestmentsDescriptions();
+
+  addMainInvestmentsYearSelectorCustomTitle();
+  addMainInvestmentsFootnote();
 
   addIEAdvice();
 });
