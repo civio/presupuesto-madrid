@@ -20,15 +20,10 @@ import glob
 import json
 import os
 import re
-import six
 import subprocess
 import urllib
 
-# urllib2 has changed significantly in Python 3
-if six.PY2:
-    from urllib2 import Request, urlopen
-else:
-    from urllib.request import Request, urlopen
+from urllib.request import Request, urlopen
 
 DATA_BASE_URL = "https://datos.madrid.es"
 
@@ -58,13 +53,9 @@ PAYMENTS_URL = "https://datos.madrid.es/sites/v/index.jsp?vgnextoid=2fd903751cd5
 
 TEMP_BASE_PATH = "/tmp/budget_app"
 
-# Select the Python interpreter for external commands based on the version we're running
-if six.PY2:
-    PYTHON = "python2"
-    PYTHON_VENV = "env"
-else:
-    PYTHON = "python3"
-    PYTHON_VENV = "env3"
+# The Python interpreter for external commands
+PYTHON = "python3"
+PYTHON_VENV = "env3"
 
 # Add global variable to control whether we should dry run git commands, useful for development.
 # In my localhost I also have `scripts/git` defined as `echo 'hello world'`. But editing inflation,
@@ -897,15 +888,11 @@ def _review_payments_data(data_files_path):
         "organismos.csv": [1, 3, 4, 7, 9, 10, 11]
     }
 
-    # Determine file mode based on Python version
-    read_mode = "rb" if six.PY2 else "r"
-    write_mode = "wb" if six.PY2 else "w"
+    read_mode = "r"
+    write_mode = "w"
 
-    # For Python 3, we need to specify newline='' to avoid extra blank lines
-    if six.PY2:
-        read_params = write_params = {}
-    else:
-        read_params = write_params = {'newline': '', 'encoding': 'utf-8'}
+    # We need to specify newline='' to avoid extra blank lines
+    read_params = write_params = {'newline': '', 'encoding': 'utf-8'}
 
     error = None
 
@@ -1217,11 +1204,7 @@ def _fetch(url):
         request = Request(url, headers={'User-Agent': 'Mozilla'})
         response = urlopen(request)
 
-        # Convert to string based on Python version
-        if six.PY2:
-            page = response.read()
-        else:
-            page = response.read().decode('utf-8', errors='replace')
+        page = response.read().decode('utf-8', errors='replace')
 
     except IOError as error:
         raise AdminException("Page at '%s' couldn't be fetched: %s" % (url, cgi.escape(str(error))))
@@ -1233,13 +1216,8 @@ def _download(url, temp_folder_path, filename):
     try:
         response = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
 
-        # In the old Python 2 code we used the same method to create a temporary file
-        # with some minor content (text) and to save a downloaded file. Not anymore.
-        if six.PY2:
-            _write_temp(temp_folder_path, filename, response.read(), 'iso-8859-1')
-        else:
-            with open(os.path.join(temp_folder_path, filename), "wb") as f:
-                f.write(response.read())
+        with open(os.path.join(temp_folder_path, filename), "wb") as f:
+            f.write(response.read())
 
     except IOError as error:
         raise AdminException(
@@ -1267,23 +1245,15 @@ def _exists_temp(temp_folder_path, filename):
 def _read_temp(temp_folder_path, filename):
     file_path = os.path.join(temp_folder_path, filename)
 
-    if six.PY2:
-        with open(file_path, "rb") as file:
-            return file.read()
-    else:
-        with open(file_path, "r") as file:
-            return file.read()
+    with open(file_path, "r") as file:
+        return file.read()
 
 
 def _write_temp(temp_folder_path, filename, content, encoding='utf-8'):
     file_path = os.path.join(temp_folder_path, filename)
 
-    if six.PY2:
-        with open(file_path, "w") as file:
-            file.write(content)
-    else:
-        with open(file_path, "w", encoding=encoding) as file:
-            file.write(content)
+    with open(file_path, "w", encoding=encoding) as file:
+        file.write(content)
 
 
 def _touch(file_path):
@@ -1406,8 +1376,7 @@ def _parse_spanish_number(number):
 def _get_content(params):
     b64_content = params.get("content", "")
     content = base64.b64decode(b64_content)
-    if six.PY3:
-        content = content.decode('utf-8')
+    content = content.decode('utf-8')
     return content
 
 
@@ -1495,9 +1464,6 @@ def _execute_cmd(cmd):
     )
 
     output, _ = process.communicate()
-    if six.PY2:
-        output = output.decode("utf8", "backslashreplace")
-
     return_code = process.poll()
     error = return_code != 0
 
@@ -1522,16 +1488,12 @@ def _csv_response(data, status=200):
 # Note that it also removes duplicates! It was useful for goals data,
 # it could be made optional or removed if we use this somewhere else.
 def _csv_cut_columns(path, source_filename, target_filename, columns, output_encoding='utf-8'):
-    # Determine file mode based on Python version
-    read_mode = "rb" if six.PY2 else "r"
-    write_mode = "wb" if six.PY2 else "w"
+    read_mode = "r"
+    write_mode = "w"
 
-    # For Python 3, we need to specify newline='' to avoid extra blank lines
-    if six.PY2:
-        read_params = write_params = {}
-    else:
-        read_params = {'newline': '', 'encoding': 'iso-8859-1'}
-        write_params = {'newline': '', 'encoding': output_encoding}
+    # We need to specify newline='' to avoid extra blank lines
+    read_params = {'newline': '', 'encoding': 'iso-8859-1'}
+    write_params = {'newline': '', 'encoding': output_encoding}
 
     last_line = []
     with open(os.path.join(path, target_filename), write_mode, **write_params) as target:

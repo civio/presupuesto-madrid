@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-import six
 import csv
 import re
 
@@ -80,7 +79,4 @@ class MadridInvestmentsLoader(InvestmentsLoader):
 
     # Hacky function for messy Python 2 Unicode handling.
     def _safe_to_utf8(self, text):
-        if six.PY2:
-            return unicode(text, encoding='iso-8859-1').encode('utf8')
-        else:
-            return text
+        return text

@@ -1,15 +1,11 @@
 # -*- coding: UTF-8 -*-
 import csv
 import re
-import six
 
 from budget_app.models import *
 from budget_app.loaders import MonitoringLoader
 
-if six.PY2:
-    from madrid_utils import MadridUtils
-else:
-    from .madrid_utils import MadridUtils
+from .madrid_utils import MadridUtils
 
 class MadridMonitoringLoader(MonitoringLoader):
 
@@ -121,7 +117,4 @@ class MadridMonitoringLoader(MonitoringLoader):
         return ';'
 
     def _decode_utf8(self, s):
-        if six.PY2:
-            return s.decode('utf-8')
-        else:
-            return s
+        return s

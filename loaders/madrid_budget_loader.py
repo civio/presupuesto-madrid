@@ -1,13 +1,9 @@
 # -*- coding: UTF-8 -*-
 import re
-import six
 
 from budget_app.loaders import SimpleBudgetLoader
 
-if six.PY2:
-    from madrid_utils import MadridUtils
-else:
-    from .madrid_utils import MadridUtils
+from .madrid_utils import MadridUtils
 
 class MadridBudgetLoader(SimpleBudgetLoader):
 
@@ -80,11 +76,8 @@ class MadridBudgetLoader(SimpleBudgetLoader):
             # The input files are encoded in ISO-8859-1, since we want to work with the files
             # as they're published in the original open data portal. All the text fields are
             # ignored, as we use the codes instead, but the description one.
-            if six.PY2:
-                description = self._spanish_titlecase(line[9].decode("iso-8859-1").encode("utf-8"))
-            else:
-                # In Python 3 we're handling the encoding at the file level, so we don't need to decode/encode here.
-                description = self._spanish_titlecase(line[9])
+            # The encoding is handled at the file level, so we don't need to decode/encode here.
+            description = self._spanish_titlecase(line[9])
 
             return {
                 'is_expense': True,
@@ -121,11 +114,8 @@ class MadridBudgetLoader(SimpleBudgetLoader):
                 amount = -amount
 
             # See note above
-            if six.PY2:
-                description = self._spanish_titlecase(line[5].decode("iso-8859-1").encode("utf-8"))
-            else:
-                # In Python 3 we're handling the encoding at the file level, so we don't need to decode/encode here.
-                description = self._spanish_titlecase(line[5])
+            # The encoding is handled at the file level, so we don't need to decode/encode here.
+            description = self._spanish_titlecase(line[5])
 
             return {
                 'is_expense': False,

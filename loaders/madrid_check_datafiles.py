@@ -2,7 +2,6 @@
 
 import os
 import csv
-import six
 import sys
 import re
 
@@ -41,10 +40,7 @@ def get_stats(path, is_expense, is_actual):
 
     filename = os.path.join(path, 'gastos.csv' if is_expense else 'ingresos.csv')
 
-    if six.PY2:
-        reader = csv.reader(open(filename, 'rb'), delimiter=';')
-    else:
-        reader = csv.reader(open(filename, 'r', encoding='iso-8859-1'), delimiter=';')
+    reader = csv.reader(open(filename, 'r', encoding='iso-8859-1'), delimiter=';')
 
     for index, line in enumerate(reader):
         if re.match("^#", line[0]):  # Ignore comments
