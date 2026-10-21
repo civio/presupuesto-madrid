@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from project.settings import ROOT_PATH, THEME_PATH, HTTPS_PROXY, HTTP_PROXY
 from budget_app.views.helpers import _set_meta_fields
