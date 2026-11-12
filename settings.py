@@ -95,9 +95,6 @@ SHOW_SECTION_PAGES = True
 # Important: We need this to be True for the institutional treemap to work properly.
 CONSISTENT_INSTITUTIONAL_CODES = True
 
-# Show an extra tab with funding breakdown (only applicable to some budgets). Default: False.
-# SHOW_FUNDING_TAB = False
-
 # Show Subtotals panel in Overview. Default: False
 SHOW_OVERVIEW_SUBTOTALS = True
 
