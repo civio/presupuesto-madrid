@@ -16,7 +16,6 @@
   {% compress js %}
   <script src="{{ static('javascripts/jquery-2.2.4.js') }}"></script>
   <script src="{{ static('javascripts/jquery-migrate-1.4.1.js') }}"></script>
-  <script src="{{ static('javascripts/modernizr-2.6.3.min.js') }}"></script>
   {% endcompress %}
 </head>
 <body class="{{ page_css_class }}">
@@ -35,7 +34,6 @@
   <script src="{{ static('javascripts/jquery.ba-bbq.js') }}"></script>
   <script src="{{ static('javascripts/jquery.cookie.min.js') }}"></script>
   <script src="{{ static('javascripts/jquery.cookiebar.js') }}"></script>
-  <script src="{{ static('javascripts/jquery.event.drag-2.0.min.js') }}"></script>
   <!-- Other dependencies -->
   <script src="{{ static('javascripts/datatables.min.js') }}"></script>
   <script src="{{ static('javascripts/select2.min.js') }}"></script>
@@ -58,10 +56,6 @@
   <script src="https://cdn.jsdelivr.net/npm/handsontable@6.2.2/dist/handsontable.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@4.6.2/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-base64@2.5.0/base64.min.js"></script>
-
-  {% if debug %}
-  <script src="{{ static('javascripts/count-css-rules.js') }}"></script>
-  {% endif %}
 
   {% include 'shared/cookiebar.html' %}
 
