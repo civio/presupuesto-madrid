@@ -7,7 +7,6 @@ theme_views = importlib.import_module('presupuesto_madrid.views')
 # We can define additional URLs applicable only to the theme. These will get added
 # to the project URL patterns list.
 EXTRA_URLS = (
-    re_path(r'^visita-guiada$', theme_views.guidedvisit, name='guidedvisit'),
     re_path(r'^inflacion\.(?P<format>.+)$', theme_views.inflation_stats, name='inflation_stats'),
     re_path(r'^poblacion\.(?P<format>.+)$', theme_views.population_stats, name='population_stats'),
 
