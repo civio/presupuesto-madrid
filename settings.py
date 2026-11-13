@@ -72,9 +72,6 @@ SHOW_MAIN_INVESTMENTS = True
 # Show Guided Visit section in menu & home options. Default: False.
 SHOW_GUIDED_VISIT = True
 
-# Show Counties & Towns links in Policies section in menu & home options. Default: False.
-# SHOW_COUNTIES_AND_TOWNS = False
-
 # Show an extra tab with institutional breakdown. Default: True.
 # SHOW_INSTITUTIONAL_TAB  = False
 
@@ -111,9 +108,6 @@ BREAKDOWN_BY_UID = False
 
 # Include financial income/expenditures in overview and global policy breakdowns. Default: True.
 INCLUDE_FINANCIAL_CHAPTERS_IN_BREAKDOWNS = True
-
-# Search in entity names. Default: True.
-SEARCH_ENTITIES = False
 
 
 # Number of items per terms page. Default: 10
